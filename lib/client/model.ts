@@ -1,0 +1,41 @@
+"use client";
+
+import { evaluateClue } from "@server/handlers";
+import { mainViewModel } from "./viewmodel";
+
+export async function submitClue(input: string): Promise<void> {
+  const acceptedClueIds = await evaluateClue(input, clues);
+  if (acceptedClueIds.length > 0) {
+    console.log("Accepted clues:", acceptedClueIds);
+  } else {
+    console.log("No clues accepted.", input);
+  }
+  for (const clueId of acceptedClueIds) {
+    if (!discoveredClues.includes(clueId)) {
+      discoveredClues.push(clueId);
+    }
+  }
+  mainViewModel.clues = Object.keys(clues).map(id => {
+    return discoveredClues.includes(id) ? clues[id] : undefined;
+  });
+}
+
+const clues: Record<string, string> = {
+  "clue-00": "神父聆听了醉汉的忏悔",
+  "clue-01": "醉汉描述的作案手法与小镇上近些年来的凶案完全一致",
+  "clue-02": "神父误认为醉汉是小镇上连环杀人案的凶手而杀死了他",
+  "clue-03": "神父杀错了人",
+  "clue-04": "律师于年前是一名警察",
+  "clue-05": "律师调查家乡的连环杀人案，了解了凶手（醉汉）的杀人手法",
+  "clue-06": "律师选择来到小镇为小镇成为了一名模仿犯",
+  "clue-07": "律师他是小镇凶案的真凶",
+  "clue-08": "醉鬼是一名连环杀人犯",
+  "clue-09": "醉鬼在来到小镇后和神父忏悔了自己的杀人过往",
+  "clue-10": "醉鬼被神父误以为是小镇上的连环杀人案凶手并被杀死",
+  "clue-11": "神父不能把从忏悔中听到的事情告诉其他人，所以他不准备用自己辩护。",
+  "clue-12": "律师被隐藏的最后一句话为：我是三年前来到这个小镇的",
+  "clue-13": "神父的愿望是希望小镇不再发生误杀案",
+  "clue-14": "醉鬼是喝醉了才会阴差阳错去找神父忏悔的",
+};
+
+export const discoveredClues: string[] = [];
