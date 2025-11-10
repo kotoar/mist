@@ -1,4 +1,3 @@
-
 import { uuidv7 } from 'uuidv7';
 import { BundleResponse } from "@shared/interfaces";
 import { readStoryData, readUserData, saveUserData, UserData } from '@server/engine/context';
@@ -18,9 +17,11 @@ export async function startGame({sessionId, storyId}: {sessionId?: string, story
   const story = readStoryData(storyId);
   if (!story) { return null; }
 
-  const clues = Object.entries(story.clues).map(([clueId, clueContent]) => 
-    userData && userData.discoveredClues.includes(clueId) ? clueContent : undefined
-);
+  const clues = story.clues.map(clue => ({
+    id: clue.id,
+    hint: clue.hint,
+    clue: userData && userData.discoveredClues.includes(clue.id) ? clue.clue : undefined,
+  }));
 
   return {
     sessionId: sessionId,

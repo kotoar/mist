@@ -1,5 +1,6 @@
 import fs from 'fs';
 import path from 'path';
+import yaml from 'js-yaml';
 import { z } from "zod";
 import { StoryData, StoryDataSchema } from "@shared/schema";
 import { redis } from '@server/services/redis';
@@ -36,9 +37,9 @@ export async function saveContext(sessionId: string, context: Context): Promise<
 }
 
 export function readStoryData(storyId: string): StoryData | null {
-  const filePath = path.join(process.cwd(), 'public', 'story', `${storyId}.json`);
+  const filePath = path.join(process.cwd(), 'public', 'story', `${storyId}.yaml`);
   const fileContents = fs.readFileSync(filePath, 'utf8');
-  const storyData = JSON.parse(fileContents);
+  const storyData = yaml.load(fileContents);
   if (!storyData) {
     return null;
   }

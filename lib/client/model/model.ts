@@ -17,6 +17,8 @@ async function serverSubmitClue(input: string, sessionId: string): Promise<void>
   console.log("Server response:", response);  
   if (!response) { return; }
   gameViewModel.clues = deepCopy(response.clues);
+  gameViewModel.indicatedId = response.unlockedIds;
+  gameViewModel.showInvalid = response.unlockedIds.length === 0;
 }
 
 export async function startGame(storyId: string): Promise<void> {

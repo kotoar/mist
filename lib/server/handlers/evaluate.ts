@@ -1,5 +1,6 @@
 "use server";
 
+import { Clue } from "@/lib/shared/schema";
 import { google } from "@ai-sdk/google";
 import { generateObject } from "ai";
 import { z } from "zod";
@@ -12,7 +13,7 @@ const ClueEvaluateSchema = z.object({
 
 export async function evaluateClue(
   input: string,
-  records: Record<string, string>
+  records: Clue[]
 ): Promise<string[]> {
   const prompt = `
 You are an expert puzzle master. Given the following input and records, determine which clues should be accepted.
@@ -21,7 +22,7 @@ If the input includes all key information from a clue, that clue should be accep
 Input: "${input}"
 
 Records:
-${Object.entries(records).map(([id, clue]) => `- ID: ${id}, Clue: ${clue}`).join("\n")}
+${records.map(clue => `- ID: ${clue.id}, Clue: ${clue.trigger ?? clue.clue}`).join("\n")}
 
 Return a JSON object with a single field "clueIds" which is a list of IDs of the clues that should be accepted based on the input.
     `.trim();

@@ -1,14 +1,20 @@
 import { proxy } from "valtio";
 import { submitClue } from "../model/model";
+import { endGame } from "@/lib/server/endpoints";
+import { ClueRepresent } from "@/lib/shared/interfaces";
 
 interface GameViewModel {
   puzzle?: string;
-  clues: (string | undefined)[];
+  clues: ClueRepresent[];
   answer?: string;
   input: string;
   clientGame: boolean;
+  indicatedId: string[];
+  showInvalid: boolean;
 
+  reset(): void;
   submit(): void;
+  endGame(): void;
 }
 
 export const gameViewModel = proxy<GameViewModel>({
@@ -17,10 +23,26 @@ export const gameViewModel = proxy<GameViewModel>({
   answer: undefined,
   input: "",
   clientGame: false,
+  indicatedId: [],
+  showInvalid: false,
 
+  reset() {
+    this.input = "";
+    this.indicatedId = [];
+    this.showInvalid = false;
+  },
   submit() {
-    // Submission logic to be implemented
-    submitClue(gameViewModel.input);
+    const input = gameViewModel.input.slice();
     gameViewModel.input = "";
-  }
+    this.indicatedId = [];
+    this.showInvalid = false;
+    submitClue(input);
+  },
+  endGame() {
+    const sessionId = localStorage.getItem("sessionId");
+    if (sessionId) { 
+      endGame(sessionId); 
+      localStorage.removeItem("sessionId");
+    }
+  },
 });
