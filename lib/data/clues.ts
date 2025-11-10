@@ -1,26 +1,5 @@
-"use client";
-
-import { evaluateClue } from "@server/handlers";
-import { mainViewModel } from "./viewmodel";
-
-export async function submitClue(input: string): Promise<void> {
-  const acceptedClueIds = await evaluateClue(input, clues);
-  if (acceptedClueIds.length > 0) {
-    console.log("Accepted clues:", acceptedClueIds);
-  } else {
-    console.log("No clues accepted.", input);
-  }
-  for (const clueId of acceptedClueIds) {
-    if (!discoveredClues.includes(clueId)) {
-      discoveredClues.push(clueId);
-    }
-  }
-  mainViewModel.clues = Object.keys(clues).map(id => {
-    return discoveredClues.includes(id) ? clues[id] : undefined;
-  });
-}
-
-const clues: Record<string, string> = {
+// Static clue data
+export const clues: Record<string, string> = {
   "clue-00": "神父聆听了醉汉的忏悔",
   "clue-01": "醉汉描述的作案手法与小镇上近些年来的凶案完全一致",
   "clue-02": "神父误认为醉汉是小镇上连环杀人案的凶手而杀死了他",
@@ -37,5 +16,3 @@ const clues: Record<string, string> = {
   "clue-13": "神父的愿望是希望小镇不再发生误杀案",
   "clue-14": "醉鬼是喝醉了才会阴差阳错去找神父忏悔的",
 };
-
-export const discoveredClues: string[] = [];

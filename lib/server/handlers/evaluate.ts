@@ -26,8 +26,6 @@ ${Object.entries(records).map(([id, clue]) => `- ID: ${id}, Clue: ${clue}`).join
 Return a JSON object with a single field "clueIds" which is a list of IDs of the clues that should be accepted based on the input.
     `.trim();
 
-  console.log(`[prompt]`, prompt);
-
   const { object } = await generateObject({
     model: google("gemini-2.5-flash"),
     prompt: prompt,

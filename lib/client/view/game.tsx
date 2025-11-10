@@ -3,10 +3,10 @@
 import { Container, For, VStack, Text, Spacer, HStack, Button, SimpleGrid, GridItem, Heading } from "@chakra-ui/react"
 import { useSnapshot } from "valtio";
 import { IMESafeInput } from "@/lib/components/IMESafeInput";
-import { mainViewModel } from "@client/viewmodel";
+import { gameViewModel } from "@/lib/client/viewmodel/game";
 
-export function MainContainer() {
-	const viewModel = useSnapshot(mainViewModel);
+export function GameView() {
+	const viewModel = useSnapshot(gameViewModel);
 
 	return (
 		<Container maxW="container.lg" height="100vh">
@@ -34,17 +34,17 @@ export function MainContainer() {
 					<IMESafeInput
 						type="textarea"
 						value={viewModel.input}
-						onChange={(newValue) => (mainViewModel.input = newValue)}
+						onChange={(newValue) => (gameViewModel.input = newValue)}
 						textareaProps={{
 							onKeyDown: (e) => {
 								if (e.key === 'Enter' && !e.shiftKey && viewModel.input.trim() !== '') {
 									e.preventDefault();
-									mainViewModel.submit();
+									gameViewModel.submit();
 								}
 							}
 						}}
 					/>
-					<Button onClick={() => mainViewModel.submit()}>Submit</Button>
+					<Button onClick={() => gameViewModel.submit()}>Submit</Button>
 				</HStack>
 			</VStack>
 		</Container>
