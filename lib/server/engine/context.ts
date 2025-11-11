@@ -68,5 +68,5 @@ export async function saveUserData(sessionId: string, storyId: string, userData?
   } else {
     data = JSON.stringify({ sessionId, storyId, discoveredClues: [] });
   }
-  await redis.set(`mist:${sessionId}`, data);
+  await redis.set(`mist:${sessionId}`, data, 'EX', 60 * 60 * 24); // 1 days expiration
 }

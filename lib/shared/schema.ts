@@ -5,6 +5,7 @@ export const ClueSchema = z.object({
   clue: z.string(),
   hint: z.string().optional(),
   trigger: z.string().optional(),
+  keys: z.array(z.string()).optional(),
 });
 
 export const StoryDataSchema = z.object({

@@ -37,6 +37,9 @@ clues:
   - id: clue-04
     clue: 律师于年前是一名警察
     hint: 律师的身份
+    keys:
+      - 律师
+      - 警察
   - id: clue-05
     clue: 律师调查家乡的连环杀人案，了解了凶手（醉汉）的杀人手法
   - id: clue-06
