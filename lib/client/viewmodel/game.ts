@@ -2,6 +2,7 @@ import { proxy } from "valtio";
 import { submitClue } from "../model/model";
 import { endGame } from "@/lib/server/endpoints";
 import { ClueRepresent } from "@/lib/shared/interfaces";
+import { ContextDelegate } from "../model/context";
 
 interface GameViewModel {
   puzzle?: string;
@@ -39,10 +40,11 @@ export const gameViewModel = proxy<GameViewModel>({
     submitClue(input);
   },
   endGame() {
-    const sessionId = localStorage.getItem("sessionId");
+    const sessionId = localStorage.getItem(`sessionId:${ContextDelegate.instance.storyId}`);
     if (sessionId) { 
       endGame(sessionId); 
-      localStorage.removeItem("sessionId");
+      localStorage.removeItem(`sessionId:${ContextDelegate.instance.storyId}`);
+      ContextDelegate.instance.storyId = undefined;
     }
   },
 });

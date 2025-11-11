@@ -9,10 +9,10 @@ import { redis } from "./services/redis";
 export async function list(): Promise<StoryItem[]> {
   return [
     { id: "demo-01", title: "sz推理之夜-神父的愿望", author: "sz推理之夜", tags: ["本格", "转载"] },
-    { id: "demo-02-modern", title: "心理医生的沉默", author: "DeepClue", tags: ["本格", "AI生成"] },
-    { id: "demo-03-england", title: "庄园里的最后一盏蜡", author: "DeepClue", tags: ["本格", "AI生成"] },
-    { id: "demo-04-coc", title: "旧书店的第三声钟", author: "DeepClue", tags: ["变格", "AI生成", "克苏鲁"] },
-    { id: "demo-05-magic", title: "学院钟楼下的影子", author: "DeepClue", tags: ["变格", "AI生成", "魔法"] },
+    { id: "demo-02", title: "心理医生的沉默", author: "DeepClue", tags: ["本格", "AI生成"] },
+    { id: "demo-03", title: "庄园里的最后一盏蜡", author: "DeepClue", tags: ["本格", "AI生成"] },
+    { id: "demo-04", title: "旧书店的第三声钟", author: "DeepClue", tags: ["变格", "AI生成", "克苏鲁"] },
+    { id: "demo-05", title: "学院钟楼下的影子", author: "DeepClue", tags: ["变格", "AI生成", "魔法"] },
   ];
 }
 
