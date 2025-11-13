@@ -3,8 +3,8 @@ import { ClientOnly } from "@chakra-ui/react";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "迷你推理 Demo",
-  description: "迷你推理: 一个迷你的 AI 推理游戏。",
+  title: "迷雾档案",
+  description: "迷雾档案: 侦探们的摸鱼神器",
   icons: {
     icon: "/icon.png",
   }

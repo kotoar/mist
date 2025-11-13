@@ -3,6 +3,22 @@ import { gameViewModel } from "../viewmodel/game";
 import { clientSubmitClue } from "./clientEngine";
 import { ContextDelegate } from "./context";
 
+export async function startGame(storyId: string): Promise<void> {
+  const sessionId = localStorage.getItem(`sessionId:${storyId}`) || undefined;
+  const response = await start({sessionId, storyId});
+  if (!response) { return; }
+  localStorage.setItem(`sessionId:${storyId}`, response.sessionId);
+  ContextDelegate.instance.storyId = storyId;
+  gameViewModel.puzzle = response.puzzle;
+  gameViewModel.sections = response.sections.map(section => ({
+    title: section.title,
+    completed: section.clues.every(clueId => response.clues.find(c => c.id === clueId)?.clue !== undefined),
+    items: section.clues
+      .map(clueId => response.clues.find(c => c.id === clueId))
+      .filter((c): c is NonNullable<typeof c> => c !== undefined),
+  }));
+}
+
 export async function submitClue(input: string): Promise<void> {
   if (gameViewModel.clientGame) {
     await clientSubmitClue(input);
@@ -17,21 +33,8 @@ async function serverSubmitClue(input: string, sessionId: string): Promise<void>
   const response = await evaluate(sessionId, input);
   console.log("Server response:", response);  
   if (!response) { return; }
-  gameViewModel.clues = deepCopy(response.clues);
+  gameViewModel.loadClues(response.clues);
   gameViewModel.indicatedId = response.unlockedIds;
   gameViewModel.showInvalid = response.unlockedIds.length === 0;
-}
-
-export async function startGame(storyId: string): Promise<void> {
-  const sessionId = localStorage.getItem(`sessionId:${storyId}`) || undefined;
-  const response = await start({sessionId, storyId});
-  if (!response) { return; }
-  localStorage.setItem(`sessionId:${storyId}`, response.sessionId);
-  ContextDelegate.instance.storyId = storyId;
-  gameViewModel.puzzle = response.puzzle;
-  gameViewModel.clues = deepCopy(response.clues);
-}
-
-function deepCopy<T>(obj: T): T {
-  return JSON.parse(JSON.stringify(obj));
+  gameViewModel.indicated = response.unlockedIds.length > 0 && gameViewModel.view === "puzzle";
 }

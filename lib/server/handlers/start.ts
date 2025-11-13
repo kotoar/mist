@@ -7,7 +7,7 @@ export async function startGame({sessionId, storyId}: {sessionId?: string, story
   if (sessionId) {
     console.log("[session] load game session:", sessionId);
     userData = await readUserData(sessionId);
-  } 
+  }
   if (!sessionId || !userData || !userData.sessionId) {
     sessionId = uuidv7();
     console.log("[session] create new game session:", sessionId);
@@ -26,6 +26,7 @@ export async function startGame({sessionId, storyId}: {sessionId?: string, story
   return {
     sessionId: sessionId,
     puzzle: story.puzzle,
+    sections: story.sections,
     clues: clues
   }
 }

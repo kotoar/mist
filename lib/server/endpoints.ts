@@ -1,7 +1,7 @@
 "use server";
 
 import { BundleResponse, ClueResponse, StoryItem } from "@shared/interfaces";
-import { startGame } from "@server/handlers/session";
+import { startGame } from "@/lib/server/handlers/start";
 import { readContext, saveContext } from "./engine/context";
 import { evaluateClue } from "./handlers/evaluate";
 import { redis } from "./services/redis";
@@ -29,9 +29,11 @@ export async function evaluate(sessionId: string, input: string): Promise<ClueRe
   const cluesRecords = context.storyData.clues.filter(clue => 
     !context.userData.discoveredClues.includes(clue.id)
   );
-  const response = await evaluateClue(input, cluesRecords);
+  const response = await evaluateClue(input, cluesRecords, context.storyData.answer);
   context.userData.discoveredClues.push(...response);
   await saveContext(sessionId, context);
+
+  const completed = context.storyData.clues.length === context.userData.discoveredClues.length;
 
   return {
     clues: context.storyData.clues.map(clue => ({
@@ -40,7 +42,7 @@ export async function evaluate(sessionId: string, input: string): Promise<ClueRe
       clue: context.userData.discoveredClues.includes(clue.id) ? clue.clue : undefined,
     })),
     unlockedIds: response,
-    answer: context.storyData.clues.length === context.userData.discoveredClues.length ? context.storyData.answer : undefined,
+    answer: completed ? context.storyData.answer : undefined,
   };
 }
 

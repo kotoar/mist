@@ -13,28 +13,29 @@ const ClueEvaluateSchema = z.object({
 
 export async function evaluateClue(
   input: string,
-  records: Clue[]
+  records: Clue[],
+  answer?: string
 ): Promise<string[]> {
-  const prompt = `
-你是一位极其严格的谜题评估专家。对于玩家的输入内容，你要判断是否有线索被揭开。
+  const prompt = [
+    "你是一位极其严格的谜题评估专家。对于玩家的输入内容，你要判断是否有线索被揭开。",
 
-### 玩家输入内容：
-"${input}"
+    `### 玩家输入内容: 
+    ${input}`,
 
-### 线索列表：
-${records.map(clue => `- [ID] ${clue.id};[线索]${clue.trigger ?? clue.clue}${clue.keys ? `; [关键点] ${clue.keys.join(", ")}` : ""}`).join("\n")}
+    `### 线索列表：
+    ${records.map(clue => `- [ID] ${clue.id};[线索]${clue.trigger ?? clue.clue}${clue.keys ? `; [关键点] ${clue.keys.join(", ")}` : ""}`).join("\n")}`,
 
-### 判定标准：
-- 玩家输入内容的语义和线索内容的语义一致
-- 玩家输入内容包含**所有**的关键点
+    answer ? `### 谜题答案：\n${answer}` : "",
 
-### 关键原则：宁可过度严格，绝不误判
+    `### 判定标准：
+    - 玩家输入内容的语义和线索内容的语义一致
+    - 玩家输入内容包含**所有**的关键点`,
 
-## 返回格式:返回被判定为揭开的线索ID列表,格式如下:
-{"clueIds": [线索ID列表]}
-    `.trim();
-
-  console.log("Clue evaluation prompt:", prompt);
+    `### 输出格式：
+    {
+      "clueIds": [/* 被揭开的线索ID列表，例如：clue-01, clue-02 */]
+    }`
+  ].filter(Boolean).join("\n\n");
 
   const { object } = await generateObject({
     model: google("gemini-2.5-flash"),
@@ -51,6 +52,8 @@ ${records.map(clue => `- [ID] ${clue.id};[线索]${clue.trigger ?? clue.clue}${c
     },
     experimental_repairText: async (options) => repairText(options.text),
   });
+
+  console.log("[evaluate] unlocked: ", object.clueIds);
 
   return object.clueIds;
 }

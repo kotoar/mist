@@ -1,10 +1,11 @@
 "use client";
 
-import { listViewModel } from "@client/viewmodel/list";
-import { GameView } from "@client/view/game";
 import { useEffect } from "react";
 import { useParams } from "next/navigation";
-import { ClientOnly } from "@chakra-ui/react";
+import { ClientOnly, useBreakpointValue } from "@chakra-ui/react";
+import { listViewModel } from "@client/viewmodel/list";
+import { GameView } from "@/lib/client/view/desktop/game";
+import { MobileGameView } from "@/lib/client/view/mobile/game";
 
 export default function GamePage() {
   // get parameters from URL if needed
@@ -17,9 +18,11 @@ export default function GamePage() {
 }
 
 function GamePageContent(props: { storyId: string }) {
+  const isMobile = useBreakpointValue({ base: true, md: false });
+
   useEffect(() => {
     listViewModel.goto(props.storyId);
   }, [props.storyId]);
 
-  return <GameView />;
+  return isMobile ? <MobileGameView /> : <GameView />;
 }

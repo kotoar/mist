@@ -12,9 +12,15 @@ export interface ClueRepresent {
   clue?: string;
 }
 
+export interface SectionBundle {
+  title?: string;
+  clues: string[];
+}
+
 export interface BundleResponse {
   sessionId: string;
   puzzle: string;
+  sections: SectionBundle[];
   clues: ClueRepresent[];
 }
 

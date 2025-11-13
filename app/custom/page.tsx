@@ -1,6 +1,6 @@
 "use client";
 
-import { GameView } from "@/lib/client/view/game";
+import { GameView } from "@/lib/client/view/desktop/game";
 
 export default function CustomPage() {
   return <GameView />;

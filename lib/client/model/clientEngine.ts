@@ -11,10 +11,17 @@ export function clientLoadStoryData(story: string) {
   discoveredClues = [];
   gameViewModel.puzzle = data.puzzle;
   gameViewModel.answer = data.answer;
-  gameViewModel.clues = clues.map(clue => ({
-    id: clue.id,
-    hint: clue.hint,
-    clue: discoveredClues.includes(clue.id) ? clue.clue : undefined,
+  gameViewModel.sections = data.sections.map(section => ({
+    title: section.title,
+    completed: section.clues.every(clueId => discoveredClues.includes(clueId)),
+    items: section.clues.map(clueId => {
+      const clue = clues.find(c => c.id === clueId);
+      return {
+        id: clueId,
+        clue: clue && discoveredClues.includes(clueId) ? clue.clue : undefined,
+        hint: clue ? clue.hint : undefined,
+      };
+    }),
   }));
 }
 
@@ -25,13 +32,15 @@ export async function clientSubmitClue(input: string): Promise<void> {
       discoveredClues.push(clueId);
     }
   }
-  gameViewModel.clues = clues.map(clue => ({
+  const updatedClues = clues.map(clue => ({
     id: clue.id,
     hint: clue.hint,
     clue: discoveredClues.includes(clue.id) ? clue.clue : undefined,
   }));
+  gameViewModel.loadClues(updatedClues);
   gameViewModel.indicatedId = acceptedClueIds;
   gameViewModel.showInvalid = acceptedClueIds.length === 0;
+  gameViewModel.indicated = acceptedClueIds.length > 0 && gameViewModel.view === "puzzle";
 }
 
 let clues: Clue[] = [];
