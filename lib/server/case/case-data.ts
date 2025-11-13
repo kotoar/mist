@@ -2,22 +2,22 @@ import fs from 'fs';
 import path from 'path';
 import yaml from 'js-yaml';
 import { z } from "zod";
-import { StoryData, StoryDataSchema } from "@shared/schema";
 import { redis } from '@server/services/redis';
+import { CaseData, CaseDataSchema } from '@shared/case-schema';
 
-export const UserDataSchema = z.object({
-  sessionId: z.string(),
-  storyId: z.string(),
-  discoveredClues: z.array(z.string()).default([]),
-});
-export type UserData = z.infer<typeof UserDataSchema>;
-
-export interface Context {
-  storyData: StoryData;
-  userData: UserData;
+export interface CaseContext {
+  storyData: CaseData;
+  userData: CaseUserData;
 }
 
-export async function readContext(sessionId: string): Promise<Context | null> {
+export const CaseUserDataSchema = z.object({
+  sessionId: z.string(),
+  storyId: z.string(),
+  solvedIds: z.array(z.string()).default([]),
+});
+export type CaseUserData = z.infer<typeof CaseUserDataSchema>;
+
+export async function readContext(sessionId: string): Promise<CaseContext | null> {
   const userData = await readUserData(sessionId);
   if (!userData) {
     return null;
@@ -32,18 +32,18 @@ export async function readContext(sessionId: string): Promise<Context | null> {
   };
 }
 
-export async function saveContext(sessionId: string, context: Context): Promise<void> {
+export async function saveContext(sessionId: string, context: CaseContext): Promise<void> {
   await saveUserData(sessionId, context.userData.storyId, context.userData);
 }
 
-export function readStoryData(storyId: string): StoryData | null {
+export function readStoryData(storyId: string): CaseData | null {
   const filePath = path.join(process.cwd(), 'public', 'story', `${storyId}.yaml`);
   const fileContents = fs.readFileSync(filePath, 'utf8');
   const storyData = yaml.load(fileContents);
   if (!storyData) {
     return null;
   }
-  const story = StoryDataSchema.safeParse(storyData);
+  const story = CaseDataSchema.safeParse(storyData);
   if (!story.success) {
     console.error("Failed to parse story data:", story.error);
     return null;
@@ -52,21 +52,21 @@ export function readStoryData(storyId: string): StoryData | null {
 }
 
 // redis, key: mist:{sessionId}
-export async function readUserData(sessionId: string): Promise<UserData | null> {
-  const data = await redis.get(`mist:${sessionId}`);
+export async function readUserData(sessionId: string): Promise<CaseUserData | null> {
+  const data = await redis.get(`case:${sessionId}`);
   if (data) {
     const parsed = JSON.parse(data);
-    return UserDataSchema.parse(parsed);
+    return CaseUserDataSchema.parse(parsed);
   }
   return null;
 }
 
-export async function saveUserData(sessionId: string, storyId: string, userData?: UserData): Promise<void> {
+export async function saveUserData(sessionId: string, storyId: string, userData?: CaseUserData): Promise<void> {
   let data = "{}";
   if (userData) {
     data = JSON.stringify(userData);
   } else {
     data = JSON.stringify({ sessionId, storyId, discoveredClues: [] });
   }
-  await redis.set(`mist:${sessionId}`, data, 'EX', 60 * 60 * 24); // 1 days expiration
+  await redis.set(`case:${sessionId}`, data, 'EX', 60 * 60 * 24); // 1 days expiration
 }

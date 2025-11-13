@@ -4,12 +4,11 @@ import { Card, Container, Image, For, Heading, HStack, Show, Spacer, VStack, Tex
 import { useSnapshot } from "valtio";
 import Link from "next/link";
 import { listViewModel } from "@client/viewmodel/list";
-import { StoryItem } from "@shared/interfaces";
+import { CasePreview } from "@/lib/shared/case-schema";
 
-export function ListView() {
+export function HomeView() {
   const viewModel = useSnapshot(listViewModel);
   
-
   return (
     <Container maxW="3xl" height="100vh">
       <VStack height="full" align="stretch" paddingTop="20px" gap="20px">
@@ -24,7 +23,7 @@ export function ListView() {
           <For each={viewModel.items}>
             {(item) => (
               <Link key={item.id} href={`/game/${item.id}`}>
-                <StoryView item={item} />
+                <CaseView item={item} />
               </Link>
             )}
           </For>
@@ -40,13 +39,6 @@ export function ListView() {
             </ChakraLink>
           </Text>
           <Text fontSize="sm">v0.0.1-alpha</Text>
-          <Show when={process.env.NEXT_PUBLIC_BUILD !== "prod"}>
-            <ChakraLink asChild>
-              <Link href="/editor">
-                <Text fontSize="sm" color="red.500">Editor</Text>
-              </Link>
-            </ChakraLink>
-          </Show>
           <Spacer />
         </HStack>
       </VStack>
@@ -54,7 +46,7 @@ export function ListView() {
   );
 }
 
-function StoryView(props: {item: StoryItem}) {
+function CaseView(props: {item: CasePreview}) {
   const { item } = props;
   return (
     <Card.Root size="md" height="full">
@@ -62,9 +54,6 @@ function StoryView(props: {item: StoryItem}) {
         <VStack align="stretch" gap="4px" height="full">
           <Heading>{item.title}</Heading>
           <Spacer minHeight="4px" />
-          <Show when={item.description}>
-            <Text>{item.description}</Text>
-          </Show>
           <Wrap>
             <For each={item.tags}>
               {(tag) => (

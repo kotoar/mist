@@ -1,76 +1,62 @@
 import { proxy } from "valtio";
-import { submitClue } from "@client/model/model";
-import { endGame } from "@/lib/server/endpoints";
-import { ClueRepresent } from "@/lib/shared/interfaces";
-import { ContextDelegate } from "../model/context";
-import { deepClone } from "valtio/utils";
+import { CaseStartResponse } from "@shared/case-interface";
+import { ContextDelegate } from "@client/model/context";
 
-export interface SectionContent {
-  title?: string;
-  completed: boolean;
-  items: readonly ClueRepresent[];
+export interface QuestionViewModel {
+  id: string;
+  input: string;
+  question: string;
+  answer?: string;
+  wrongFlag: boolean;
+  percentage: number;
+  interactable: boolean;
+  updateInput(input: string): void;
+  submit(): void;
 }
 
 interface GameViewModel {
   view: "puzzle" | "clues";
-  puzzle?: string;
-  sections: SectionContent[];
-  answer?: string;
-  input: string;
-  clientGame: boolean;
-  indicatedId: string[];
-  indicated: boolean;
-  showInvalid: boolean;
+  title: string;
+  puzzle: string;
+  questions: QuestionViewModel[];
+  story?: string;
 
-  reset(): void;
-  loadClues(clues: ClueRepresent[]): void;
-  submit(): void;
+  load(bundle: CaseStartResponse): void;
   endGame(): void;
 }
 
 export const gameViewModel = proxy<GameViewModel>({
   view: "puzzle",
+  title: "",
   puzzle: "",
-  sections: [],
-  answer: undefined,
-  input: "",
-  clientGame: false,
-  indicatedId: [],
-  indicated: false,
-  showInvalid: false,
-
-  reset() {
-    gameViewModel.view = "puzzle";
-    gameViewModel.input = "";
-    gameViewModel.indicatedId = [];
-    gameViewModel.showInvalid = false;
-  },
-  loadClues(clues: ClueRepresent[]) {
-    const sections = deepClone(gameViewModel.sections);
-    for (const section of sections) {
-      for (const clue of section.items) {
-        const updatedClue = clues.find(c => c.id === clue.id);
-        if (updatedClue) {
-          clue.clue = updatedClue.clue;
-        }
+  questions: [],
+  story: undefined,
+  load(bundle: CaseStartResponse) {
+    gameViewModel.title = bundle.title;
+    gameViewModel.puzzle = bundle.puzzle;
+    gameViewModel.questions = bundle.items.map(item => proxy<QuestionViewModel>({
+      id: item.id,
+      input: "",
+      question: item.question,
+      answer: item.answer,
+      wrongFlag: false,
+      percentage: 0,
+      interactable: true,
+      updateInput(input: string) {
+        this.input = input;
+      },
+      submit() {
+        if (!this.interactable) { return; }
+        this.interactable = false;
+        ContextDelegate.instance.submit(
+          ContextDelegate.instance.sessionId!,
+          this.id,
+          this.input,
+        ).then(() => this.interactable = true);
       }
-      section.completed = section.items.every(clue => clue.clue !== undefined);
-    }
-    gameViewModel.sections = sections;
-  },
-  submit() {
-    const input = gameViewModel.input.slice();
-    gameViewModel.input = "";
-    this.indicatedId = [];
-    this.showInvalid = false;
-    submitClue(input);
+    }));
   },
   endGame() {
-    const sessionId = localStorage.getItem(`sessionId:${ContextDelegate.instance.storyId}`);
-    if (sessionId) { 
-      endGame(sessionId); 
-      localStorage.removeItem(`sessionId:${ContextDelegate.instance.storyId}`);
-      ContextDelegate.instance.storyId = undefined;
-    }
+    ContextDelegate.instance.endGame();
   },
 });
