@@ -42,7 +42,7 @@ export async function judge(props:{
   ].filter(Boolean).join("\n\n");
 
   const response = await generateObject({
-    model: google("gemini-2.5-flash"),
+    model: google("gemini-2.5-flash-lite"),
     prompt: prompt,
     schema: CaseJudgeSchema,
     maxRetries: 1,
@@ -50,7 +50,7 @@ export async function judge(props:{
     providerOptions: {
       google: {
         thinkingConfig: {
-          thinkingBudget: 50
+          thinkingBudget: 512
         },
       },
     },
