@@ -5,7 +5,7 @@ export function InfoView({size = "md"}: {size?: "xs" | "sm" | "md"}) {
   return (
     <Dialog.Root>
       <Dialog.Trigger asChild>
-        <IconButton aria-label="Game Info" size={size} variant="outline">
+        <IconButton aria-label="Game Info" size={size} colorPalette="blue" variant="outline">
           <Icon as={MdOutlineInfo} />
         </IconButton>
       </Dialog.Trigger>

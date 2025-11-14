@@ -55,6 +55,7 @@ export const gameViewModel = proxy<GameViewModel>({
         ).then(() => this.interactable = true);
       }
     }));
+    gameViewModel.story = bundle.story;
   },
   endGame() {
     ContextDelegate.instance.endGame();
