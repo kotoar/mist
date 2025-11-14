@@ -1,5 +1,6 @@
 "use server";
 
+import { track } from '@vercel/analytics/server';
 import { CaseStartResponse, CaseSubmitRequest, CaseSubmitResponse } from "@shared/case-interface";
 import { CasePreview } from "@shared/case-schema";
 import { redis } from "@server/services/redis";
@@ -37,6 +38,9 @@ export async function submit(request: CaseSubmitRequest): Promise<CaseSubmitResp
     context.userData.solvedIds.push(request.questionId);
     await saveContext(request.sessionId, context);
     completed = context.userData.solvedIds.length === context.storyData.items.length;
+    if (completed) {
+      track("case_solved", { story: context.userData.storyId });
+    }
   }
 
   return {
