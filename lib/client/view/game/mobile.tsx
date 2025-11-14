@@ -4,6 +4,7 @@ import { For, HStack, Show, VStack, Text, Heading, Badge, Spacer } from "@chakra
 import { gameViewModel } from "@client/viewmodel/game";
 import { QuestionView } from "./question";
 import { StoryBannerView } from "./story-banner";
+import { InfoView } from "../info";
 
 export function MobileGameView() {
   const viewModel = useSnapshot(gameViewModel);
@@ -18,7 +19,7 @@ export function MobileGameView() {
           variant={viewModel.view === "puzzle" ? "solid" : "subtle"}
           cursor="pointer"
           onClick={() => { gameViewModel.view = "puzzle"; }}
-        >谜题</Badge>
+        >案件</Badge>
         <Badge
           size="lg"
           variant={viewModel.view === "clues" ? "solid" : "subtle"}
@@ -26,6 +27,7 @@ export function MobileGameView() {
           onClick={() => { gameViewModel.view = "clues"; }}
         >推理</Badge>
         <Spacer />
+        <InfoView size="xs" />
         <Badge
           size="lg"
           colorPalette="red"

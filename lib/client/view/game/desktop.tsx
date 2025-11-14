@@ -1,10 +1,11 @@
 "use client";
 
 import { useSnapshot } from "valtio";
-import { Container, For, VStack, Text, SimpleGrid, GridItem, Heading, ScrollArea, Box } from "@chakra-ui/react"
+import { Container, For, VStack, Text, SimpleGrid, GridItem, Heading, ScrollArea, Box, HStack, Spacer } from "@chakra-ui/react"
 import { gameViewModel } from "@client/viewmodel/game";
 import { QuestionView } from "./question";
 import { StoryBannerView } from "./story-banner";
+import { InfoView } from "../info";
 
 export function DesktopGameView() {
 	const viewModel = useSnapshot(gameViewModel);
@@ -17,10 +18,12 @@ export function DesktopGameView() {
 						<ScrollArea.Root height="95vh" size="sm" variant="always">
 							<ScrollArea.Viewport>
 								<ScrollArea.Content paddingEnd="5">
-									<VStack align="stretch" gap="10px" padding="15px">
-										<Box position="sticky" top={0} zIndex={1} bg="bg">
-											<Heading fontSize="2xl" fontWeight="bold">谜题</Heading>
-										</Box>
+									<VStack align="stretch" gap="10px">
+										<HStack position="sticky" top={0} zIndex={1} bg="bg">
+											<Heading fontSize="2xl" fontWeight="bold">案件</Heading>
+											<Spacer />
+											<InfoView size="sm" />
+										</HStack>
 										<Text whiteSpace="pre-wrap">{viewModel.puzzle}</Text>
 									</VStack>
 								</ScrollArea.Content>
@@ -32,7 +35,7 @@ export function DesktopGameView() {
 						<ScrollArea.Root height="95vh" size="sm" variant="always">
 							<ScrollArea.Viewport>
 								<ScrollArea.Content paddingEnd="5">
-									<VStack gap="10px" align="stretch">
+									<VStack align="stretch" gap="10px" >
 										<Box position="sticky" top={0} zIndex={1} bg="bg">
 											<Heading fontSize="2xl" fontWeight="bold">推理</Heading>
 										</Box>
