@@ -39,8 +39,6 @@ export async function submit(request: CaseSubmitRequest): Promise<CaseSubmitResp
     completed = context.userData.solvedIds.length === context.storyData.items.length;
   }
 
-  console.log("solved ids:", context.userData.solvedIds);
-
   return {
     questionId: request.questionId,
     correct: response.correct,

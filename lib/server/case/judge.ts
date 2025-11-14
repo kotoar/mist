@@ -57,7 +57,5 @@ export async function judge(props:{
     experimental_repairText: async (options) => repairText(options.text),
   });
 
-  console.log("[judge] response: ", response.object);
-
   return response.object;
 }
