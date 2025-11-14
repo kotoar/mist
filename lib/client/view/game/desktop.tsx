@@ -3,6 +3,7 @@
 import { useSnapshot } from "valtio";
 import { Container, For, VStack, Text, SimpleGrid, GridItem, Heading, ScrollArea, Box, HStack, Spacer, Button } from "@chakra-ui/react"
 import { useRouter } from "next/navigation";
+import Markdown from 'react-markdown';
 import { gameViewModel } from "@client/viewmodel/game";
 import { QuestionView } from "./question";
 import { StoryBannerView } from "./story-banner";
@@ -36,7 +37,7 @@ function CaseView() {
 							<Heading fontSize="2xl" fontWeight="bold">案件</Heading>
 							<Spacer />
 						</HStack>
-						<Text whiteSpace="pre-wrap">{viewModel.puzzle}</Text>
+						<Markdown>{viewModel.puzzle}</Markdown>
 					</VStack>
 				</ScrollArea.Content>
 			</ScrollArea.Viewport>

@@ -10,7 +10,7 @@ import { judge } from "./judge";
 
 export async function list(): Promise<CasePreview[]> {
   return [
-    { id: "case-02", title: "午夜的钟声", author: "天色盐", tags: ["本格"] },
+    { id: "case-D01", title: "01 收藏家之死", author: "DeepClue", tags: ["本格"] },
   ];
 }
 
