@@ -9,8 +9,7 @@ import { judge } from "./judge";
 
 export async function list(): Promise<CasePreview[]> {
   return [
-    { id: "case-01", title: "湖边的灯光", author: "天色盐", tags: ["本格", "原创"] },
-    { id: "case-02", title: "午夜的钟声", author: "天色盐", tags: ["本格", "AI生成"] },
+    { id: "case-02", title: "午夜的钟声", author: "天色盐", tags: ["本格"] },
   ];
 }
 
@@ -26,6 +25,7 @@ export async function submit(request: CaseSubmitRequest): Promise<CaseSubmitResp
   }
   const response = await judge({
     input: request.input,
+    question: question.question,
     referenceAnswer: question.trigger,
     keys: question.keys || [],
     story: context.storyData.puzzle,

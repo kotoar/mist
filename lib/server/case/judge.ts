@@ -5,13 +5,17 @@ import { repairText } from "@server/services/ai-utils";
 
 export async function judge(props:{
   input: string,
+  question: string,
   referenceAnswer: string,
   keys: string[],
   story: string
 }): Promise<CaseJudge> {
-  const { input, referenceAnswer, keys, story } = props;
+  const { input, question, referenceAnswer, keys, story } = props;
   const prompt = [
-    "你是一位极其严格的谜题评估专家。对于玩家的输入内容，你要判断玩家的答案是否正确。",
+    "你是一位极其严格的谜题评估专家。对于一个问题，玩家的输入自己的回答，你要判断玩家的答案是否正确。",
+
+    `### 问题
+    ${question}`,
 
     `### 玩家输入内容: 
     ${input}`,
