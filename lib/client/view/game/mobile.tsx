@@ -1,6 +1,6 @@
 import { useSnapshot } from "valtio";
 import { useRouter } from "next/navigation";
-import { For, HStack, Show, VStack, Text, Heading, Badge, Spacer } from "@chakra-ui/react";
+import { For, HStack, Show, VStack, Heading, Badge, Spacer } from "@chakra-ui/react";
 import Markdown from 'react-markdown';
 import { gameViewModel } from "@client/viewmodel/game";
 import { QuestionView } from "./question";

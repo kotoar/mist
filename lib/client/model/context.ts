@@ -1,6 +1,6 @@
 "use client";
 
-import { end, start, submit } from "@server/case/case-endpoints";
+import { end, start, submit } from "@/lib/server/case/endpoints";
 import { gameViewModel } from "@client/viewmodel/game";
 
 export class ContextDelegate {

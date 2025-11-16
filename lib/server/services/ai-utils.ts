@@ -11,3 +11,4 @@ export function repairText(text: string): string {
     .replace(/[\n\r]+/g, " ").trim();
   return output;
 }
+

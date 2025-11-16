@@ -7,11 +7,16 @@ import { redis } from "@server/services/redis";
 import { startGame } from "./start";
 import { readContext, saveContext } from "./case-data";
 import { judge } from "./judge";
+import { fetchMistCaseList } from './data-reader';
 
 export async function list(): Promise<CasePreview[]> {
-  return [
-    { id: "case-D01", title: "01 收藏家之死", author: "DeepClue", tags: ["本格"] },
-  ];
+  const items = await fetchMistCaseList();
+  return items.map(item => ({
+    id: item.case_id,
+    title: item.title,
+    author: item.author || undefined,
+    tags: item.tags || [],
+  }));
 }
 
 export async function start({sessionId, storyId}: {sessionId?: string, storyId: string}): Promise<CaseStartResponse | null> {
@@ -28,7 +33,6 @@ export async function submit(request: CaseSubmitRequest): Promise<CaseSubmitResp
     input: request.input,
     question: question.question,
     referenceAnswer: question.trigger,
-    keys: question.keys || [],
     story: context.storyData.puzzle,
   });
   if (!response) { return null; }

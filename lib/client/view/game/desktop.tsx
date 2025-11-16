@@ -1,7 +1,7 @@
 "use client";
 
 import { useSnapshot } from "valtio";
-import { Container, For, VStack, Text, SimpleGrid, GridItem, Heading, ScrollArea, Box, HStack, Spacer, Button } from "@chakra-ui/react"
+import { Container, For, VStack, SimpleGrid, GridItem, Heading, ScrollArea, HStack, Spacer, Button } from "@chakra-ui/react"
 import { useRouter } from "next/navigation";
 import Markdown from 'react-markdown';
 import { gameViewModel } from "@client/viewmodel/game";

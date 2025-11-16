@@ -1,9 +1,7 @@
-import fs from 'fs';
-import path from 'path';
-import yaml from 'js-yaml';
 import { z } from "zod";
 import { redis } from '@server/services/redis';
 import { CaseData, CaseDataSchema } from '@shared/case-schema';
+import { readMistCaseData } from './data-reader';
 
 export interface CaseContext {
   storyData: CaseData;
@@ -22,7 +20,7 @@ export async function readContext(sessionId: string): Promise<CaseContext | null
   if (!userData) {
     return null;
   }
-  const storyData = readStoryData(userData.storyId);
+  const storyData = await readStoryData(userData.storyId);
   if (!storyData) {
     return null;
   }
@@ -36,10 +34,8 @@ export async function saveContext(sessionId: string, context: CaseContext): Prom
   await saveUserData(sessionId, context.userData.storyId, context.userData);
 }
 
-export function readStoryData(storyId: string): CaseData | null {
-  const filePath = path.join(process.cwd(), 'public', 'story', `${storyId}.yaml`);
-  const fileContents = fs.readFileSync(filePath, 'utf8');
-  const storyData = yaml.load(fileContents);
+export async function readStoryData(storyId: string): Promise<CaseData | null> {
+  const storyData = await readMistCaseData(storyId);
   if (!storyData) {
     return null;
   }

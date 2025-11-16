@@ -39,7 +39,6 @@ export function HomeView() {
             </ChakraLink>
           </Text>
           <Text fontSize="sm">v0.0.1-alpha</Text>
-          <Spacer />
         </HStack>
       </VStack>
     </Container>

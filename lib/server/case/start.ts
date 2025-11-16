@@ -17,7 +17,7 @@ export async function startGame({sessionId, storyId}: {sessionId?: string, story
     saveUserData(sessionId, storyId);
   }
   
-  const story = readStoryData(storyId);
+  const story = await readStoryData(storyId);
   if (!story) { return null; }
 
   return {

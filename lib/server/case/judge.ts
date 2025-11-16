@@ -7,10 +7,9 @@ export async function judge(props:{
   input: string,
   question: string,
   referenceAnswer: string,
-  keys: string[],
   story: string
 }): Promise<CaseJudge> {
-  const { input, question, referenceAnswer, keys, story } = props;
+  const { input, question, referenceAnswer, story } = props;
   const prompt = [
     "你是一位极其严格的谜题评估专家。对于一个问题，玩家的输入自己的回答，你要判断玩家的答案是否正确。",
 
@@ -23,16 +22,11 @@ export async function judge(props:{
     `### 参考答案：
     ${referenceAnswer}`,
 
-    keys.length === 0 ? "" :
-    `### 关键点：
-    ${keys.map((key, index) => `${index + 1}. ${key}`).join("\n")}`,
-
     `### 谜题背景：
     ${story}`,
 
     `### 判定标准：
-    - 玩家输入内容的语义和参考答案的语义一致
-    - 玩家输入内容包含的关键点会大大提升答案的正确性评分`,
+    - 玩家输入内容的语义和参考答案的语义一致`,
 
     `### 输出格式：
     {

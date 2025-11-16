@@ -11,7 +11,6 @@ export const CaseItemSchema = z.object({
   id: z.string(),
   question: z.string(),
   trigger: z.string().describe("判定输入是否正确的条件"),
-  keys: z.array(z.string()).optional().describe("判定时的关键词，玩家一定要输入这些关键词才会被认为是正确的"),
   answer: z.string().describe("输入正确后会显示给玩家的内容")
 });
 

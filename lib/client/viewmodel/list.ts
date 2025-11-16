@@ -1,6 +1,6 @@
 import { proxy } from "valtio";
 import { CasePreview } from "@shared/case-schema";
-import { list } from "@server/case/case-endpoints";
+import { list } from "@/lib/server/case/endpoints";
 
 interface ListViewModel {
   items: CasePreview[];
