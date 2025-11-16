@@ -48,22 +48,21 @@ export function HomeView() {
 function CaseView(props: {item: CasePreview}) {
   const { item } = props;
   return (
-    <Card.Root size="md" height="full">
+    <Card.Root size={{ md: "md", base: "sm" }}height="full">
       <Card.Body>
         <VStack align="stretch" gap="4px" height="full">
-          <Heading>{item.title}</Heading>
-          <Spacer minHeight="4px" />
+          <Heading size={{ md: "md", base: "sm" }}>{item.title}</Heading>
           <Wrap>
             <For each={item.tags}>
               {(tag) => (
-                <Badge key={tag} colorPalette={tagColor(tag)}>
+                <Badge key={tag} colorPalette={tagColor(tag)} size={{ md: "sm", base: "xs" }}>
                   {tag}
                 </Badge>
               )}
             </For>
             <Spacer />
             <Show when={item.author}>
-              <Text color="gray.500" fontSize="sm">作者：{item.author}</Text>
+              <Text color="gray.500" fontSize={{ md: "sm", base: "xs" }}>作者：{item.author}</Text>
             </Show>
           </Wrap>
         </VStack>
