@@ -20,7 +20,8 @@ export async function fetchMistCaseList(): Promise<MistCaseItem[]> {
   const { data, error } = await supabase
     .from('mist_case')
     .select('case_id, created_at, title, description, author, tags, metadata, content')
-    .eq("stage", "prod");
+    .eq("stage", "prod")
+    .order("case_id", { ascending: true });
 
   if (error) {
     throw new Error(`Failed to fetch mist cases: ${error.message}`);
