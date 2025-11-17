@@ -1,10 +1,11 @@
 "use client";
 
-import { Card, Container, Image, For, Heading, HStack, Show, Spacer, VStack, Text, Wrap, Badge, SimpleGrid, Box, Link as ChakraLink } from "@chakra-ui/react";
+import { Card, Container, Image, For, Heading, HStack, Show, Spacer, VStack, Text, Wrap, Badge, SimpleGrid, Box, Link as ChakraLink, Highlight } from "@chakra-ui/react";
 import { useSnapshot } from "valtio";
 import Link from "next/link";
 import { listViewModel } from "@client/viewmodel/list";
 import { CasePreview } from "@/lib/shared/case-schema";
+import { CommunityView } from "./community";
 
 export function HomeView() {
   const viewModel = useSnapshot(listViewModel);
@@ -14,10 +15,7 @@ export function HomeView() {
       <VStack height="full" align="stretch" paddingTop="20px" gap="20px">
         <HStack position="sticky" top={0} zIndex={1} bg="bg" marginBottom="20px">
           <Image src="/icon.png" alt="Logo" boxSize="50px" />
-          <Box>
-            <Heading fontSize="2xl">迷雾档案</Heading>
-            <Text>侦探们的摸鱼神器</Text>
-          </Box>
+          <TitleView />
         </HStack>
         <SimpleGrid columns={2} gap={4}>
           <For each={viewModel.items}>
@@ -29,17 +27,20 @@ export function HomeView() {
           </For>
         </SimpleGrid>
         <Spacer />
-        <HStack position="sticky" bottom={0} bg="bg" paddingY="10px" gap="10px">
-          <Text fontSize="sm">
-            © 2025 MistCase by{" "}
-            <ChakraLink colorPalette="cyan" fontSize="sm" asChild>
-              <Link href="https://deepclue.app" target="_blank" rel="noopener noreferrer">
-                DeepClue
-              </Link>
-            </ChakraLink>
-          </Text>
-          <Text fontSize="sm">v0.0.1-alpha</Text>
-        </HStack>
+        <VStack align="start" position="sticky" bottom={0} bg="bg" gap="2px">
+          <CommunityView />
+          <HStack paddingY="10px" gap="10px">
+            <Text fontSize="sm">
+              © 2025 MistCase by{" "}
+              <ChakraLink colorPalette="cyan" fontSize="sm" asChild>
+                <Link href="https://deepclue.app" target="_blank" rel="noopener noreferrer">
+                  DeepClue
+                </Link>
+              </ChakraLink>
+            </Text>
+            <Text fontSize="sm">v0.0.1-alpha</Text>
+          </HStack>
+        </VStack>
       </VStack>
     </Container>
   );
@@ -50,7 +51,7 @@ function CaseView(props: {item: CasePreview}) {
   return (
     <Card.Root size={{ md: "md", base: "sm" }}height="full">
       <Card.Body>
-        <VStack align="stretch" gap="4px" height="full">
+        <VStack align="stretch" justify="space-between" gap="4px" height="full">
           <Heading size={{ md: "md", base: "sm" }}>{item.title}</Heading>
           <Wrap>
             <For each={item.tags}>
@@ -69,6 +70,42 @@ function CaseView(props: {item: CasePreview}) {
       </Card.Body>
     </Card.Root>
   );
+}
+
+function TitleView() {
+  const viewModel = useSnapshot(listViewModel);
+
+  if (viewModel.type === "case") {
+    return (
+      <Box>
+        <Heading size="2xl">
+          <Highlight query="档案" styles={{ px: "0.5", bg: { _light: "teal.200", _dark: "teal.700" } }}>
+            迷雾档案
+          </Highlight>
+        </Heading>
+        <Text>侦探们的摸鱼神器</Text>
+      </Box>
+    );
+  } else {
+    return (
+      <Box>
+        <Heading size="2xl">
+          <Highlight query="迷雾" styles={{ px: "0.5", bg: { _light: "purple.200", _dark: "purple.700" } }}>
+            迷雾档案
+          </Highlight>
+        </Heading>
+        <Highlight 
+          query={["神祇", "消遣"]} 
+          styles={{ 
+            px: "0.5", 
+            bg: "fg",
+          }}
+        >
+          神祇们的消遣神器
+        </Highlight>
+      </Box>
+    );
+  }
 }
 
 type TagColor = 'gray' | 'red' | 'orange' | 'yellow' | 'green' | 'teal' | 'blue' | 'cyan' | 'purple' | 'pink';
