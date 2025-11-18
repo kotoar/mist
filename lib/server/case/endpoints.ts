@@ -9,7 +9,7 @@ import { readContext, saveContext } from "./case-data";
 import { judge } from "./judge";
 import { fetchMistCaseList } from './data-reader';
 
-export async function list(): Promise<CasePreview[]> {
+export async function caseList(): Promise<CasePreview[]> {
   const items = await fetchMistCaseList();
   return items.map(item => ({
     id: item.case_id,

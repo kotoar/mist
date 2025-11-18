@@ -10,7 +10,7 @@ export const MistCaseItemSchema = z.object({
   author: z.string().nullable(),
   tags: z.array(z.string()).nullable(),
   metadata: z.array(z.string()).nullable(),
-  content: z.string().nullable(),
+  content: z.string().nullable()
 });
 
 export type MistCaseItem = z.infer<typeof MistCaseItemSchema>;

@@ -2,7 +2,7 @@ import { useSnapshot } from "valtio";
 import { useRouter } from "next/navigation";
 import { For, HStack, Show, VStack, Heading, Badge, Spacer } from "@chakra-ui/react";
 import Markdown from 'react-markdown';
-import { gameViewModel } from "@client/viewmodel/game";
+import { gameViewModel } from "@/lib/client/viewmodel/case";
 import { QuestionView } from "./question";
 import { StoryBannerView } from "./story-banner";
 import { InfoView } from "../info";
