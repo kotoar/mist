@@ -18,7 +18,7 @@ export function SectionView({section}: {section: SectionRepresent}) {
 		return (
 			<Box bg="bg.emphasized" width="full">
 				<Text whiteSpace="pre-wrap" color="fg.subtle" marginLeft="10%">
-					{clue.hint ? `[${clue.hint}]` : " "}
+					{clue.hint && viewModel.showMistHints ? `[${clue.hint}]` : " "}
 				</Text>
 			</Box>
 		);
