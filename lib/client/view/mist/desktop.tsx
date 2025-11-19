@@ -1,9 +1,10 @@
 "use client";
 
 import { useSnapshot } from "valtio";
-import { Container, For, VStack, Text, Spacer, HStack, Button, SimpleGrid, GridItem, Heading, ScrollArea, Show, Card, Box } from "@chakra-ui/react"
+import { Container, For, VStack, Text, Spacer, HStack, Button, SimpleGrid, GridItem, Heading, ScrollArea, Show, Card, Box, Switch } from "@chakra-ui/react"
 import { useRouter } from "next/navigation";
 import { IMESafeInput } from "@/lib/components/IMESafeInput";
+import { LoadingView } from "@/lib/components/LoadingView";
 import { mistViewModel } from "@client/viewmodel/mist";
 import { MistStoryBannerView } from "./story-banner";
 import { SectionView } from "./section";
@@ -21,9 +22,9 @@ export function DesktopMistView() {
 							<ScrollArea.Viewport>
 								<ScrollArea.Content paddingEnd="5">
 									<VStack align="stretch" gap="10px" padding="15px">
-										<Box position="sticky" top={0} zIndex={1} bg="bg">
-											<Heading fontSize="2xl" fontWeight="bold">谜题</Heading>
-										</Box>
+										<HStack position="sticky" top={0} zIndex={1} bg="bg">
+											<Heading fontSize="2xl" fontWeight="bold">{viewModel.title}</Heading>
+										</HStack>
 										<Text whiteSpace="pre-wrap">{viewModel.puzzle}</Text>
 									</VStack>
 								</ScrollArea.Content>
@@ -38,12 +39,12 @@ export function DesktopMistView() {
 									<VStack gap="10px" align="stretch">
                     <VStack position="sticky" top={0} paddingY="4px" zIndex={1} bg="bg">
                       <HStack width="full">
-                        <Heading fontSize="2xl" fontWeight="bold">推理</Heading>
+                        <Heading fontSize="2xl" fontWeight="bold">迷雾</Heading>
                         <Spacer />
 												<Button 
                           size="sm" colorPalette="pink" variant="surface"
                           onClick={() => mistViewModel.skip()}
-                        >直接看答案</Button>
+                        >我想看答案</Button>
                         <Button 
                           size="sm" colorPalette="red" variant="surface"
                           onClick={() => {
@@ -85,9 +86,24 @@ function PanelView() {
 	const viewModel = useSnapshot(mistViewModel);
 	return (
 		<VStack width="full" align="stretch" gap="10px">
-			<Show when={viewModel.showInvalid}>
-				<Text color="red.500">没有新的线索显现</Text>
-			</Show>
+			<HStack>
+				<Text color="red.500">( {viewModel.count} )</Text>
+				<Show when={viewModel.showInvalid}>
+					<Text color="red.500">没有新的线索显现</Text>
+				</Show>
+				<Spacer />
+				<Switch.Root
+					size="sm"
+					checked={viewModel.showMistHints}
+					onCheckedChange={(e) => mistViewModel.showMistHints = e.checked}
+				>
+					<Switch.HiddenInput />
+					<Switch.Control>
+						<Switch.Thumb />
+					</Switch.Control>
+					<Switch.Label>显示方向</Switch.Label>
+				</Switch.Root>
+			</HStack>
 			<HStack align="start">
 				<IMESafeInput
 					type="textarea"
@@ -102,7 +118,15 @@ function PanelView() {
 						}
 					}}
 				/>
-				<Button onClick={() => mistViewModel.submit()}>提交</Button>
+				<Button
+					disabled={!viewModel.interactable || viewModel.input.trim() === ''}
+					onClick={() => mistViewModel.submit()}
+				>
+					<Show when={!viewModel.interactable}>
+						<LoadingView />
+					</Show>
+					<Text>提交</Text>
+				</Button>
 			</HStack>
 		</VStack>
 	);

@@ -46,7 +46,7 @@ export function HomeView() {
                 </Link>
               </ChakraLink>
             </Text>
-            <Text fontSize="sm">v0.0.1-alpha</Text>
+            <Text fontSize="sm">v0.1.1</Text>
           </HStack>
         </VStack>
       </VStack>

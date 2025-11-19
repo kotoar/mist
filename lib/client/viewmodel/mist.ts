@@ -20,6 +20,7 @@ export function sectionCompleted(section: SectionRepresent): boolean {
 
 interface MistViewModel {
   view: "puzzle" | "clues";
+  title: string;
   puzzle: string;
   sections: SectionRepresent[];
   story?: string;
@@ -27,6 +28,9 @@ interface MistViewModel {
   indicated: boolean;
   indicatedId: string[];
   showInvalid: boolean;
+  interactable: boolean;
+  count: number;
+  showMistHints: boolean;
 
   load(bundle: MistStartResponse): void;
   submit(): void;
@@ -36,6 +40,7 @@ interface MistViewModel {
 
 export const mistViewModel = proxy<MistViewModel>({
   view: "puzzle",
+  title: "",
   puzzle: "",
   sections: [],
   story: undefined,
@@ -43,8 +48,12 @@ export const mistViewModel = proxy<MistViewModel>({
   indicated: false,
   indicatedId: [],
   showInvalid: false,
+  interactable: true,
+  count: 0,
+  showMistHints: false,
 
   load(bundle: MistStartResponse) {
+    mistViewModel.title = bundle.title;
     mistViewModel.puzzle = bundle.puzzle;
     mistViewModel.sections = bundle.sections.map(section => ({
       id: section.id,
@@ -62,13 +71,21 @@ export const mistViewModel = proxy<MistViewModel>({
     mistViewModel.input = "";
     mistViewModel.indicatedId = [];
     mistViewModel.showInvalid = false;
+    mistViewModel.indicated = false;
+    mistViewModel.interactable = true;
+    mistViewModel.count = 0;
   },
 
   submit() {
     const input = mistViewModel.input.trim();
     mistViewModel.input = "";
     mistViewModel.showInvalid = false;
-    MistDelegate.instance.submit(input);
+    mistViewModel.indicatedId = [];
+    mistViewModel.interactable = false;
+    MistDelegate.instance.submit(input).then(() => {
+      mistViewModel.interactable = true;
+      mistViewModel.count += 1;
+    });
   },
 
   skip() {

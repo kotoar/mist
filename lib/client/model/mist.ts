@@ -33,6 +33,11 @@ export class MistDelegate {
       return;
     }
 
+    if (mistViewModel.view === "puzzle") {
+      mistViewModel.indicated = true;
+    }
+    mistViewModel.indicatedId = response.revealed.map(clue => clue.id);
+
     const updateSections = deepClone(mistViewModel.sections)
     response.revealed.forEach(clue => {
       const section = updateSections.find(sec => sec.clues.some(c => c.id === clue.id));

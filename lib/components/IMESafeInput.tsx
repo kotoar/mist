@@ -47,6 +47,7 @@ export const IMESafeInput: React.FC<IMESafeInputProps> = ({
   };
 
   const commonProps = {
+    fontSize: "16px",
     value: localValue,
     onChange: handleChange,
     onCompositionStart: handleCompositionStart,
