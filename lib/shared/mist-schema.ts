@@ -30,4 +30,5 @@ export const MistDataSchema = z.object({
 });
 
 export type MistPreview = z.infer<typeof MistPreviewSchema>;
+export type MistClue = z.infer<typeof MistClueSchema>;
 export type MistData = z.infer<typeof MistDataSchema>;

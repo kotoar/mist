@@ -30,6 +30,7 @@ interface MistViewModel {
 
   load(bundle: MistStartResponse): void;
   submit(): void;
+  skip(): void;
   endGame(): void;
 }
 
@@ -64,13 +65,14 @@ export const mistViewModel = proxy<MistViewModel>({
   },
 
   submit() {
-    if (!MistDelegate.instance.sessionId) { return; }
+    const input = mistViewModel.input.trim();
     mistViewModel.input = "";
     mistViewModel.showInvalid = false;
-    MistDelegate.instance.submit(
-      MistDelegate.instance.sessionId,
-      mistViewModel.input,
-    );
+    MistDelegate.instance.submit(input);
+  },
+
+  skip() {
+    MistDelegate.instance.skip();
   },
 
   endGame() {

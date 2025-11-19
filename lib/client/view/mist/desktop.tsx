@@ -40,6 +40,10 @@ export function DesktopMistView() {
                       <HStack width="full">
                         <Heading fontSize="2xl" fontWeight="bold">推理</Heading>
                         <Spacer />
+												<Button 
+                          size="sm" colorPalette="pink" variant="surface"
+                          onClick={() => mistViewModel.skip()}
+                        >直接看答案</Button>
                         <Button 
                           size="sm" colorPalette="red" variant="surface"
                           onClick={() => {

@@ -79,9 +79,7 @@ function BannerView() {
               迷雾档案
             </Highlight>
           </Heading>
-          <Highlight query={["神祇", "消遣"]} styles={{ px: "0.5", bg: "fg" }}>
-            神祇们的消遣神器
-          </Highlight>
+          <Text>神明的谜题</Text>
         </Box>
       );
     }

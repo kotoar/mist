@@ -1,6 +1,6 @@
 "use client";
 
-import { end, start, submit } from "@server/mist/endpoints";
+import { end, skip, start, submit } from "@server/mist/endpoints";
 import { mistViewModel } from "@client/viewmodel/mist";
 
 export class MistDelegate {
@@ -19,15 +19,14 @@ export class MistDelegate {
     mistViewModel.load(response);
   }
 
-  async submit(sessionId: string, input: string): Promise<void> {
-    const response = await submit({ sessionId, input });
+  async submit(input: string): Promise<void> {
+    if (!this.sessionId) { return; }
+    const response = await submit({ sessionId: this.sessionId, input });
     if (!response) { return; }
 
     if (response.answer) {
       mistViewModel.story = response.answer;
-      console.log("Game Completed!");
     }
-    console.log("Game Not Completed!");
 
     if (response.revealed.length === 0) {
       mistViewModel.showInvalid = true;
@@ -43,8 +42,23 @@ export class MistDelegate {
       clueData.content = clue.content;
     });
     mistViewModel.sections = updateSections;
+  }
 
-    
+  async skip(): Promise<void> {
+    if (!this.sessionId) { return; }
+    const response = await skip(this.sessionId);
+    if (!response) { return; }
+    mistViewModel.story = response.answer;
+
+    const updateSections = deepClone(mistViewModel.sections)
+    response.revealed.forEach(clue => {
+      const section = updateSections.find(sec => sec.clues.some(c => c.id === clue.id));
+      if (!section) { return; }
+      const clueData = section.clues.find(c => c.id === clue.id);
+      if (!clueData) { return; }
+      clueData.content = clue.content;
+    });
+    mistViewModel.sections = updateSections;
   }
 
   endGame() {

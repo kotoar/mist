@@ -16,11 +16,6 @@ export function MobileMistGameView() {
       </Show>
       <Show when={viewModel.view === "clues"}>
         <VStack width="full" gap="25px" align="stretch" padding="10px">
-          <Show when={viewModel.story}>
-            <Box position="sticky" top={0} zIndex={1} bg="bg" paddingY="4px">
-              <MistStoryBannerView />
-            </Box>
-          </Show>
           <For each={viewModel.sections}>
             {(section, index) => (
               <SectionView key={index} section={section} />
@@ -43,6 +38,9 @@ function PanelView() {
 
   return (
     <VStack width="full" gap="8px" align="stretch">
+      <Show when={viewModel.story}>
+        <MistStoryBannerView />
+      </Show>
       <HStack>
         <Badge 
           size="lg"

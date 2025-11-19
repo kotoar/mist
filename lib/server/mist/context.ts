@@ -1,9 +1,7 @@
 import { z } from "zod";
-import fs from "fs";
-import path from "path";
-import yaml from "yaml";
 import { MistData, MistDataSchema } from "@shared/mist-schema";
 import { redis } from "@server/services/redis";
+import { readMistMistData } from "./data-reader";
 
 export interface MistContext {
   storyData: MistData;
@@ -38,7 +36,7 @@ export async function saveContext(sessionId: string, context: MistContext): Prom
 }
 
 export async function readStoryData(storyId: string): Promise<MistData | null> {
-  const storyData = await readMistData(storyId);
+  const storyData = await readMistMistData(storyId);
   if (!storyData) {
     return null;
   }
@@ -48,18 +46,6 @@ export async function readStoryData(storyId: string): Promise<MistData | null> {
     return null;
   }
   return story.data;
-}
-
-async function readMistData(mistId: string): Promise<MistData | null> {
-  try {
-    const filePath = path.join(process.cwd(), "public", "story", `${mistId}.yaml`);
-    const fileContent = fs.readFileSync(filePath, 'utf8');
-    const data = yaml.parse(fileContent);
-    return data;
-  } catch (error) {
-    console.error(`Failed to read mist data for ${mistId}:`, error);
-    return null;
-  }
 }
 
 // redis, key: mist:{sessionId}

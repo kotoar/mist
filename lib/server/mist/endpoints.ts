@@ -7,11 +7,16 @@ import { MistStartResponse, MistSubmitRequest, MistSubmitResponse } from '@share
 import { MistPreview } from '@shared/mist-schema';
 import { readContext, saveContext } from './context';
 import { evaluate } from './evaluate';
+import { fetchMistMistList } from './data-reader';
 
 export async function mistList(): Promise<MistPreview[]> {
-  return [
-    { id: "mist-01", title: "M01 神父的心愿", author: "sz推理之夜", tags: ["本格", "解谜"] },
-  ];
+  const items = await fetchMistMistList();
+  return items.map(item => ({
+    id: item.mist_id,
+    title: item.title,
+    author: item.author || undefined,
+    tags: item.tags || [],
+  }));
 }
 
 export async function start({sessionId, storyId}: {sessionId?: string, storyId: string}): Promise<MistStartResponse | null> {
@@ -29,7 +34,7 @@ export async function submit(request: MistSubmitRequest): Promise<MistSubmitResp
   if (!revealed) { return null; }
 
   if (revealed.length === 0) {
-    return { revealed: [], answer: "sf" };
+    return { revealed: [] };
   }
 
   context.userData.solvedIds = [...new Set([...context.userData.solvedIds, ...revealed])];
@@ -49,6 +54,24 @@ export async function submit(request: MistSubmitRequest): Promise<MistSubmitResp
     )),
     answer: completed ? context.storyData.story : undefined,
   }
+}
+
+export async function skip(sessionId: string): Promise<MistSubmitResponse | null> {
+  const context = await readContext(sessionId);
+  if (!context) { return null; }
+
+  context.userData.solvedIds = context.storyData.clues.map(clue => clue.id);
+  await saveContext(sessionId, context);
+
+  track("mist_skipped", { story: context.userData.storyId });
+
+  return {
+    revealed: context.storyData.clues.map(clue => ({
+      id: clue.id,
+      content: clue.content || ""
+    })),
+    answer: context.storyData.story,
+  };
 }
 
 export async function end(sessionId: string): Promise<void> {

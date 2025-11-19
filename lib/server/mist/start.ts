@@ -20,11 +20,13 @@ export async function startGame({sessionId, storyId}: {sessionId?: string, story
   const storyData = await readStoryData(storyId);
   if (!storyData) { return null; }
 
+  const completed = userData ? userData.solvedIds.length >= storyData.clues.length : false;
+
   return {
     sessionId: sessionId,
     title: storyData.title,
     puzzle: storyData.puzzle,
-    story: storyData.story,
+    story: completed ? storyData.story : undefined,
     clues: storyData.clues.map(clue => 
       userData?.solvedIds.includes(clue.id) ? clue : { id: clue.id, hint: clue.hint }
     ),
