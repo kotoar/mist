@@ -1,3 +1,5 @@
+"use client";
+
 import { useSnapshot } from "valtio";
 import { useRouter } from "next/navigation";
 import { For, HStack, Show, VStack, Heading, Badge, Spacer } from "@chakra-ui/react";
