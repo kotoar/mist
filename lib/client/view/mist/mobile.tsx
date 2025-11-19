@@ -1,3 +1,5 @@
+"use client";
+
 import { useSnapshot } from "valtio";
 import { Badge, Box, Button, For, HStack, Show, Spacer, VStack, Text, Circle, Float } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
@@ -24,7 +26,7 @@ export function MobileMistGameView() {
           <Spacer />
         </VStack>
       </Show>
-      <Box height="120px" />
+      <Box height={ viewModel.story ? "185px" : "120px"} />
       <Box position="fixed" bottom={0} left={0} right={0} bg="bg" borderTop="1px solid" borderColor="fg.subtle" padding="10px">
         <PanelView />
       </Box>
@@ -66,6 +68,11 @@ function PanelView() {
           <Text color="red.500">没有新的线索显现</Text>
         </Show>
         <Spacer />
+        <Badge 
+          size="lg"
+          colorPalette="pink"
+          onClick={() => mistViewModel.skip()}
+        >直接看答案</Badge>
         <Badge 
           size="lg"
           colorPalette="red"
