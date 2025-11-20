@@ -33,7 +33,8 @@ export async function submit(request: CaseSubmitRequest): Promise<CaseSubmitResp
     input: request.input,
     question: question.question,
     referenceAnswer: question.trigger,
-    story: context.storyData.puzzle,
+    puzzle: context.storyData.puzzle,
+    story: context.storyData.story || "",
   });
   if (!response) { return null; }
 
