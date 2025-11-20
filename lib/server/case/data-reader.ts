@@ -1,7 +1,8 @@
-import { CaseData, CaseDataSchema } from '@/lib/shared/case-schema';
-import { z } from 'zod';
-import { supabase } from '../services/supabase';
-import { parse } from 'yaml';
+import { z } from "zod";
+import { parse } from "yaml";
+import { CaseData, CaseDataSchema } from "@shared/case-schema";
+import { supabase } from "@server/services/supabase";
+import { availableStages } from "@server/services/stage";
 
 export const MistCaseItemSchema = z.object({
   case_id: z.string().default(''),
@@ -15,12 +16,12 @@ export const MistCaseItemSchema = z.object({
 
 export type MistCaseItem = z.infer<typeof MistCaseItemSchema>;
 
-
 export async function fetchMistCaseList(): Promise<MistCaseItem[]> {
+  const stages = availableStages();
   const { data, error } = await supabase
     .from('mist_case')
     .select('case_id, created_at, title, description, author, tags, metadata, content')
-    .eq("stage", "prod")
+    .in("stage", stages)
     .order("case_id", { ascending: true });
 
   if (error) {
@@ -29,7 +30,6 @@ export async function fetchMistCaseList(): Promise<MistCaseItem[]> {
 
   return data as MistCaseItem[];
 }
-
 
 export async function readMistCaseData(caseId: string): Promise<CaseData | null> {
   const { data, error } = await supabase
