@@ -48,7 +48,7 @@ export function MobileMistGameView() {
             <Switch.Control>
               <Switch.Thumb />
             </Switch.Control>
-            <Switch.Label>显示方向</Switch.Label>
+            <Switch.Label>显示思路方向</Switch.Label>
           </Switch.Root>
           <For each={viewModel.sections}>
             {(section, index) => (
