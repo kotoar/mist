@@ -9,10 +9,12 @@ export function SectionView({section}: {section: SectionRepresent}) {
 	function ClueView({clue}: {clue: ClueRepresent}) {
 		if (clue.content) {
 			return (
-				<Text 
-					whiteSpace="pre-wrap" 
-					color={viewModel.indicatedId.includes(clue.id) ? "red.500" : "fg.default"}
-				>{clue.content}</Text>
+				<Box bg="bg.muted" width="full">
+					<Text 
+						whiteSpace="pre-wrap" 
+						color={viewModel.indicatedId.includes(clue.id) ? "red.500" : "fg.default"}
+					>{clue.content}</Text>
+				</Box>
 			);
 		}
 		return (
@@ -25,7 +27,7 @@ export function SectionView({section}: {section: SectionRepresent}) {
 	}
 
 	return (
-		<VStack align="stretch" gap="6px">
+		<VStack align="stretch" gap="18px">
       <HStack justify="start">
         <Show when={sectionCompleted(section)}>
           <Icon size="lg" as={CiCircleCheck} color="green.500" />

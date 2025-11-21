@@ -28,7 +28,7 @@ export async function startGame({sessionId, storyId}: {sessionId?: string, story
     puzzle: storyData.puzzle,
     story: completed ? storyData.story : undefined,
     clues: storyData.clues.map(clue => 
-      userData?.solvedIds.includes(clue.id) ? clue : { id: clue.id, hint: clue.hint }
+      userData?.solvedIds.includes(clue.id) ? { id: clue.id, content: `【${clue.trigger}】\n ${clue.content}` } : { id: clue.id, hint: clue.hint }
     ),
     sections: storyData.sections
   }

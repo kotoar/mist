@@ -46,12 +46,15 @@ export async function submit(request: MistSubmitRequest): Promise<MistSubmitResp
   await saveContext(request.sessionId, context);
 
   return {
-    revealed: revealed.map(id => (
-      {
-        id,
-        content: context.storyData.clues.find(clue => clue.id === id)?.content || ""
-      }
-    )),
+    revealed: revealed.map(id => {
+      const clue = context.storyData.clues.find(clue => clue.id === id);
+      const trigger = clue?.trigger || "";
+      const content = clue?.content || "";
+      return {
+        id: clue?.id || id,
+        content: `【${trigger}】\n ${content}`
+      };
+    }),
     answer: completed ? context.storyData.story : undefined,
   }
 }
@@ -68,7 +71,7 @@ export async function skip(sessionId: string): Promise<MistSubmitResponse | null
   return {
     revealed: context.storyData.clues.map(clue => ({
       id: clue.id,
-      content: clue.content || ""
+      content: `【${clue.trigger}】\n ${clue.content}`
     })),
     answer: context.storyData.story,
   };
