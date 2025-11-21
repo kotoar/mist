@@ -44,6 +44,7 @@ export function MistInfoView({size = "md"}: {size?: "2xs" | "xs" | "sm" | "md"})
             <Dialog.Body>
               <Text>根据谜面给出的信息，在尽可能少的猜测次数内，尽可能的挖掘隐藏在字里行间的真相。</Text>
               <Text>如果从已知的信息里实在找不出答案，可以尝试提出新的假设，分析在这种情况下，最有可能的真相会是什么。</Text>
+              <Text color="red.500" fontWeight="bold">因为技术的限制，请尽量输入一整句话而不是只言片语。在只输入一两个词语的时候十分容易误触发错误判断。</Text>
             </Dialog.Body>
           </Dialog.Content>
         </Dialog.Positioner>

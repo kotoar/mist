@@ -57,6 +57,7 @@ ${story}
 
 ### 判定标准（必须全部满足）：
 - 玩家输入出现与线索判定标准中关键短语的逐字匹配
+- 【重要】整体语义和判定标准中的语义完全相符，不能缺少部分语义
 - 不依赖推断或常识补全；仅凭玩家输入文本本身证据判定
 - 若无把握，请返回空
 
@@ -77,7 +78,7 @@ ${story}
     providerOptions: {
       google: {
         thinkingConfig: {
-          thinkingBudget: 512
+          thinkingBudget: 1500
         },
       },
     },

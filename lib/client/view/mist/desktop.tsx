@@ -8,6 +8,7 @@ import { LoadingView } from "@/lib/components/LoadingView";
 import { mistViewModel } from "@client/viewmodel/mist";
 import { MistStoryBannerView } from "./story-banner";
 import { SectionView } from "./section";
+import { MistInfoView } from "../info";
 
 export function DesktopMistView() {
 	const viewModel = useSnapshot(mistViewModel);
@@ -41,6 +42,7 @@ export function DesktopMistView() {
                       <HStack width="full">
                         <Heading fontSize="2xl" fontWeight="bold">迷雾</Heading>
                         <Spacer />
+												<MistInfoView size="sm" />
 												<Button 
                           size="sm" colorPalette="pink" variant="surface"
                           onClick={() => mistViewModel.skip()}
