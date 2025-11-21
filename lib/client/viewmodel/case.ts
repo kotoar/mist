@@ -1,6 +1,6 @@
 import { proxy } from "valtio";
 import { CaseStartResponse } from "@shared/case-interface";
-import { ContextDelegate } from "@client/model/context";
+import { ContextDelegate } from "@/lib/client/model/case";
 
 export interface QuestionViewModel {
   id: string;

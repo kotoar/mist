@@ -3,9 +3,9 @@
 import { useEffect } from "react";
 import { useParams } from "next/navigation";
 import { ClientOnly, useBreakpointValue } from "@chakra-ui/react";
-import { DesktopGameView } from "@/lib/client/view/game/desktop";
-import { MobileGameView } from "@/lib/client/view/game/mobile";
-import { ContextDelegate } from "@/lib/client/model/context";
+import { DesktopGameView } from "@/lib/client/view/case/desktop";
+import { MobileGameView } from "@/lib/client/view/case/mobile";
+import { ContextDelegate } from "@/lib/client/model/case";
 
 export default function GamePage() {
   // get parameters from URL if needed

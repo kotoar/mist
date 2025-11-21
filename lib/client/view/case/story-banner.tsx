@@ -1,7 +1,7 @@
 import { useSnapshot } from "valtio";
 import { useRouter } from "next/navigation";
-import { gameViewModel } from "@client/viewmodel/game";
 import { Alert, Button, Dialog, Portal, Spacer, Text } from "@chakra-ui/react";
+import { gameViewModel } from "@client/viewmodel/case";
 
 export function StoryBannerView() {
   const viewModel = useSnapshot(gameViewModel);
@@ -16,7 +16,7 @@ export function StoryBannerView() {
       <Spacer />
       <Dialog.Root size="lg">
         <Dialog.Trigger asChild>
-          <Button variant="outline">阅读结局故事</Button>
+          <Button variant="solid">阅读结局故事</Button>
         </Dialog.Trigger>
         <Portal>
           <Dialog.Positioner>

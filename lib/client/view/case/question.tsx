@@ -1,7 +1,7 @@
 import { VStack, Heading, Show, HStack, Button, Text } from "@chakra-ui/react";
 import { useSnapshot } from "valtio";
 import { IMESafeInput } from "@/lib/components/IMESafeInput";
-import { QuestionViewModel } from "@client/viewmodel/game";
+import { QuestionViewModel } from "@/lib/client/viewmodel/case";
 
 export function QuestionView({ question }: { question: QuestionViewModel }) {
 	const viewModel = useSnapshot(question);
