@@ -88,10 +88,10 @@ function PanelView() {
 	const viewModel = useSnapshot(mistViewModel);
 	return (
 		<VStack width="full" align="stretch" gap="10px">
-			<HStack>
-				<Text color="red.500">( {viewModel.count} )</Text>
-				<Show when={viewModel.showInvalid}>
-					<Text color="red.500">没有新的线索显现</Text>
+			<HStack align="start">
+				<Text color="red.500" whiteSpace="nowrap">( {viewModel.count} )</Text>
+				<Show when={viewModel.message}>
+					<Text color="red.500">{viewModel.message}</Text>
 				</Show>
 				<Spacer />
 				<Switch.Root
@@ -103,7 +103,7 @@ function PanelView() {
 					<Switch.Control>
 						<Switch.Thumb />
 					</Switch.Control>
-					<Switch.Label>显示思路方向</Switch.Label>
+					<Switch.Label whiteSpace="nowrap">显示思路方向</Switch.Label>
 				</Switch.Root>
 			</HStack>
 			<HStack align="start">

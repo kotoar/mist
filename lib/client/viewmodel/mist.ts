@@ -27,7 +27,7 @@ interface MistViewModel {
   input: string;
   indicated: boolean;
   indicatedId: string[];
-  showInvalid: boolean;
+  message?: string;
   interactable: boolean;
   count: number;
   showMistHints: boolean;
@@ -47,7 +47,7 @@ export const mistViewModel = proxy<MistViewModel>({
   input: "",
   indicated: false,
   indicatedId: [],
-  showInvalid: false,
+  message: undefined,
   interactable: true,
   count: 0,
   showMistHints: false,
@@ -70,7 +70,7 @@ export const mistViewModel = proxy<MistViewModel>({
     mistViewModel.story = bundle.story;
     mistViewModel.input = "";
     mistViewModel.indicatedId = [];
-    mistViewModel.showInvalid = false;
+    mistViewModel.message = undefined;
     mistViewModel.indicated = false;
     mistViewModel.interactable = true;
     mistViewModel.count = 0;
@@ -79,7 +79,7 @@ export const mistViewModel = proxy<MistViewModel>({
   submit() {
     const input = mistViewModel.input.trim();
     mistViewModel.input = "";
-    mistViewModel.showInvalid = false;
+    mistViewModel.message = undefined;
     mistViewModel.indicatedId = [];
     mistViewModel.interactable = false;
     MistDelegate.instance.submit(input).then(() => {
