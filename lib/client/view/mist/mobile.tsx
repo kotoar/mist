@@ -74,7 +74,7 @@ function PanelView() {
       <Show when={viewModel.story}>
         <MistStoryBannerView />
       </Show>
-      <HStack>
+      <HStack align="end">
         <Badge 
           size="lg"
           variant={viewModel.view === "puzzle" ? "solid" : "outline"}
@@ -97,10 +97,10 @@ function PanelView() {
           </Show>
         </Box>
         <Spacer />
-        <Show when={viewModel.showInvalid}>
-          <Text color="red.500">没有新的线索显现</Text>
+        <Show when={viewModel.message}>
+          <Text color="red.500">{viewModel.message}</Text>
         </Show>
-        <Text color="red.500">( {viewModel.count} )</Text>
+        <Text color="red.500" whiteSpace="nowrap">( {viewModel.count} )</Text>
       </HStack>
       <HStack>
         <IMESafeInput

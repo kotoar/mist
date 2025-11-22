@@ -29,7 +29,7 @@ export class MistDelegate {
     }
 
     if (response.revealed.length === 0) {
-      mistViewModel.showInvalid = true;
+      mistViewModel.message = response.hint;
       return;
     }
 

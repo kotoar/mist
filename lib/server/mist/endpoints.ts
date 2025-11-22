@@ -27,14 +27,14 @@ export async function submit(request: MistSubmitRequest): Promise<MistSubmitResp
   const context = await readContext(request.sessionId);
   if (!context) { return null; }
 
-  const revealed = await evaluate({
+  const {revealed, hint} = await evaluate({
     input: request.input,
     context: context,
   });
   if (!revealed) { return null; }
 
   if (revealed.length === 0) {
-    return { revealed: [] };
+    return { revealed: [], hint: hint};
   }
 
   context.userData.solvedIds = [...new Set([...context.userData.solvedIds, ...revealed])];
