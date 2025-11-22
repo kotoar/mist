@@ -27,5 +27,6 @@ export interface MistSubmitResponse {
     id: string;
     content: string;
   }[];
+  hint?: string;
   answer?: string;
 }
