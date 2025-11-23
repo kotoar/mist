@@ -4,7 +4,8 @@ import { useSnapshot } from "valtio";
 import { Container, For, VStack, SimpleGrid, GridItem, Heading, ScrollArea, HStack, Spacer, Button } from "@chakra-ui/react"
 import { useRouter } from "next/navigation";
 import Markdown from 'react-markdown';
-import { gameViewModel } from "@/lib/client/viewmodel/case";
+import { Prose } from "@/components/ui/prose";
+import { gameViewModel } from "@client/viewmodel/case";
 import { QuestionView } from "./question";
 import { StoryBannerView } from "./story-banner";
 import { CaseInfoView } from "../info";
@@ -37,7 +38,9 @@ function CaseView() {
 							<Heading fontSize="2xl" fontWeight="bold">案件</Heading>
 							<Spacer />
 						</HStack>
-						<Markdown>{viewModel.puzzle}</Markdown>
+						<Prose color="fg">
+							<Markdown>{viewModel.puzzle}</Markdown>
+						</Prose>
 					</VStack>
 				</ScrollArea.Content>
 			</ScrollArea.Viewport>
