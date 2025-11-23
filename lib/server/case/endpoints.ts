@@ -2,22 +2,10 @@
 
 import { track } from '@vercel/analytics/server';
 import { CaseStartResponse, CaseSubmitRequest, CaseSubmitResponse } from "@shared/case-interface";
-import { CasePreview } from "@shared/case-schema";
 import { redis } from "@server/services/redis";
 import { startGame } from "./start";
 import { readContext, saveContext } from "./case-data";
 import { judge } from "./judge";
-import { fetchMistCaseList } from './data-reader';
-
-export async function caseList(): Promise<CasePreview[]> {
-  const items = await fetchMistCaseList();
-  return items.map(item => ({
-    id: item.case_id,
-    title: item.title,
-    author: item.author || undefined,
-    tags: item.tags || [],
-  }));
-}
 
 export async function start({sessionId, storyId}: {sessionId?: string, storyId: string}): Promise<CaseStartResponse | null> {
   return await startGame({ sessionId, storyId });

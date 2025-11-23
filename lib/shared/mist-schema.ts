@@ -4,6 +4,7 @@ export const MistPreviewSchema = z.object({
   id: z.string(),
   title: z.string(),
   author: z.string().optional(),
+  difficulty: z.enum(["easy", "medium", "hard"]).optional(),
   tags: z.array(z.string()).default([]).readonly(),
 });
 

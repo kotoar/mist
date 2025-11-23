@@ -6,8 +6,6 @@ import { availableStages } from "@server/services/stage";
 
 export const MistCaseItemSchema = z.object({
   case_id: z.string().default(''),
-  game: z.enum(["case", "detect"]).default("case"),
-  difficulty: z.string().nullable().default(null),
   title: z.string(),
   description: z.string().nullable(),
   author: z.string().nullable(),
@@ -22,7 +20,7 @@ export async function fetchMistCaseList(): Promise<MistCaseItem[]> {
   const stages = availableStages();
   const { data, error } = await supabase
     .from('mist_case')
-    .select('case_id, created_at, title, description, author, tags, metadata, content, game, difficulty')
+    .select('case_id, created_at, title, description, author, tags, metadata, content')
     .in("stage", stages)
     .order("case_id", { ascending: true });
 
@@ -33,15 +31,17 @@ export async function fetchMistCaseList(): Promise<MistCaseItem[]> {
   return data as MistCaseItem[];
 }
 
-export async function readMistCaseData(caseId: string): Promise<CaseData | null> {
+export async function readMistDetectData(caseId: string): Promise<CaseData | null> {
   const { data, error } = await supabase
     .from('mist_case')
     .select('content')
     .eq('case_id', caseId)
-    .single();
+    .eq("game", "detect")
+    .maybeSingle();
 
   if (error) {
-    throw new Error(`Failed to read mist case: ${error.message}`);
+    console.error(`Failed to read mist case: ${error.message}`);
+    return null;
   }
 
   if (!data) {
@@ -50,7 +50,8 @@ export async function readMistCaseData(caseId: string): Promise<CaseData | null>
 
   const parsed = CaseDataSchema.safeParse(parse(data.content));
   if (!parsed.success) {
-    throw new Error('Failed to parse mist case content');
+    console.error('Failed to parse mist case content:', parsed.error);
+    return null;
   }
   return parsed.data;
 }

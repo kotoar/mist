@@ -4,6 +4,7 @@ import { useSnapshot } from "valtio";
 import { useRouter } from "next/navigation";
 import { For, HStack, Show, VStack, Heading, Badge, Spacer } from "@chakra-ui/react";
 import Markdown from 'react-markdown';
+import { Prose } from "@/components/ui/prose";
 import { gameViewModel } from "@/lib/client/viewmodel/case";
 import { QuestionView } from "./question";
 import { StoryBannerView } from "./story-banner";
@@ -42,7 +43,9 @@ export function MobileGameView() {
         >结束游戏</Badge>
       </HStack>
       <Show when={viewModel.view === "puzzle"}>
-        <Markdown>{viewModel.puzzle}</Markdown>
+        <Prose color="fg">
+          <Markdown>{viewModel.puzzle}</Markdown>
+        </Prose>
       </Show>
       <Show when={viewModel.view === "clues"}>
         <VStack width="full" gap="25px" align="stretch" padding="10px">

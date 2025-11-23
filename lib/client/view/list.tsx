@@ -5,6 +5,7 @@ import { useSnapshot } from "valtio";
 import Link from "next/link";
 import { listViewModel } from "@client/viewmodel/list";
 import { CasePreview } from "@shared/case-schema";
+import { MistPreview } from "@shared/mist-schema";
 import { CommunityView } from "./community";
 
 export function HomeView() {
@@ -18,7 +19,7 @@ export function HomeView() {
           <Show when={viewModel.type === "case"}>
             <For each={viewModel.cases}>
               {(item) => (
-                <Link key={item.id} href={`/case/${item.id}`}>
+                <Link key={item.id} href={`/${item.game}/${item.id}`}>
                   <CaseView item={item} />
                 </Link>
               )}
@@ -106,13 +107,29 @@ function BannerView() {
   );
 }
 
-function CaseView(props: {item: CasePreview}) {
+function CaseView(props: {item: CasePreview | MistPreview}) {
   const { item } = props;
   return (
-    <Card.Root size={{ md: "md", base: "sm" }}height="full">
+    <Card.Root size={{ md: "md", base: "sm" }} height="full">
       <Card.Body>
         <VStack align="stretch" justify="space-between" gap="4px" height="full">
-          <Heading size={{ md: "md", base: "sm" }}>{item.title}</Heading>
+          <Heading size={{ md: "md", base: "sm" }}>
+            {item.title}{" "}
+            <Show when={item.difficulty}>
+              <Badge 
+                size={{ md: "sm", base: "xs" }}
+                colorPalette={
+                  item.difficulty === "easy" ? "green" :
+                  item.difficulty === "medium" ? "yellow" :
+                  "red"
+                }
+              >
+                {item.difficulty === "easy" ? "简单" :
+                 item.difficulty === "medium" ? "中等" :
+                 "困难"}
+              </Badge>
+            </Show>
+          </Heading>
           <Wrap>
             <For each={item.tags}>
               {(tag) => (
