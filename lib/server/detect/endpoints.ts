@@ -5,6 +5,7 @@ import { redis } from "@server/services/redis";
 import { startDetect } from "./start";
 import { readContext, saveContext } from "./detect-data";
 import { judgeB } from "./judge";
+import { track } from "@vercel/analytics/server";
 
 export async function start({sessionId, storyId}: {sessionId?: string, storyId: string}): Promise<DetectStartResponse | null> {
   return await startDetect({ sessionId, storyId });
@@ -30,6 +31,9 @@ export async function submit(sessionId: string, input?: string): Promise<DetectS
   }
   if (correct) {
     const completed = context.userData.currentIndex + 1 >= context.storyData.items.length;
+    if (completed) {
+      track("case_solved", { story: context.userData.storyId });
+    }
     return {
       answer: question.answer,
       story: completed ? context.storyData.story : undefined,
