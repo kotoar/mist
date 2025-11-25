@@ -1,6 +1,6 @@
 "use client";
 
-import { HomeView } from "@/lib/client/view/list";
+import { HomeView } from "@/lib/client/view/list/list";
 import { listViewModel } from "@/lib/client/viewmodel/list";
 import { useEffect } from "react";
 

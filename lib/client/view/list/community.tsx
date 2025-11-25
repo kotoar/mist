@@ -1,21 +1,15 @@
-import { Wrap, Button, Icon, Blockquote, VStack, Text } from "@chakra-ui/react";
+import { Wrap, Button, Icon, VStack, Text } from "@chakra-ui/react";
 import { FaEnvelope } from "react-icons/fa";
 import { SiXiaohongshu } from "react-icons/si";
 
 export function CommunityView() {
   return (
-    <VStack align="stretch" gap={4}>
-      <Blockquote.Root>
-        <Blockquote.Content>
-          <VStack gap="10px">
-            <Text fontSize="sm" whiteSpace="pre-wrap">
-              我们仍处于开发的早期阶段。
-              如果您有任何问题、建议或只是想聊天，请随时联系我们！
-            </Text>
-            <ContactDetailsView />
-          </VStack>
-        </Blockquote.Content>
-      </Blockquote.Root>
+    <VStack align="stretch" width="full" gap={4} bg="bg.muted" padding="10px" borderRadius="md">
+      <Text fontSize="sm" whiteSpace="pre-wrap">
+        我们仍处于开发的早期阶段。
+        任何问题、建议或者想要特定背景的剧本，请随时联系我们！
+      </Text>
+      <ContactDetailsView />
     </VStack>
   );
 }
