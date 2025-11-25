@@ -1,11 +1,11 @@
 "use server";
 
+import { track } from "@vercel/analytics/server";
 import { DetectNextResponse, DetectStartResponse, DetectSubmitResponse } from "@shared/detect-interface";
 import { redis } from "@server/services/redis";
 import { startDetect } from "./start";
 import { readContext, saveContext } from "./detect-data";
 import { judgeB } from "./judge";
-import { track } from "@vercel/analytics/server";
 
 export async function start({sessionId, storyId}: {sessionId?: string, storyId: string}): Promise<DetectStartResponse | null> {
   return await startDetect({ sessionId, storyId });
