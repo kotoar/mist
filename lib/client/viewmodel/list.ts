@@ -9,7 +9,9 @@ import { mistList } from "@/lib/server/mist/endpoints";
 interface ListViewModel {
   _type: "case" | "mist" | null;
   type: "case" | "mist";
+  caseFilter: "all" | "detect" | "case";
   cases: CasePreview[];
+  get showCases(): CasePreview[];
   mists: MistPreview[];
   fetch(): Promise<void>;
 }
@@ -38,8 +40,18 @@ export const listViewModel = proxy<ListViewModel>({
       mistList().then(data => listViewModel.mists = data);
     }
   },
-  cases: [],
+  cases: [] as CasePreview[],
+  caseFilter: "all",
   mists: [],
+
+  get showCases() {
+    if (this.caseFilter === "all") {
+      return this.cases;
+    } else {
+      return this.cases.filter((c: CasePreview) => c.game === this.caseFilter);
+    }
+  },
+
   async fetch() {
     switch (this.type) {
       case "case":
