@@ -46,7 +46,7 @@ export function HomeView() {
         <Spacer />
         <VStack align="start" position="sticky" bottom={0} bg="bg" gap="2px">
           <CommunityView />
-          <HStack paddingY="10px" gap="10px">
+          <HStack paddingY="10px" width="full" gap="10px">
             <Text fontSize="sm">
               © 2025 MistCase by{" "}
               <ChakraLink colorPalette="cyan" fontSize="sm" asChild>
@@ -56,6 +56,12 @@ export function HomeView() {
               </ChakraLink>
             </Text>
             <Text fontSize="sm">v0.1.2-beta</Text>
+            <Spacer />
+            <ChakraLink colorPalette="purple" fontSize="sm" asChild>
+              <Link href="/aigc">
+                AIGC推理实验室
+              </Link>
+            </ChakraLink>
           </HStack>
         </VStack>
       </VStack>
