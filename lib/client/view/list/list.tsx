@@ -1,6 +1,6 @@
 "use client";
 
-import { Container, Image, For, Heading, HStack, Show, Spacer, VStack, Text, Wrap, Badge, SimpleGrid, Box, Link as ChakraLink, Highlight, Button, Portal, Select, createListCollection } from "@chakra-ui/react";
+import { Container, Image, For, Heading, HStack, Show, Spacer, VStack, Text, SimpleGrid, Box, Link as ChakraLink, Highlight, Button, Portal, Select, createListCollection } from "@chakra-ui/react";
 import { useSnapshot } from "valtio";
 import Link from "next/link";
 import { listViewModel } from "@client/viewmodel/list";
@@ -56,6 +56,7 @@ export function HomeView() {
             </For>
           </Show>
         </SimpleGrid>
+        <Spacer />
         <CommunityView />
         <VStack align="start" position="sticky" bottom={0} bg="bg" gap="2px">
           <HStack paddingY="10px" width="full" gap="10px">
