@@ -1,13 +1,12 @@
 "use client";
 
-import { Card, Container, Image, For, Heading, HStack, Show, Spacer, VStack, Text, Wrap, Badge, SimpleGrid, Box, Link as ChakraLink, Highlight, Button, Portal, Select, createListCollection } from "@chakra-ui/react";
+import { Container, Image, For, Heading, HStack, Show, Spacer, VStack, Text, Wrap, Badge, SimpleGrid, Box, Link as ChakraLink, Highlight, Button, Portal, Select, createListCollection } from "@chakra-ui/react";
 import { useSnapshot } from "valtio";
 import Link from "next/link";
 import { listViewModel } from "@client/viewmodel/list";
-import { CasePreview } from "@shared/case-schema";
-import { MistPreview } from "@shared/mist-schema";
 import { CommunityView } from "./community";
 import { GuideButtonView } from "./guide";
+import { CaseView } from "./case-item";
 
 export function HomeView() {
   const viewModel = useSnapshot(listViewModel);
@@ -23,12 +22,19 @@ export function HomeView() {
             <CaseTypeSelector />
           </Show>
         </HStack>
-        <SimpleGrid columns={2} gap={4}>
+        <SimpleGrid columns={{ base: 2, md: 2 }} gap={4}>
           <Show when={viewModel.type === "case"}>
             <For each={viewModel.showCases}>
               {(item) => (
                 <Link key={item.id} href={`/${item.game}/${item.id}`}>
-                  <CaseView item={item} />
+                  <CaseView 
+                    type={item.game === "case" ? "case" : "detect"}
+                    difficulty={item.difficulty}
+                    index={item.index}
+                    title={item.title}
+                    tags={item.tags}
+                    author={item.author}
+                  />
                 </Link>
               )}
             </For>
@@ -37,15 +43,21 @@ export function HomeView() {
             <For each={viewModel.mists}>
               {(item) => (
                 <Link key={item.id} href={`/mist/${item.id}`}>
-                  <CaseView item={item} />
+                  <CaseView 
+                    type="mist"
+                    difficulty={item.difficulty}
+                    index={item.index}
+                    title={item.title}
+                    tags={item.tags}
+                    author={item.author}
+                  />
                 </Link>
               )}
             </For>
           </Show>
         </SimpleGrid>
-        <Spacer />
+        <CommunityView />
         <VStack align="start" position="sticky" bottom={0} bg="bg" gap="2px">
-          <CommunityView />
           <HStack paddingY="10px" width="full" gap="10px">
             <Text fontSize="sm">
               © 2025 MistCase by{" "}
@@ -55,7 +67,6 @@ export function HomeView() {
                 </Link>
               </ChakraLink>
             </Text>
-            <Text fontSize="sm">v0.1.2-beta</Text>
             <Spacer />
             <ChakraLink colorPalette="purple" fontSize="sm" asChild>
               <Link href="/aigc">
@@ -121,48 +132,6 @@ function BannerView() {
   );
 }
 
-function CaseView(props: {item: CasePreview | MistPreview}) {
-  const { item } = props;
-  return (
-    <Card.Root size={{ md: "md", base: "sm" }} height="full">
-      <Card.Body>
-        <VStack align="stretch" justify="space-between" gap="4px" height="full">
-          <Heading size={{ md: "md", base: "sm" }}>
-            {item.title}{" "}
-            <Show when={item.difficulty}>
-              <Badge 
-                size={{ md: "sm", base: "xs" }}
-                colorPalette={
-                  item.difficulty === "easy" ? "green" :
-                  item.difficulty === "medium" ? "yellow" :
-                  "red"
-                }
-              >
-                {item.difficulty === "easy" ? "简单" :
-                 item.difficulty === "medium" ? "中等" :
-                 "困难"}
-              </Badge>
-            </Show>
-          </Heading>
-          <Wrap>
-            <For each={item.tags}>
-              {(tag) => (
-                <Badge key={tag} colorPalette={tagColor(tag)} size={{ md: "sm", base: "xs" }}>
-                  {tag}
-                </Badge>
-              )}
-            </For>
-            <Spacer />
-            <Show when={item.author}>
-              <Text color="gray.500" fontSize={{ md: "sm", base: "xs" }}>作者：{item.author}</Text>
-            </Show>
-          </Wrap>
-        </VStack>
-      </Card.Body>
-    </Card.Root>
-  );
-}
-
 function CaseTypeSelector() {
   const viewModel = useSnapshot(listViewModel);
   const selectorItems = createListCollection({
@@ -206,11 +175,4 @@ function CaseTypeSelector() {
       </Select.Root>
     </HStack>
   );
-}
-
-type TagColor = 'gray' | 'red' | 'orange' | 'yellow' | 'green' | 'teal' | 'blue' | 'cyan' | 'purple' | 'pink';
-const colorList: TagColor[] = ['red', 'orange', 'yellow', 'green', 'teal', 'blue', 'cyan', 'purple', 'pink'];
-function tagColor(tag: string): TagColor {
-  const hash = Array.from(tag).reduce((acc, char) => acc + char.charCodeAt(0), 0);
-  return colorList[hash % colorList.length];
 }

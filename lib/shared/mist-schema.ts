@@ -2,6 +2,7 @@ import { z } from "zod";
 
 export const MistPreviewSchema = z.object({
   id: z.string(),
+  index: z.string(),
   title: z.string(),
   author: z.string().optional(),
   difficulty: z.enum(["easy", "medium", "hard"]).optional(),
