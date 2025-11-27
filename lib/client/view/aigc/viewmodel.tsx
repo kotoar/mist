@@ -6,6 +6,7 @@ export interface NovelListItem {
   aiRate: string;
   author?: string;
   tags: readonly string[];
+  duration?: string;
 }
 
 interface NovelViewModel {
@@ -22,7 +23,8 @@ export const novelViewModel = proxy<NovelViewModel>({
       title: "N01 未署名的附录",
       aiRate: "70%",
       author: "天色盐",
-      tags: ["本格"],
+      tags: ["本格", "社会派"],
+      duration: "约25分钟",
     }
   ],
   content: "",
