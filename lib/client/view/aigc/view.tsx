@@ -1,6 +1,6 @@
 "use client";
 
-import { Blockquote, Container, Heading, HStack, Image, VStack, Text, Spacer, Show, For, Badge } from "@chakra-ui/react";
+import { Blockquote, Container, Heading, HStack, Image, VStack, Text, Spacer, Show, For, Badge, useBreakpointValue } from "@chakra-ui/react";
 import { NovelListItem, novelViewModel } from "./viewmodel";
 import { useSnapshot } from "valtio";
 import Link from "next/link";
@@ -26,10 +26,10 @@ export function AigcListView() {
 
 function Banner() {
   return (
-    <VStack gap="10px" position="sticky" top="0" align="stretch" bg="bg" paddingBottom="10px">
-      <HStack align="center" width="full" gap="10px">
+    <VStack gap="10px" align="stretch" paddingBottom="10px">
+      <HStack position="sticky" top="0" align="center" width="full" gap="10px" bg="bg" zIndex={1} py="10px">
         <Image src="/lab-icon.png" alt="Logo:Lab" boxSize="50px" />
-        <Heading size="2xl">迷雾档案：AIGC实验室</Heading>
+        <Heading size="2xl">迷雾档案：AIGC 推理实验室</Heading>
       </HStack>
       <Blockquote.Root>
         <Blockquote.Content whiteSpace="pre-wrap" color="fg.muted" fontSize="sm">
@@ -47,19 +47,47 @@ function Banner() {
 }
 
 function ListItemView({ item }: { item: NovelListItem}) {
-  return (
-    <HStack width="full" align="stretch" gap="5px">
-      <Text fontWeight="bold">{item.title}</Text>
-      <For each={item.tags}>
-        {(tag) => (
-          <Badge key={tag}>{tag}</Badge>
-        )}
-      </For>
-      <Spacer />
-      <Text fontSize="sm" color="fg.muted">AI参与度：{item.aiRate}</Text>
-      <Show when={item.author}>
-        <Text fontSize="sm" color="fg.muted">作者：{item.author}</Text>
-      </Show>
-    </HStack>
-  );
+  const isMobile = useBreakpointValue({ base: true, md: false });
+
+  if (isMobile) {
+    return (
+      <VStack align="stretch" gap="5px" padding="10px" bg="bg.emphasized" borderRadius="md">
+        <HStack>
+          <Text fontWeight="bold" fontSize="lg">{item.title}</Text>
+          <HStack gap="5px" flexWrap="wrap">
+            <For each={item.tags}>
+              {(tag) => (
+                <Badge key={tag}>{tag}</Badge>
+              )}
+            </For>
+          </HStack>
+        </HStack>
+        <HStack>
+          <Text fontSize="sm" color="fg.muted">AI参与度：{item.aiRate}</Text>
+          <Show when={item.author}>
+            <Text fontSize="sm" color="fg.muted">作者：{item.author}</Text>
+          </Show>
+          <Spacer />
+          <Text fontSize="sm" color="fg.muted">{item.duration}</Text>
+        </HStack>
+      </VStack>
+    );
+  } else {
+    return (
+      <HStack width="full" align="stretch" gap="5px" padding="10px" bg="bg.emphasized" borderRadius="md">
+        <Text fontWeight="bold">{item.title}</Text>
+        <For each={item.tags}>
+          {(tag) => (
+            <Badge key={tag}>{tag}</Badge>
+          )}
+        </For>
+        <Text fontSize="sm" color="fg.muted">{item.duration}</Text>
+        <Spacer />
+        <Text fontSize="sm" color="fg.muted">AI参与度：{item.aiRate}</Text>
+        <Show when={item.author}>
+          <Text fontSize="sm" color="fg.muted">作者：{item.author}</Text>
+        </Show>
+      </HStack>
+    );
+  }
 }
