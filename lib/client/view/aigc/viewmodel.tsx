@@ -9,11 +9,13 @@ export interface NovelListItem {
 }
 
 interface NovelViewModel {
+  id: string;
   list: readonly NovelListItem[];
   content: string;
 }
 
 export const novelViewModel = proxy<NovelViewModel>({
+  id: "",
   list: [
     {
       id: "novel-n01",
