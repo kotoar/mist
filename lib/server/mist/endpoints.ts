@@ -4,20 +4,8 @@ import { track } from '@vercel/analytics/server';
 import { redis } from "@server/services/redis";
 import { startGame } from "./start";
 import { MistStartResponse, MistSubmitRequest, MistSubmitResponse } from '@shared/mist-interface';
-import { MistPreview } from '@shared/mist-schema';
 import { readContext, saveContext } from './context';
 import { evaluate } from './evaluate';
-import { fetchMistMistList } from './data-reader';
-
-export async function mistList(): Promise<MistPreview[]> {
-  const items = await fetchMistMistList();
-  return items.map(item => ({
-    id: item.mist_id,
-    title: item.title,
-    author: item.author || undefined,
-    tags: item.tags || [],
-  }));
-}
 
 export async function start({sessionId, storyId}: {sessionId?: string, storyId: string}): Promise<MistStartResponse | null> {
   return await startGame({ sessionId, storyId });

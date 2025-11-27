@@ -4,7 +4,7 @@ import { proxy } from "valtio";
 import { caseList } from "@server/list/case-list";
 import { CasePreview } from "@shared/case-schema";
 import { MistPreview } from "@shared/mist-schema";
-import { mistList } from "@/lib/server/mist/endpoints";
+import { mistList } from "@/lib/server/list/case-list";
 
 interface ListViewModel {
   _type: "case" | "mist" | null;
