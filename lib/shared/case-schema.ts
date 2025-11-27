@@ -4,6 +4,7 @@ export const CasePreviewSchema = z.object({
   id: z.string(),
   game: z.enum(["case", "detect"]).default("case"),
   difficulty: z.enum(["easy", "medium", "hard"]).optional(),
+  index: z.string(),
   title: z.string(),
   author: z.string().optional(),
   tags: z.array(z.string()).default([]).readonly(),

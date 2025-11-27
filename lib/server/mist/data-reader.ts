@@ -6,6 +6,7 @@ import { availableStages } from '../services/stage';
 
 export const MistMistItemSchema = z.object({
   mist_id: z.string().default(''),
+  index: z.string(),
   title: z.string(),
   description: z.string().nullable(),
   author: z.string().nullable(),
@@ -20,7 +21,7 @@ export async function fetchMistMistList(): Promise<MistMistItem[]> {
   const stages = availableStages();
   const { data, error } = await supabase
     .from('mist_mist')
-    .select('mist_id, title, description, author, tags, metadata, content')
+    .select('mist_id, index, title, description, author, tags, metadata, content')
     .in("stage", stages)
     .order("mist_id", { ascending: true });
 
