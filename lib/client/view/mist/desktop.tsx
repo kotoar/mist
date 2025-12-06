@@ -8,7 +8,7 @@ import { LoadingView } from "@/lib/components/LoadingView";
 import { mistViewModel } from "@client/viewmodel/mist";
 import { MistStoryBannerView } from "./story-banner";
 import { SectionView } from "./section";
-import { MistInfoView } from "../info";
+import { MistInfoView } from "../components/info";
 
 export function DesktopMistView() {
 	const viewModel = useSnapshot(mistViewModel);

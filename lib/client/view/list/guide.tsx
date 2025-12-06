@@ -1,5 +1,6 @@
 import { Prose } from "@/components/ui/prose";
-import { Dialog, Button, Portal, CloseButton } from "@chakra-ui/react";
+import { Dialog, Button, Portal, CloseButton, Icon } from "@chakra-ui/react";
+import { FaBook } from "react-icons/fa";
 import Markdown from "react-markdown";
 
 export function GuideButtonView() {
@@ -7,6 +8,7 @@ export function GuideButtonView() {
     <Dialog.Root size="lg">
       <Dialog.Trigger asChild>
         <Button size="sm" colorPalette="blue" variant="outline">
+          <Icon as={FaBook} />
           侦探手册
         </Button>
       </Dialog.Trigger>
