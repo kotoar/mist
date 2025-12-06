@@ -8,7 +8,7 @@ import { Prose } from "@/components/ui/prose";
 import { gameViewModel } from "@/lib/client/viewmodel/case";
 import { QuestionView } from "./question";
 import { StoryBannerView } from "./story-banner";
-import { CaseInfoView } from "../info";
+import { CaseInfoView } from "../components/info";
 
 export function MobileGameView() {
   const viewModel = useSnapshot(gameViewModel);

@@ -8,7 +8,7 @@ import { LoadingView } from "@/lib/components/LoadingView";
 import { mistViewModel } from "@client/viewmodel/mist";
 import { SectionView } from "./section";
 import { MistStoryBannerView } from "./story-banner";
-import { MistInfoView } from "@client/view/info";
+import { MistInfoView } from "@/lib/client/view/components/info";
 
 export function MobileMistGameView() {
   const viewModel = useSnapshot(mistViewModel);

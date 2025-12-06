@@ -1,4 +1,4 @@
-import { Card, VStack, HStack, Spacer, Show, Badge, Heading, Wrap, For, Text, useBreakpointValue } from "@chakra-ui/react";
+import { Card, VStack, HStack, Spacer, Show, Badge, Heading, Wrap, For, Text, Image, useBreakpointValue } from "@chakra-ui/react";
 
 interface CaseViewProps {
   type: "mist" | "case" | "detect";
@@ -7,16 +7,31 @@ interface CaseViewProps {
   title: string;
   tags: readonly string[];
   author?: string;
+  cover: string | null;
 }
 export function CaseView(props: CaseViewProps) {
   const isMobile = useBreakpointValue({ base: true, md: false });
 
+  const difficultyColor = props.difficulty ? (
+    props.difficulty === "easy" ? "green" :
+    props.difficulty === "medium" ? "yellow" :
+    "red"
+  ) : undefined;
+  const difficultyLabel = props.difficulty ? (
+    props.difficulty === "easy" ? "简单" :
+    props.difficulty === "medium" ? "中等" :
+    "困难"
+  ) : undefined;
+
   if (isMobile) {
     return (
       <Card.Root size="sm" height="full">
+        <Show when={props.cover}>
+          <Image src={props.cover || undefined} alt="Cover Image" borderTopRadius="md" objectFit="cover" maxH="150px" />
+        </Show>
         <Card.Body>
           <VStack align="stretch" gap="4px" height="full" width="full">
-            <HStack width="full" align="center">
+            <HStack width="full" align="start">
               <Text>{props.index}</Text>
               <Spacer />
               <Show when={props.difficulty}>
@@ -58,30 +73,24 @@ export function CaseView(props: CaseViewProps) {
   } else {
     return (
       <Card.Root size="sm" height="full">
+        <Show when={props.cover}>
+          <Image src={props.cover || undefined} alt="Cover Image" borderTopRadius="md" objectFit="cover" maxH="150px" />
+        </Show>
         <Card.Body>
           <VStack align="stretch" gap="4px" height="full" width="full">
-            <HStack width="full" align="center">
+            <Spacer />
+            <HStack width="full" align="start">
               <Text>{props.index}</Text>
               <Heading size={{ md: "md", base: "sm" }}>
                 {props.title}
               </Heading>
               <Spacer />
               <Show when={props.difficulty}>
-                <Badge 
-                  size={{ md: "sm", base: "xs" }}
-                  colorPalette={
-                    props.difficulty === "easy" ? "green" :
-                    props.difficulty === "medium" ? "yellow" :
-                    "red"
-                  }
-                >
-                  {props.difficulty === "easy" ? "简单" :
-                  props.difficulty === "medium" ? "中等" :
-                  "困难"}
+                <Badge size={{ md: "sm", base: "xs" }} colorPalette={difficultyColor}>
+                  {difficultyLabel}
                 </Badge>
               </Show>
             </HStack>
-            <Spacer />
             <Wrap gap="2px" align="center">
               <For each={props.tags}>
                 {(tag) => (
@@ -100,8 +109,6 @@ export function CaseView(props: CaseViewProps) {
       </Card.Root>
     );
   }
-
-  
 }
 
 type TagColor = 'gray' | 'red' | 'orange' | 'yellow' | 'green' | 'teal' | 'blue' | 'cyan' | 'purple' | 'pink';
