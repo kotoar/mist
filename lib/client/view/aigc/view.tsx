@@ -1,7 +1,8 @@
 "use client";
 
-import { Blockquote, Container, Heading, HStack, Image, VStack, Text, Spacer, Show, For, Badge, useBreakpointValue } from "@chakra-ui/react";
+import { Blockquote, Container, HStack, VStack, Text, Spacer, Show, For, Badge, useBreakpointValue, Button } from "@chakra-ui/react";
 import { NovelListItem, novelViewModel } from "./viewmodel";
+import { PageTitleView } from "@client/view/components/title";
 import { useSnapshot } from "valtio";
 import Link from "next/link";
 
@@ -27,9 +28,12 @@ export function AigcListView() {
 function Banner() {
   return (
     <VStack gap="10px" align="stretch" paddingBottom="10px">
-      <HStack position="sticky" top="0" align="center" width="full" gap="10px" bg="bg" zIndex={1} py="10px">
-        <Image src="/lab-icon.png" alt="Logo:Lab" boxSize="50px" />
-        <Heading size="2xl">迷雾档案：AIGC 推理实验室</Heading>
+      <HStack>
+        <PageTitleView type="aigc" />
+        <Spacer />
+        <Link href="/" passHref>
+          <Button size={{ md: "sm", base: "xs" }} colorPalette="orange" variant="surface">主页</Button>
+        </Link>
       </HStack>
       <Blockquote.Root>
         <Blockquote.Content whiteSpace="pre-wrap" color="fg.muted" fontSize="sm">
