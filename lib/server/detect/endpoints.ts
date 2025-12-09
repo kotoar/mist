@@ -18,16 +18,22 @@ export async function submit(sessionId: string, input?: string): Promise<DetectS
   if (!question) { return null; }
 
   let correct = false;
+  let score = 0;
+  let hint: string | undefined = undefined;
   if (!input) {
     correct = true;
+    score = 100;
   } else {
-    correct = await judgeB({
+    const result = await judgeB({
       input,
       question: question.question,
       referenceAnswer: question.trigger,
       puzzle: context.storyData.puzzle,
       story: context.storyData.story || "",
     });
+    correct = result.correct;
+    score = result.score;
+    hint = result.hint;
   }
   if (correct) {
     const completed = context.userData.currentIndex + 1 >= context.storyData.items.length;
@@ -35,11 +41,15 @@ export async function submit(sessionId: string, input?: string): Promise<DetectS
       track("case_solved", { story: context.userData.storyId });
     }
     return {
+      score: score,
+      hint: undefined,
       answer: question.answer,
       story: completed ? context.storyData.story : undefined,
     }
   } else {
     return {
+      score: score,
+      hint: hint,
       answer: undefined,
       story: undefined,
     }

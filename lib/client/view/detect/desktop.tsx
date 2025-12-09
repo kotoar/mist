@@ -120,7 +120,10 @@ function PanelView() {
         </Show>
       </HStack>
       <Show when={viewModel.currentFinished === false}>
-        <Text color="red.500">回答错误，可以再试一试</Text>
+        <Text color="red.500">回答错误，可以再试一试(接近程度: {viewModel.score} / 100)</Text>
+        <Show when={viewModel.hint}>
+          <Text color="red.400">{viewModel.hint}</Text>
+        </Show>
       </Show>
       <Show when={viewModel.currentFinished}>
         <Prose color="fg">

@@ -16,6 +16,8 @@ interface DetectViewModel {
   currentFinished?: boolean;
   input: string;
   story?: string;
+  score: number;
+  hint: string;
 
   interactable: boolean;
 
@@ -36,6 +38,9 @@ export const detectViewModel = proxy<DetectViewModel>({
   input: "",
   story: undefined,
   interactable: true,
+  score: 100,
+  hint: "",
+  
   load(bundle: DetectStartResponse) {
     detectViewModel.title = bundle.title;
     detectViewModel.puzzle = bundle.puzzle;

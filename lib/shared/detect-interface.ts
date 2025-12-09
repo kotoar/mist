@@ -1,5 +1,16 @@
 import { z } from "zod";
 
+export const DetectJudgeSchema = z.object({
+  correct: z.boolean()
+    .describe("Whether the answer is correct"),
+  score: z.number()
+    .min(0)
+    .max(100)
+    .describe("Score for the answer, from 0 to 100"),
+  hint: z.string().optional().describe("Optional hint for incorrect answers"),
+});
+export type DetectJudge = z.infer<typeof DetectJudgeSchema>;
+
 export const DetectStartResponseSchema = z.object({
   sessionId: z.string(),
   title: z.string(),
@@ -15,6 +26,8 @@ export const DetectStartResponseSchema = z.object({
 export type DetectStartResponse = z.infer<typeof DetectStartResponseSchema>;
 
 export interface DetectSubmitResponse {
+  score: number;
+  hint?: string;
   answer?: string;
   story?: string;
 }
