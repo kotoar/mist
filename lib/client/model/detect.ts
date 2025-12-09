@@ -28,6 +28,8 @@ export class DetectDelegate {
       detectViewModel.currentFinished = true;
     } else {
       detectViewModel.currentFinished = false;
+      detectViewModel.score = response.score;
+      detectViewModel.hint = response.hint || "";
     }
     if (response.story) {
       detectViewModel.story = response.story;
