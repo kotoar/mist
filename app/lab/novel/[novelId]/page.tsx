@@ -3,8 +3,8 @@
 import { useParams } from "next/navigation";
 import { useEffect } from "react";
 import { ClientOnly } from "@chakra-ui/react";
-import { NovelView } from "@client/view/aigc/novel";
-import { novelViewModel } from "@client/view/aigc/viewmodel";
+import { NovelView } from "@/lib/client/view/novel/novel";
+import { novelViewModel } from "@/lib/client/view/novel/viewmodel";
 import { readNovelContent } from "@server/aigc/novel";
 
 export default function NovelPage() {

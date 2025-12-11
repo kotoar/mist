@@ -1,0 +1,99 @@
+id: compose-02
+title: P02 沉默的祝酒词
+setup: 私人会所的包间里，黑帮教父正举起酒杯，准备庆祝他的60岁大寿。房间里只有心腹保镖和一名新来的侍者。侍者刚刚在教父的红酒里下了剧毒的“氰化物”，只需要一口，教父就会心脏骤停。
+
+ending: 教父微笑着将酒杯送到唇边，在众人的注视下毫无防备地一饮而尽。仅仅过了三秒，他突然松开领带，面容极度扭曲，紧接着连人带椅子重重倒在地上，口吐白沫，身体剧烈抽搐。保镖们惊慌失措地围在濒死的老大身边大喊医生，而那名“新来的侍者”趁着混乱的间隙，低着头悄无声息地退出了包间，消失在走廊的阴影里。
+
+currentResult: 失败：教父饮下毒酒身亡，侍者趁乱逃离。
+targetResult: 胜利：利用化学反应、生物本能或物理现象，在教父饮酒前让毒药显形，或迫使杀手暴露。
+
+sentences:
+  - subject: 房间的灯光
+    content: 昏暗而暧昧，营造出氛围感。
+    failureCriteria: 变亮（不足以发现液体异常）。
+
+  - subject: 墙上的空调
+    content: 开着微风模式，气流平缓。
+    # 【胜利路线 A：气流扩散】
+    # 结合“毒药是粉末”和“侍者距离”。
+    successCriteria: 突然开启强力风扇模式，直吹餐桌。逻辑：强风将侍者袖口或刚撒入杯口的残余毒粉吹起，形成明显的白色粉尘雾，甚至吹入侍者眼睛导致其痛苦捂眼暴露。
+
+  - subject: 教父手中的酒杯
+    content: 是极薄的水晶高脚杯。
+    failureCriteria: 碎裂（侍者会换一杯，平局）。
+
+  - subject: 杯中的红酒
+    content: 呈现深红宝石色，酒体醇厚。
+    # 【胜利路线 B：化学显色】
+    # 结合“特定毒物反应”。
+    successCriteria: 混入了大量的酸性柠檬汁或苏打水。逻辑：特定毒药在酸性或碳酸环境下产生剧烈的起泡反应或变色（如变成蓝色），肉眼可见的异常让教父立刻停手。
+
+  - subject: 溶解的毒药
+    content: 无色无味，迅速溶于酒精。
+    failureCriteria: 变得浑浊（在昏暗灯光下看不清）。
+
+  - subject: 桌上的餐刀
+    content: 是一把锋利的不锈钢牛排刀。
+    # 【胜利路线 C：银针试毒】
+    # 经典的化学伏笔。
+    successCriteria: 材质变为未经处理的纯银。逻辑：教父习惯用餐刀碰杯。纯银接触到含有硫化物或特定毒素的液体会瞬间变黑（Tarnish）。保镖看到变黑的刀刃会立刻拔枪。
+
+  - subject: 侍者的表情
+    content: 保持着训练有素的僵硬微笑。
+    # 【胜利路线 D：生理失控】
+    # 心理博弈。
+    successCriteria: 极度扭曲且汗如雨下。逻辑：保镖对“过度紧张”极其敏感。侍者无法控制的生理恐惧出卖了他，导致被预防性拿下。
+
+  - subject: 侍者的手套
+    content: 洁白棉质，一尘不染。
+    failureCriteria: 变脏或脱落。
+
+  - subject: 桌底下的波斯猫
+    content: 吃饱喝足，正在呼呼大睡。
+    # 【胜利路线 E：生物试毒】
+    # 结合“教父宠爱猫”。
+    successCriteria: 饥肠辘辘，跳上桌子乞食。逻辑：教父非常宠猫，习惯在自己吃喝前先喂猫。猫舔了一口酒液当场抽搐死亡，瞬间揭露毒杀阴谋。
+
+  - subject: 门口的保镖
+    content: 戴着墨镜，双手交叉在胸前。
+    failureCriteria: 离开或睡着（教父必死）。
+
+  - subject: 房间的背景音乐
+    content: 播放着大音量的歌剧。
+    failureCriteria: 静音（无关紧要）。
+
+  - subject: 桌上的蜡烛
+    content: 火苗稳定地燃烧着。
+    successCriteria: 突然爆燃变成诡异的绿色。逻辑：某些毒物挥发气体接触明火会产生焰色反应（虽略显夸张，但在推理类中通过）。
+
+  - subject: 教父的戒指
+    content: 是一枚巨大的黄金图章戒指。
+    failureCriteria: 变成银戒指（他不一定会把手伸进酒里）。
+
+  - subject: 教父的嘴唇
+    content: 有些干裂，急需润喉。
+    failureCriteria: 湿润。
+
+  - subject: 窗外的夜色
+    content: 漆黑一片，下着小雨。
+    failureCriteria: 月光明亮。
+
+  - subject: 桌上的餐巾
+    content: 折叠成天鹅形状，摆在盘子里。
+    failureCriteria: 掉在地上。
+
+  - subject: 侍者的站位
+    content: 站在教父右后方，距离一步之遥。
+    failureCriteria: 站得更远。
+
+  - subject: 毒药的剂量
+    content: 足以杀死一头大象。
+    failureCriteria: 减少剂量（依然致死）。
+
+  - subject: 酒瓶的软木塞
+    content: 已经被拔出，放在一边。
+    failureCriteria: 塞回去。
+
+  - subject: 房间的门
+    content: 紧紧关闭着，隔绝了声音。
+    failureCriteria: 打开。
