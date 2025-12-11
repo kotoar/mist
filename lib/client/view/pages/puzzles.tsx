@@ -2,13 +2,20 @@
 
 import { Container, VStack, Text, Button, HStack, Spacer, Card, Heading, Wrap, Image, Blockquote } from "@chakra-ui/react";
 import Link from "next/link";
-import { PageTitleView } from "../components/title";
+import { PageTitleView } from "@client/view/components/title";
 
 export function PuzzleListView() {
   return (
     <Container maxW="6xl" height="100vh">
       <VStack align="stretch" height="full" gap="20px" padding="20px">
         <Banner />
+        <Blockquote.Root>
+          <Blockquote.Content whiteSpace="pre-wrap" color="fg.muted" fontSize="sm">
+            网页解密游戏是近年来兴起的一种互动式谜题体验形式。玩家通过浏览网页、解读线索、破解密码，逐步揭开隐藏在故事背后的秘密。
+            {`\n`}
+            请多加使用游戏内的搜索功能，揭开作者设置的各种谜题。
+          </Blockquote.Content>
+        </Blockquote.Root>
         <Wrap>
           <Link href="https://street7.mistcase.app" passHref target="_blank" rel="noopener noreferrer">
             <PuzzlePreviewView />
@@ -29,13 +36,6 @@ function Banner() {
           <Button size={{ md: "sm", base: "xs" }} colorPalette="orange" variant="surface">主页</Button>
         </Link>
       </HStack>
-      <Blockquote.Root>
-        <Blockquote.Content whiteSpace="pre-wrap" color="fg.muted" fontSize="sm">
-          网页解密游戏是近年来兴起的一种互动式谜题体验形式。玩家通过浏览网页、解读线索、破解密码，逐步揭开隐藏在故事背后的秘密。
-          {`\n`}
-          请多加使用游戏内的搜索功能，揭开作者设置的各种谜题。
-        </Blockquote.Content>
-      </Blockquote.Root>
     </VStack>
   );
 }
@@ -50,7 +50,7 @@ function PuzzlePreviewView() {
       <Card.Body>
         <VStack align="stretch" gap="4px" width="full">
           <Wrap align="start">
-            <Heading size="sm">命栽七号街</Heading>
+            <Heading size="sm">《命栽七号街》</Heading>
             <Spacer />
             <Text fontSize="sm">1 - 1.5小时</Text>
           </Wrap>

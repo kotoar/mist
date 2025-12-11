@@ -91,10 +91,10 @@ function CaseTypeSelector() {
   });
   return (
     <HStack align="center" gap="10px">
-      <Text>档案类型</Text>
+      <Text fontSize="sm">档案类型</Text>
       <Select.Root 
         collection={selectorItems}
-        width="150px"
+        width="100px"
         size="sm"
         value={[viewModel.caseFilter]}
         onValueChange={(details) => listViewModel.caseFilter = details.value[0] as "all" | "detect" | "case"}

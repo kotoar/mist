@@ -1,4 +1,4 @@
-import { PuzzleListView } from "@/lib/client/view/puzzles/view";
+import { PuzzleListView } from "@/lib/client/view/pages/puzzles";
 
 export default function Page() {
   return <PuzzleListView />;
