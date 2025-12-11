@@ -1,9 +1,9 @@
-import { Box, Heading, HStack, Button, Highlight, Text, Image, useBreakpointValue } from "@chakra-ui/react";
+import { Box, Heading, HStack, Button, Highlight, Text, Image, useBreakpointValue, Float, Badge } from "@chakra-ui/react";
 import Link from "next/link";
 import { useSnapshot } from "valtio";
 import { listViewModel } from "@client/viewmodel/list";
 
-export function PageTitleView({ type }: { type: "case" | "mist" | "aigc" | "puzzles" }) {
+export function PageTitleView({ type }: { type: "case" | "mist" | "lab" | "puzzles" }) {
   const isMobile = useBreakpointValue({ base: true, md: false });
 
   if (isMobile) {
@@ -46,18 +46,18 @@ export function PageTitleView({ type }: { type: "case" | "mist" | "aigc" | "puzz
           </Box>
         </HStack>
       );
-    case "aigc":
+    case "lab":
       return (
         <HStack position="sticky" top="0" align="center" width="full" gap="10px" bg="bg" zIndex={1} py="10px">
           <Image src="/lab-icon.png" alt="Logo:Lab" boxSize="50px" />
-          <Heading size="2xl">迷雾档案：AIGC 推理实验室</Heading>
+          <Heading size="2xl">迷雾档案：实验室</Heading>
         </HStack>
       );
     case "puzzles":
       return (
         <HStack position="sticky" top="0" align="center" width="full" gap="10px" bg="bg" zIndex={1} py="10px">
           <Image src="/icon.png" alt="Logo:Puzzles" boxSize="50px" />
-          <Heading size="2xl">迷雾档案：网页解密游戏</Heading>
+          <Heading size="2xl">迷雾档案：网页解谜游戏</Heading>
         </HStack>
       );
     default:
@@ -85,13 +85,20 @@ export function PageSelector() {
         <Button 
           size={{ md: "sm", base: "xs" }}
           variant="ghost"
-        >解密</Button>
+        >解谜</Button>
       </Link>
-      <Link href="/aigc" passHref>
-        <Button 
-          size={{ md: "sm", base: "xs" }}
-          variant="ghost"
-        >实验室</Button>
+      <Link href="/lab" passHref>
+        <Box position="relative">
+          <Button 
+            size={{ md: "sm", base: "xs" }}
+            variant="ghost"
+          >实验室</Button>
+          <Float offsetX="5px" offsetY="5px" zIndex={10}>
+            <Badge size="xs" variant="solid" colorPalette="blue">
+              Beta
+            </Badge>
+          </Float>
+        </Box>
       </Link>
     </HStack>
   );

@@ -1,0 +1,103 @@
+id: compose-01
+title: P01 广场上的枪声
+setup: 正午，太阳直射广场。市长站在讲台上演讲。对面废弃大楼的304房间漆黑一片，像个黑洞。一支狙击枪管藏在黑暗深处，瞄准了讲台。
+
+ending: 十二点的钟声准时敲响，巨大的轰鸣声完美掩盖了加装消音器的枪声。市长的演讲戛然而止，眉心爆出一团血雾，向后仰面倒下。人群在短暂的死寂后爆发出一片尖叫。当特警冲进对面废弃大楼的304房间时，那里空无一人，只留下一枚还带着余温的弹壳。凶手利用完美的阴影和声音掩护，早已像幽灵一样消失得无影无踪。
+
+currentResult: 失败：市长被击杀，或凶手因环境不佳放弃任务并逃脱。
+targetResult: 胜利：利用强光致盲、声学过载或生理惊跳，迫使凶手当场暴露位置或生理失控被捕。
+
+sentences:
+  - subject: 天空中的太阳
+    content: 悬在正头顶，光线极其强烈。
+    # 伏笔：巨大的能量源。
+    failureCriteria: 阴天、下雨、有云遮挡。
+
+  - subject: 广场中央的雕塑
+    content: 由粗糙的生锈黑铁制成。
+    # 【胜利路线 A：光学致盲】
+    # 结合“瞳孔放大”和“烈日”。
+    successCriteria: 材质变为高抛光镜面或凹面镜，且角度将阳光反射进304房间。逻辑：强光射入暗室，致盲瞳孔放大的凶手并暴露其位置。
+
+  - subject: 304房间的窗帘
+    content: 厚重且不透光，挡住了两侧。
+    failureCriteria: 拉开或完全闭合。
+
+  - subject: 窗台上的积灰
+    content: 积了厚厚的一层霉菌灰尘。
+    failureCriteria: 变干净。
+
+  - subject: 窗框上的排气扇
+    content: 早就锈死，扇叶卡住了。
+    # 【胜利路线 B：尘爆窒息】
+    # 结合“积灰”和“呼吸平稳”。
+    successCriteria: 突然全速倒转（向内吹风）。逻辑：卷起陈年积灰形成高浓度尘雾，引发凶手剧烈咳嗽或哮喘，导致瞄准失效。
+
+  - subject: 市长的麦克风
+    content: 是全向收音的高灵敏型号。
+    # 【胜利路线 C：声学过载】
+    # 结合“佩戴耳机”。
+    successCriteria: 产生极高分贝的尖锐啸叫（Feedback）。逻辑：通过凶手的耳机传导噪音，震破耳膜或引发眩晕。
+    failureCriteria: 没声音或断电。
+
+  - subject: 前排的一个小孩
+    content: 手里抓着一个充气过足的气球。
+    # 【胜利路线 D：惊跳反射】
+    # 结合“手指搭在扳机上”。
+    successCriteria: 气球突然爆炸发出巨响。逻辑：触发惊跳反射（Startle Response），导致手抖误触扳机走火暴露。
+    failureCriteria: 气球飞走。
+
+  - subject: 路边的运货卡车
+    content: 刚刚熄火，引擎还在发热。
+    # 备选路线 D
+    successCriteria: 引擎发生严重回火发出巨响。逻辑：同气球，触发惊跳反射。
+    failureCriteria: 开走。
+
+  - subject: 市政厅的大钟
+    content: 指针指向11点59分。
+    failureCriteria: 故障不响。
+
+  - subject: 广场上的鸽子
+    content: 正在地面上啄食。
+    failureCriteria: 飞起来遮挡视线。
+
+  - subject: 市长的领带
+    content: 是鲜艳的红色。
+    failureCriteria: 任何颜色的改变。
+
+  - subject: 讲台上的演讲稿
+    content: 被镇纸压着。
+    failureCriteria: 被风吹走。
+
+  - subject: 凶手的呼吸
+    content: 平稳而有节奏。
+    successCriteria: 突发哮喘、打嗝或剧烈咳嗽。
+
+  - subject: 凶手的手指
+    content: 轻轻搭在扳机上。
+    successCriteria: 被静电击中或昆虫叮咬导致抽搐。
+
+  - subject: 凶手的瞄准镜
+    content: 镜片上镀了防反光膜。
+    successCriteria: 镀膜脱落或镜片碎裂。
+
+  - subject: 凶手的耳机
+    content: 开启了环境音放大模式。
+    # 伏笔：为“麦克风啸叫”提供条件。
+    successCriteria: 电池漏液或电路短路。
+    failureCriteria: 没电或摘下。
+
+  - subject: 警方的观察手
+    content: 看不清阴暗的窗户内部。
+    failureCriteria: 换望远镜。
+
+  - subject: 广场喷泉
+    content: 处于关闭状态。
+    successCriteria: 突发高压水幕。逻辑：物理遮挡视线。
+
+  - subject: 凶手的距离
+    content: 约600米。
+
+  - subject: 凶手的瞳孔
+    content: 因为适应黑暗而处于放大状态。
+    # 伏笔：提示畏光弱点。
