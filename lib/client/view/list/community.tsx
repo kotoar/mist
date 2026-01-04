@@ -18,13 +18,13 @@ function ContactDetailsView() {
   return (
     <Wrap width="full" justify="start" gap={4}>
       <Button
-          size={{ md: "sm", base: "xs" }}
-          variant="outline"
-          onClick={() => window.open('https://xhslink.com/m/3keCJl9wtyp', '_blank', 'noopener,noreferrer')}
-        >
-          <Icon as={SiXiaohongshu } />
-          小红书
-        </Button>
+        size={{ md: "sm", base: "xs" }}
+        variant="outline"
+        onClick={() => window.open('https://xhslink.com/m/3keCJl9wtyp', '_blank', 'noopener,noreferrer')}
+      >
+        <Icon as={SiXiaohongshu } />
+        小红书
+      </Button>
       <Button
         size={{ md: "sm", base: "xs" }}
         variant="outline"

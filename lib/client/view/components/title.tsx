@@ -1,63 +1,24 @@
-import { Box, Heading, HStack, Button, Highlight, Text, Image, useBreakpointValue, Float, Badge } from "@chakra-ui/react";
-import Link from "next/link";
-import { useSnapshot } from "valtio";
-import { listViewModel } from "@client/viewmodel/list";
+import { Heading, HStack, Button, Image, Wrap, Spacer } from "@chakra-ui/react";
+import { useRouter } from "next/navigation";
+import { PageType } from "@client/viewmodel/list";
 
-export function PageTitleView({ type }: { type: "case" | "mist" | "lab" | "puzzles" }) {
-  const isMobile = useBreakpointValue({ base: true, md: false });
-
-  if (isMobile) {
-    return (
-      <HStack>
-        <Image src="/icon.png" alt="Logo" boxSize="20px" />
-        <Heading size="lg">
-          迷雾档案
-        </Heading>
-      </HStack>
-    );
-  }
-
+export function PageTitleView({ type }: { type?: PageType }) {
   switch (type) {
     case "case":
-      return (
-        <HStack>
-          <Image src="/icon.png" alt="Logo" boxSize="50px" />
-          <Box width="200px">
-            <Heading size="2xl">
-              <Highlight query="档案" styles={{ px: "0.5", bg: { _light: "teal.200", _dark: "teal.700" } }}>
-                迷雾档案
-              </Highlight>
-            </Heading>
-            <Text>侦探们的摸鱼神器</Text>
-          </Box>
-        </HStack>
-      );
     case "mist":
+    case "home":
+    case "puzzles":
       return (
-        <HStack>
-          <Image src="/icon.png" alt="Logo" boxSize="50px" />
-          <Box width="200px">
-            <Heading size="2xl">
-              <Highlight query="迷雾" styles={{ px: "0.5", bg: { _light: "purple.200", _dark: "purple.700" } }}>
-                迷雾档案
-              </Highlight>
-            </Heading>
-            <Text>神明的谜题</Text>
-          </Box>
+        <HStack gap="10px">
+          <Image src="/icon.png" alt="Logo:Puzzles" boxSize="50px" />
+          <Heading size="2xl">迷雾档案</Heading>
         </HStack>
       );
     case "lab":
       return (
-        <HStack position="sticky" top="0" align="center" width="full" gap="10px" bg="bg" zIndex={1} py="10px">
+        <HStack gap="10px">
           <Image src="/lab-icon.png" alt="Logo:Lab" boxSize="50px" />
           <Heading size="2xl">迷雾档案：实验室</Heading>
-        </HStack>
-      );
-    case "puzzles":
-      return (
-        <HStack position="sticky" top="0" align="center" width="full" gap="10px" bg="bg" zIndex={1} py="10px">
-          <Image src="/icon.png" alt="Logo:Puzzles" boxSize="50px" />
-          <Heading size="2xl">迷雾档案：网页解谜游戏</Heading>
         </HStack>
       );
     default:
@@ -65,41 +26,51 @@ export function PageTitleView({ type }: { type: "case" | "mist" | "lab" | "puzzl
   }
 }
 
-export function PageSelector() {
-  const viewModel = useSnapshot(listViewModel);
+export function PageSelector({ type }: { type?: PageType }) {
+  const router = useRouter();
+
   return (
     <HStack gap="4px">
       <Button 
         size={{ md: "sm", base: "xs" }}
-        variant={ viewModel.type === "case" ? "surface" : "ghost" } 
+        variant={ type === "home" ? "surface" : "ghost" } 
+        colorPalette="orange"
+        onClick={ () => router.push("/")}
+      >主页</Button>
+      <Button 
+        size={{ md: "sm", base: "xs" }}
+        variant={ type === "case" ? "surface" : "ghost" } 
         colorPalette="teal"
-        onClick={() => listViewModel.type = "case"}
+        onClick={() => router.push("/case")}
       >档案</Button>
       <Button 
         size={{ md: "sm", base: "xs" }}
-        variant={ viewModel.type === "mist" ? "surface" : "ghost" }
+        variant={ type === "mist" ? "surface" : "ghost" }
         colorPalette="purple"
-        onClick={() => listViewModel.type = "mist"}
+        onClick={() => router.push("/mist")}
       >迷雾</Button>
-      <Link href="/puzzles" passHref>
-        <Button 
-          size={{ md: "sm", base: "xs" }}
-          variant="ghost"
-        >解谜</Button>
-      </Link>
-      <Link href="/lab" passHref>
-        <Box position="relative">
-          <Button 
-            size={{ md: "sm", base: "xs" }}
-            variant="ghost"
-          >实验室</Button>
-          <Float offsetX="5px" offsetY="5px" zIndex={10}>
-            <Badge size="xs" variant="solid" colorPalette="blue">
-              Beta
-            </Badge>
-          </Float>
-        </Box>
-      </Link>
+      <Button 
+        size={{ md: "sm", base: "xs" }}
+        variant={ type === "puzzles" ? "surface" : "ghost" }
+        colorPalette="blue"
+        onClick={() => router.push("/puzzles")}
+      >解谜</Button>
+      <Button 
+        size={{ md: "sm", base: "xs" }}
+        variant={ type === "lab" ? "surface" : "ghost" }
+        colorPalette="blue"
+        onClick={() => router.push("/lab")}
+      >实验室</Button>
     </HStack>
+  );
+}
+
+export function PageNavigator({ type }: { type?: PageType }) {
+  return (
+    <Wrap position="sticky" top={0} align="center" zIndex={1} bg="bg" marginBottom="20px">
+      <PageTitleView type={type} />
+      <Spacer />
+      <PageSelector type={type} />
+    </Wrap>
   );
 }
