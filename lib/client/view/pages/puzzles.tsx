@@ -1,14 +1,14 @@
 "use client";
 
-import { Container, VStack, Text, Button, HStack, Spacer, Card, Heading, Wrap, Image, Blockquote } from "@chakra-ui/react";
+import { Container, VStack, Text, Spacer, Card, Heading, Wrap, Image, Blockquote } from "@chakra-ui/react";
 import Link from "next/link";
-import { PageTitleView } from "@client/view/components/title";
+import { PageNavigator } from "@client/view/components/title";
 
 export function PuzzleListView() {
   return (
     <Container maxW="6xl" height="100vh">
       <VStack align="stretch" height="full" gap="20px" padding="20px">
-        <Banner />
+        <PageNavigator type="puzzles" />
         <Blockquote.Root>
           <Blockquote.Content whiteSpace="pre-wrap" color="fg.muted" fontSize="sm">
             网页解密游戏是近年来兴起的一种互动式谜题体验形式。玩家通过浏览网页、解读线索、破解密码，逐步揭开隐藏在故事背后的秘密。
@@ -23,20 +23,6 @@ export function PuzzleListView() {
         </Wrap>
       </VStack>
     </Container>
-  );
-}
-
-function Banner() {
-  return (
-    <VStack gap="10px" align="stretch" paddingBottom="10px">
-      <HStack>
-        <PageTitleView type="puzzles" />
-        <Spacer />
-        <Link href="/" passHref>
-          <Button size={{ md: "sm", base: "xs" }} colorPalette="orange" variant="surface">主页</Button>
-        </Link>
-      </HStack>
-    </VStack>
   );
 }
 

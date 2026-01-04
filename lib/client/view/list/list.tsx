@@ -9,26 +9,26 @@ import { GuideButtonView } from "./guide";
 import { CaseView } from "./case-item";
 import { PageSelector, PageTitleView } from "../components/title";
 
-export function HomeView() {
+export function ListView({ type }: { type: "case" | "mist" }) {
   const viewModel = useSnapshot(listViewModel);
   
   return (
     <Container maxW="6xl" height="100vh">
       <VStack height="full" align="stretch" paddingTop="20px">
         <Wrap position="sticky" top={0} align="center" zIndex={1} bg="bg" marginBottom="20px">
-          <PageTitleView type={viewModel.type} />
+          <PageTitleView type={type} />
           <Spacer />
-          <PageSelector />
+          <PageSelector type={type} />
         </Wrap>
         <HStack gap="20px">
           <GuideButtonView />
           <Spacer />
-          <Show when={viewModel.type === "case"}>
+          <Show when={type === "case"}>
             <CaseTypeSelector />
           </Show>
         </HStack>
         <SimpleGrid columns={{ base: 2, sm: 2, md: 3, lg: 4 }} gap={4}>
-          <Show when={viewModel.type === "case"}>
+          <Show when={type === "case"}>
             <For each={viewModel.showCases}>
               {(item) => (
                 <Link key={item.id} href={`/${item.game}/${item.id}`}>
@@ -45,7 +45,7 @@ export function HomeView() {
               )}
             </For>
           </Show>
-          <Show when={viewModel.type === "mist"}>
+          <Show when={type === "mist"}>
             <For each={viewModel.mists}>
               {(item) => (
                 <Link key={item.id} href={`/mist/${item.id}`}>
