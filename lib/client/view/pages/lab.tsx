@@ -1,8 +1,8 @@
 "use client";
 
-import { Blockquote, Container, HStack, VStack, Text, Spacer, Show, For, Badge, useBreakpointValue, Button, Heading, Card, Wrap, Box, SimpleGrid } from "@chakra-ui/react";
+import { Blockquote, Container, HStack, VStack, Text, Spacer, Show, For, Badge, useBreakpointValue, Heading, Card, Box, SimpleGrid } from "@chakra-ui/react";
 import { NovelListItem, novelViewModel } from "../novel/viewmodel";
-import { PageTitleView } from "@client/view/components/title";
+import { PageNavigator } from "@client/view/components/title";
 import { useSnapshot } from "valtio";
 import Link from "next/link";
 
@@ -10,13 +10,7 @@ export function LabListView() {
   return (
     <Container maxW="6xl" height="100vh">
       <VStack align="stretch" height="full" gap="20px" padding="20px">
-        <HStack>
-          <PageTitleView type="lab" />
-          <Spacer />
-          <Link href="/" passHref>
-            <Button size={{ md: "sm", base: "xs" }} colorPalette="orange" variant="surface">主页</Button>
-          </Link>
-        </HStack>
+        <PageNavigator type="lab" />
         <ComposeSection />
         <Box height="1px" bg="bg.emphasized" />
         <NovelSection />

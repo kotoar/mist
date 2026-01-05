@@ -6,40 +6,17 @@ import { CasePreview } from "@shared/case-schema";
 import { MistPreview } from "@shared/mist-schema";
 import { mistList } from "@/lib/server/list/case-list";
 
+export type PageType = "home" | "case" | "mist" | "lab" | "puzzles";
+
 interface ListViewModel {
-  _type: "case" | "mist" | null;
-  type: "case" | "mist";
   caseFilter: "all" | "detect" | "case";
   cases: CasePreview[];
   get showCases(): CasePreview[];
   mists: MistPreview[];
-  fetch(): Promise<void>;
+  fetch(type: "case" | "mist"): Promise<void>;
 }
 
 export const listViewModel = proxy<ListViewModel>({
-  _type: null,
-  get type() {
-    if (this._type === null) {
-      const storedType = localStorage.getItem("listType") as "case" | "mist";
-      if (storedType) {
-        this._type = storedType;
-        return this._type;
-      } else {
-        this._type = "case";
-        return this._type;
-      }
-    }
-    return this._type;
-  },
-  set type(value: "case" | "mist") {
-    this._type = value;
-    localStorage.setItem("listType", value);
-    if (value === "case" && this.cases.length === 0) {
-      caseList().then(data => listViewModel.cases = data);
-    } else {
-      mistList().then(data => listViewModel.mists = data);
-    }
-  },
   cases: [] as CasePreview[],
   caseFilter: "all",
   mists: [],
@@ -52,8 +29,8 @@ export const listViewModel = proxy<ListViewModel>({
     }
   },
 
-  async fetch() {
-    switch (this.type) {
+  async fetch(type: "case" | "mist") {
+    switch (type) {
       case "case":
         this.cases = await caseList();
         break;
