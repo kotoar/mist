@@ -10,14 +10,14 @@ export function PageTitleView({ type }: { type?: PageType }) {
     case "puzzles":
       return (
         <HStack gap="10px">
-          <Image src="/icon.png" alt="Logo:Puzzles" boxSize="50px" />
+          <Image src="/icon.png" alt="Logo:Puzzles" boxSize="30px" />
           <Heading size="2xl">迷雾档案</Heading>
         </HStack>
       );
     case "lab":
       return (
         <HStack gap="10px">
-          <Image src="/lab-icon.png" alt="Logo:Lab" boxSize="50px" />
+          <Image src="/lab-icon.png" alt="Logo:Lab" boxSize="30px" />
           <Heading size="2xl">迷雾档案：实验室</Heading>
         </HStack>
       );
