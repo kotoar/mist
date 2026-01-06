@@ -4,8 +4,9 @@ import { Box, Button, Container, GridItem, Heading, HStack, Icon, SimpleGrid, VS
 import { PageNavigator } from "@client/view/components/title";
 import { RecentItem, RecentItemView } from "./recent-item";
 import Link from "next/link";
-import { SiBilibili, SiXiaohongshu } from "react-icons/si";
+import { SiBilibili, SiTencentqq, SiXiaohongshu } from "react-icons/si";
 import { FaArchive, FaEye, FaPuzzlePiece, FaQuestionCircle } from "react-icons/fa";
+import { MdEmail } from "react-icons/md";
 
 export function HomeView() {
   return (
@@ -108,12 +109,20 @@ function ConnectionLinksSection() {
         </Text>
       </Box>
       <Wrap width="full" justify="start" gap={4}>
-      <Button
-        size={{ md: "sm", base: "xs" }}
-        variant="outline"
-        onClick={() => window.open('https://xhslink.com/m/3keCJl9wtyp', '_blank', 'noopener,noreferrer')}
-      >
-        <Icon as={SiXiaohongshu} />
+        <Button
+          size={{ md: "sm", base: "xs" }}
+          variant="outline"
+          onClick={() => window.open('mailto:mistcase@deepclue.app', '_blank', 'noopener,noreferrer')}
+        >
+          <Icon as={MdEmail} />
+          mistcase@deepclue.app
+        </Button>
+        <Button
+          size={{ md: "sm", base: "xs" }}
+          variant="outline"
+          onClick={() => window.open('https://xhslink.com/m/3keCJl9wtyp', '_blank', 'noopener,noreferrer')}
+        >
+          <Icon as={SiXiaohongshu} />
           小红书: @deepclue
         </Button>
         <Button
@@ -123,6 +132,14 @@ function ConnectionLinksSection() {
         >
           <Icon as={SiBilibili} />
           哔哩哔哩: @DeepClue侦探事务所
+        </Button>
+        <Button
+          size={{ md: "sm", base: "xs" }}
+          variant="outline"
+          onClick={() => window.open('https://qm.qq.com/q/AYvSHdaldC', '_blank', 'noopener,noreferrer')}
+        >
+          <Icon as={SiTencentqq} />
+          QQ: 迷雾档案 MistCase
         </Button>
       </Wrap>
     </VStack>
