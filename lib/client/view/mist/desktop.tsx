@@ -9,10 +9,12 @@ import { mistViewModel } from "@client/viewmodel/mist";
 import { MistStoryBannerView } from "./story-banner";
 import { SectionView } from "./section";
 import { MistInfoView } from "../components/info";
+import { Prose } from "@/components/ui/prose";
+import Markdown from "react-markdown";
 
 export function DesktopMistView() {
 	const viewModel = useSnapshot(mistViewModel);
-  const router = useRouter();
+	const router = useRouter();
 
 	return (
 		<Container maxW="container.lg" height="100vh">
@@ -26,7 +28,11 @@ export function DesktopMistView() {
 										<HStack position="sticky" top={0} zIndex={1} bg="bg">
 											<Heading fontSize="2xl" fontWeight="bold">{viewModel.title}</Heading>
 										</HStack>
-										<Text whiteSpace="pre-wrap">{viewModel.puzzle}</Text>
+										<Prose color="fg">
+											<Markdown>
+												{viewModel.puzzle}
+											</Markdown>
+										</Prose>
 									</VStack>
 								</ScrollArea.Content>
 							</ScrollArea.Viewport>
@@ -38,34 +44,34 @@ export function DesktopMistView() {
 							<ScrollArea.Viewport>
 								<ScrollArea.Content paddingEnd="5">
 									<VStack gap="10px" align="stretch">
-                    <VStack position="sticky" top={0} paddingY="4px" zIndex={1} bg="bg">
-                      <HStack width="full">
-                        <Heading fontSize="2xl" fontWeight="bold">迷雾</Heading>
-                        <Spacer />
+										<VStack position="sticky" top={0} paddingY="4px" zIndex={1} bg="bg">
+											<HStack width="full">
+												<Heading fontSize="2xl" fontWeight="bold">迷雾</Heading>
+												<Spacer />
 												<MistInfoView size="sm" />
-												<Button 
-                          size="sm" colorPalette="pink" variant="surface"
-                          onClick={() => mistViewModel.skip()}
-                        >我想看答案</Button>
-                        <Button 
-                          size="sm" colorPalette="red" variant="surface"
-                          onClick={() => {
-                            mistViewModel.endGame()
-                            router.push("/");
-                          }}
-                        >结束游戏</Button>
-                      </HStack>
-                      <Show when={viewModel.story}>
-                        <MistStoryBannerView />
-                      </Show>
-                    </VStack>
+												<Button
+													size="sm" colorPalette="pink" variant="surface"
+													onClick={() => mistViewModel.skip()}
+												>我想看答案</Button>
+												<Button
+													size="sm" colorPalette="red" variant="surface"
+													onClick={() => {
+														mistViewModel.endGame()
+														router.push("/");
+													}}
+												>结束游戏</Button>
+											</HStack>
+											<Show when={viewModel.story}>
+												<MistStoryBannerView />
+											</Show>
+										</VStack>
 										<For each={viewModel.sections}>
 											{(section, index) => (
-                        <Card.Root key={index}>
-                          <Card.Body>
-                            <SectionView key={index} section={section} />
-                          </Card.Body>
-                        </Card.Root>
+												<Card.Root key={index}>
+													<Card.Body>
+														<SectionView key={index} section={section} />
+													</Card.Body>
+												</Card.Root>
 											)}
 										</For>
 										<Spacer />

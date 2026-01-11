@@ -34,13 +34,13 @@ export function DesktopComposeView() {
         <Box>
           <For each={viewModel.sentences}>
             {(sentence, index) => (
-              <Text 
+              <Text
                 key={index}
                 as="span"
                 whiteSpace="pre-wrap"
                 cursor="pointer"
                 marginRight="8px"
-                bg={viewModel.selectedIndex === index ? {_dark: "red.600", _light: "red.100"}: {_dark: "yellow.800", _light: "yellow.100"}}
+                bg={viewModel.selectedIndex === index ? { _dark: "red.600", _light: "red.100" } : { _dark: "yellow.800", _light: "yellow.100" }}
                 onClick={() => composeViewModel.selectedIndex = index}
               >{sentence.subject}{sentence.content}</Text>
             )}
@@ -48,9 +48,9 @@ export function DesktopComposeView() {
         </Box>
         <Text whiteSpace="pre-wrap" color="fg.muted">{viewModel.originalEnding}</Text>
         <Spacer minH={`${bottomHeight}px`} />
-        <VStack 
+        <VStack
           ref={bottomVStackRef}
-          position={{base: "fixed", md: "sticky"}} bottom={{base: "0", md: "10px"}} left={0} right={0}
+          position={{ base: "fixed", md: "sticky" }} bottom={{ base: "0", md: "10px" }} left={0} right={0}
           align="stretch" gap="10px" padding="10px"
           border="1px solid" borderColor="bg.emphasized" borderRadius="md" bg="bg.muted"
         >
@@ -81,7 +81,7 @@ export function DesktopComposeView() {
             <IMESafeInput
               type="textarea"
               textareaProps={{
-                placeholder: "最多输入20个字", 
+                placeholder: "最多输入20个字",
                 maxLength: 20,
                 onKeyDown: (e) => {
                   if (e.key === "Enter" && !e.shiftKey) {
@@ -93,7 +93,7 @@ export function DesktopComposeView() {
               value={viewModel.input}
               onChange={(e) => composeViewModel.input = e}
             />
-            <Button 
+            <Button
               variant="solid"
               disabled={viewModel.selectedIndex === undefined || viewModel.input.trim() === "" || !viewModel.interactable}
               onClick={() => handleSubmit(viewModel.selectedIndex!)}

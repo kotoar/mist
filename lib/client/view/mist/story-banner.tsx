@@ -2,6 +2,8 @@ import { useSnapshot } from "valtio";
 import { useRouter } from "next/navigation";
 import { Alert, Button, Dialog, Portal, Spacer, Text } from "@chakra-ui/react";
 import { mistViewModel } from "@client/viewmodel/mist";
+import { Prose } from "@/components/ui/prose";
+import Markdown from "react-markdown";
 
 export function MistStoryBannerView() {
   const viewModel = useSnapshot(mistViewModel);
@@ -25,7 +27,11 @@ export function MistStoryBannerView() {
                 <Dialog.Title>结局故事</Dialog.Title>
               </Dialog.Header>
               <Dialog.Body>
-                <Text whiteSpace="pre-wrap">{viewModel.story}</Text>
+                <Prose color="fg">
+                  <Markdown>
+                    {viewModel.story}
+                  </Markdown>
+                </Prose>
               </Dialog.Body>
               <Dialog.Footer>
                 <Button onClick={() => {

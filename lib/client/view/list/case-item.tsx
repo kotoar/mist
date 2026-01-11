@@ -14,13 +14,13 @@ export function CaseView(props: CaseViewProps) {
 
   const difficultyColor = props.difficulty ? (
     props.difficulty === "easy" ? "green" :
-    props.difficulty === "medium" ? "yellow" :
-    "red"
+      props.difficulty === "medium" ? "yellow" :
+        "red"
   ) : undefined;
   const difficultyLabel = props.difficulty ? (
     props.difficulty === "easy" ? "简单" :
-    props.difficulty === "medium" ? "中等" :
-    "困难"
+      props.difficulty === "medium" ? "中等" :
+        "困难"
   ) : undefined;
 
   if (isMobile) {
@@ -31,32 +31,22 @@ export function CaseView(props: CaseViewProps) {
         </Show>
         <Card.Body>
           <VStack align="stretch" gap="4px" height="full" width="full">
-            <HStack width="full" align="start">
+            <HStack width="full" align="center">
               <Text>{props.index}</Text>
               <Spacer />
               <Show when={props.difficulty}>
-                <Badge 
-                  size="xs"
-                  colorPalette={
-                    props.difficulty === "easy" ? "green" :
-                    props.difficulty === "medium" ? "yellow" :
-                    "red"
-                  }
-                >
-                  {props.difficulty === "easy" ? "简单" :
-                   props.difficulty === "medium" ? "中等" :
-                   "困难"}
+                <Badge size="sm" colorPalette={difficultyColor}>
+                  {difficultyLabel}
                 </Badge>
               </Show>
             </HStack>
             <Heading size="sm">
               {props.title}
             </Heading>
-            <Spacer />
             <Wrap gap="2px" align="center">
               <For each={props.tags}>
                 {(tag) => (
-                  <Badge key={tag} colorPalette={tagColor(tag)} size="xs">
+                  <Badge key={tag} colorPalette={tagColor(tag)} size="sm">
                     {tag}
                   </Badge>
                 )}
