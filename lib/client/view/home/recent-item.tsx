@@ -41,12 +41,12 @@ export function RecentItemView(props: RecentItem) {
   function handleClick() {
     router.push(props.url);
   }
-    
+
   return (
     <Card.Root size="sm" height="100%" onClick={handleClick} cursor="pointer">
       <Show when={props.cover}>
-        <Image 
-          src={props.cover || undefined} alt="Cover Image" 
+        <Image
+          src={props.cover || undefined} alt="Cover Image"
           borderTopRadius="md" objectFit="cover" maxH="150px" />
       </Show>
       <Card.Body>
@@ -63,10 +63,6 @@ export function RecentItemView(props: RecentItem) {
             <Text fontSize={{ md: "sm", base: "xs" }} color="fg.muted">
               {props.date}
             </Text>
-            <Show when={props.author}>
-              <Spacer />
-              <Text fontSize={{ md: "sm", base: "xs" }} color="fg.muted">{props.author}</Text>
-            </Show>
           </HStack>
         </VStack>
       </Card.Body>

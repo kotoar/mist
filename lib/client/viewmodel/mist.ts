@@ -50,7 +50,7 @@ export const mistViewModel = proxy<MistViewModel>({
   message: undefined,
   interactable: true,
   count: 0,
-  showMistHints: false,
+  showMistHints: true,
 
   load(bundle: MistStartResponse) {
     mistViewModel.title = bundle.title;

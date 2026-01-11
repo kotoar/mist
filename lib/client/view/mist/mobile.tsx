@@ -9,6 +9,8 @@ import { mistViewModel } from "@client/viewmodel/mist";
 import { SectionView } from "./section";
 import { MistStoryBannerView } from "./story-banner";
 import { MistInfoView } from "@/lib/client/view/components/info";
+import { Prose } from "@/components/ui/prose";
+import Markdown from "react-markdown";
 
 export function MobileMistGameView() {
   const viewModel = useSnapshot(mistViewModel);
@@ -20,22 +22,26 @@ export function MobileMistGameView() {
         <Text fontWeight="bold">{viewModel.title}</Text>
         <Spacer />
         <MistInfoView size="2xs" />
-        <Badge 
+        <Badge
           size="lg"
           colorPalette="pink"
           onClick={() => mistViewModel.skip()}
         >我想看答案</Badge>
-        <Badge 
+        <Badge
           size="lg"
           colorPalette="red"
-          onClick={() => { 
-            mistViewModel.endGame(); 
+          onClick={() => {
+            mistViewModel.endGame();
             router.push('/');
           }}
         >结束游戏</Badge>
       </HStack>
       <Show when={viewModel.view === "puzzle"}>
-        <Text whiteSpace="pre-wrap">{viewModel.puzzle}</Text>
+        <Prose color="fg">
+          <Markdown>
+            {viewModel.puzzle}
+          </Markdown>
+        </Prose>
       </Show>
       <Show when={viewModel.view === "clues"}>
         <VStack width="full" gap="25px" align="stretch" padding="10px">
@@ -58,7 +64,7 @@ export function MobileMistGameView() {
           <Spacer />
         </VStack>
       </Show>
-      <Box height={ viewModel.story ? "185px" : "120px"} />
+      <Box height={viewModel.story ? "185px" : "120px"} />
       <Box position="fixed" bottom={0} left={0} right={0} bg="bg" borderTop="1px solid" borderColor="fg.subtle" padding="10px">
         <PanelView />
       </Box>
@@ -75,17 +81,17 @@ function PanelView() {
         <MistStoryBannerView />
       </Show>
       <HStack align="end">
-        <Badge 
+        <Badge
           size="lg"
           variant={viewModel.view === "puzzle" ? "solid" : "outline"}
           onClick={() => { mistViewModel.view = "puzzle"; }}
         >谜面</Badge>
         <Box position="relative">
-          <Badge 
+          <Badge
             size="lg"
             variant={viewModel.view === "clues" ? "solid" : "outline"}
-            onClick={() => { 
-              mistViewModel.view = "clues"; 
+            onClick={() => {
+              mistViewModel.view = "clues";
               mistViewModel.indicated = false;
             }}
           >线索</Badge>
