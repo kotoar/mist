@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, Button, Container, GridItem, Heading, HStack, Icon, SimpleGrid, VStack, Wrap, Text, ScrollArea, For } from "@chakra-ui/react";
+import { Box, Button, Container, GridItem, Heading, HStack, Icon, SimpleGrid, VStack, Wrap, Text, ScrollArea, For, Dialog } from "@chakra-ui/react";
 import { PageNavigator } from "@client/view/components/title";
 import { RecentItem, RecentItemView } from "./recent-item";
 import Link from "next/link";
@@ -35,19 +35,19 @@ function RecentItemsSection() {
       <Heading size="lg">最近上新</Heading>
       <ScrollArea.Root direction="horizontal" width="full">
         <ScrollArea.Viewport>
-        <ScrollArea.Content py="4">
-          <HStack gap="20px" align="stretch">
-            <For each={recent}>
-              {(item, index) => (
-                <RecentItemView 
-                  key={index}
-                  type={item.type} title={item.title} cover={item.cover} date={item.date}
-                  author={item.author} url={item.url}
-                />
-              )}
-            </For>
-          </HStack>
-        </ScrollArea.Content>
+          <ScrollArea.Content py="4">
+            <HStack gap="20px" align="stretch">
+              <For each={recent}>
+                {(item, index) => (
+                  <RecentItemView
+                    key={index}
+                    type={item.type} title={item.title} cover={item.cover} date={item.date}
+                    author={item.author} url={item.url}
+                  />
+                )}
+              </For>
+            </HStack>
+          </ScrollArea.Content>
         </ScrollArea.Viewport>
         <ScrollArea.Scrollbar orientation="horizontal" />
         <ScrollArea.Corner />

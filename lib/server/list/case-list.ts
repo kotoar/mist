@@ -37,5 +37,6 @@ export async function mistList(): Promise<MistPreview[]> {
     title: item.title,
     author: item.author || undefined,
     tags: item.tags || [],
+    cover: item.cover,
   }));
 }

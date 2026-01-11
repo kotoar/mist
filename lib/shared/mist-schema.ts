@@ -7,6 +7,7 @@ export const MistPreviewSchema = z.object({
   author: z.string().optional(),
   difficulty: z.enum(["easy", "medium", "hard"]).optional(),
   tags: z.array(z.string()).default([]).readonly(),
+  cover: z.string().nullable(),
 });
 
 const MistClueSchema = z.object({

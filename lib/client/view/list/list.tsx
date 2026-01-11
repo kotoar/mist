@@ -11,7 +11,7 @@ import { PageSelector, PageTitleView } from "../components/title";
 
 export function ListView({ type }: { type: "case" | "mist" }) {
   const viewModel = useSnapshot(listViewModel);
-  
+
   return (
     <Container maxW="6xl" height="100vh">
       <VStack height="full" align="stretch" paddingTop="20px">
@@ -32,13 +32,12 @@ export function ListView({ type }: { type: "case" | "mist" }) {
             <For each={viewModel.showCases}>
               {(item) => (
                 <Link key={item.id} href={`/${item.game}/${item.id}`}>
-                  <CaseView 
+                  <CaseView
                     type={item.game === "case" ? "case" : "detect"}
                     difficulty={item.difficulty}
                     index={item.index}
                     title={item.title}
                     tags={item.tags}
-                    author={item.author}
                     cover={item.cover}
                   />
                 </Link>
@@ -49,14 +48,13 @@ export function ListView({ type }: { type: "case" | "mist" }) {
             <For each={viewModel.mists}>
               {(item) => (
                 <Link key={item.id} href={`/mist/${item.id}`}>
-                  <CaseView 
+                  <CaseView
                     type="mist"
                     difficulty={item.difficulty}
                     index={item.index}
                     title={item.title}
                     tags={item.tags}
-                    author={item.author}
-                    cover={null}
+                    cover={item.cover}
                   />
                 </Link>
               )}
@@ -92,7 +90,7 @@ function CaseTypeSelector() {
   return (
     <HStack align="center" gap="10px">
       <Text fontSize="sm">档案类型</Text>
-      <Select.Root 
+      <Select.Root
         collection={selectorItems}
         width="100px"
         size="sm"

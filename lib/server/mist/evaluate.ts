@@ -4,7 +4,7 @@ import { google } from "@ai-sdk/google";
 import { MistContext } from "@server/mist/context";
 import { repairText } from "@server/services/ai-utils";
 
-export async function evaluate(props:{
+export async function evaluate(props: {
   input: string,
   context: MistContext
 }): Promise<{ revealed: string[], hint?: string }> {
@@ -21,7 +21,7 @@ export async function evaluate(props:{
   });
 }
 
-async function evaluateImpl(props:{
+async function evaluateImpl(props: {
   input: string,
   triggers: { id: string; trigger: string }[],
   puzzle: string,
@@ -97,7 +97,7 @@ ${story}
   `.trim();
 
   const { object } = await generateObject({
-    model: google("gemini-2.5-flash-lite"),
+    model: google("gemini-2.5-flash"),
     prompt: prompt,
     schema: ClueEvaluateSchema,
     maxRetries: 1,
@@ -105,7 +105,7 @@ ${story}
     providerOptions: {
       google: {
         thinkingConfig: {
-          thinkingBudget: 1200
+          thinkingBudget: 50
         },
       },
     },
