@@ -4,7 +4,7 @@ import { Box, Button, Container, GridItem, Heading, HStack, Icon, SimpleGrid, VS
 import { PageNavigator } from "@client/view/components/title";
 import { RecentItem, RecentItemView } from "./recent-item";
 import Link from "next/link";
-import { SiBilibili, SiTencentqq, SiXiaohongshu } from "react-icons/si";
+import { SiAndroid, SiBilibili, SiTencentqq, SiXiaohongshu } from "react-icons/si";
 import { FaArchive, FaEye, FaPuzzlePiece, FaQuestionCircle } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 
@@ -85,11 +85,11 @@ function RecentItemsSection() {
 function NewsListSection() {
   return (
     <VStack align="stretch" width="full" gap="10px">
-      <Link href="/news/2025-summary">
-        <HStack justify="space-between" borderBottom="1px solid" borderColor="bg.emphasized" paddingY="4px">
-          <Text>DeepClue 2025 年终总结</Text>
-          <Text fontSize="sm" color="fg.muted">2026-01-04</Text>
-        </HStack>
+      <Link href="/download/android/mistcase-android-0.0.1.apk">
+        <Button variant="outline">
+          <Icon as={SiAndroid} />
+          《迷雾档案》安卓版
+        </Button>
       </Link>
     </VStack>
   );
