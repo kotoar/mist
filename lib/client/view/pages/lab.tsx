@@ -109,7 +109,7 @@ function NovelSection() {
   );
 }
 
-function NovelListItemView({ item }: { item: NovelListItem}) {
+function NovelListItemView({ item }: { item: NovelListItem }) {
   const isMobile = useBreakpointValue({ base: true, md: false });
 
   if (isMobile) {
