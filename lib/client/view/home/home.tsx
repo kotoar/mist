@@ -1,8 +1,9 @@
 "use client";
 
-import { Box, Button, Container, GridItem, Heading, HStack, Icon, SimpleGrid, VStack, Wrap, Text, ScrollArea, For, Dialog } from "@chakra-ui/react";
+import { Box, Button, Container, GridItem, Heading, HStack, Icon, SimpleGrid, VStack, Wrap, Text, ScrollArea, For } from "@chakra-ui/react";
 import { PageNavigator } from "@client/view/components/title";
 import { RecentItem, RecentItemView } from "./recent-item";
+import { ScriptsSection } from "./home-scripts";
 import Link from "next/link";
 import { SiAndroid, SiBilibili, SiTencentqq, SiXiaohongshu } from "react-icons/si";
 import { FaArchive, FaEye, FaPuzzlePiece, FaQuestionCircle } from "react-icons/fa";
@@ -16,14 +17,19 @@ export function HomeView() {
         <RecentItemsSection />
         <SimpleGrid columns={{ base: 1, md: 2 }} gap="25px">
           <GridItem>
-            <Heading size="lg" marginBottom="10px">最新情报</Heading>
-            <NewsListSection />
+            <Heading size="lg" marginBottom="10px">聚众推理</Heading>
+            <ScriptsSection />
           </GridItem>
           <GridItem>
-            <Heading size="lg" marginBottom="10px">关于我们</Heading>
+            <Heading size="lg" marginBottom="10px">开发部</Heading>
             <ConnectionLinksSection />
           </GridItem>
         </SimpleGrid>
+        <HStack paddingY="10px" width="full" gap="10px" borderTop="1px solid" borderColor="gray.200">
+          <Text fontSize="sm">
+            © 2025 MistCase(迷雾档案) by DeepClue
+          </Text>
+        </HStack>
       </VStack>
     </Container>
   );
@@ -82,32 +88,23 @@ function RecentItemsSection() {
   );
 }
 
-function NewsListSection() {
-  return (
-    <VStack align="stretch" width="full" gap="10px">
-      <Link href="/download/android/mistcase-android-0.0.1.apk">
-        <Button variant="outline">
-          <Icon as={SiAndroid} />
-          《迷雾档案》安卓版
-        </Button>
-      </Link>
-    </VStack>
-  );
-}
-
 function ConnectionLinksSection() {
-  const text = `
-《迷雾档案》是一个推理游戏集合的企划。我们会集合各种形式的推理解谜游戏，包括短篇本格推理（档案）、类海龟汤的迷雾游戏（迷雾）、故事性和游戏时间都比较长的网页解密游戏（大解谜）等。
-目前各种游戏模式都在更新中，自媒体的内容也在筹备中，欢迎大家关注我们的社交账号！
-  `;
+  const text = `《迷雾档案》是一个推理游戏集合的企划。我们会集合各种形式的推理解谜游戏。
+目前我们仍处于开发的早期阶段，各种游戏模式都在更新中，自媒体的内容也在筹备中，欢迎大家关注我们的社交账号！`;
 
   return (
-    <VStack>
-      <Box width="full" bg="bg.muted" padding="10px" borderRadius="md">
-        <Text fontSize="sm" whiteSpace="pre-wrap">
+    <VStack align="start">
+      <Box width="full" bg="bg.subtle" padding="10px" borderRadius="md">
+        <Text fontSize="sm" whiteSpace="pre-wrap" fontFamily="Noto Serif CJK SC">
           {text}
         </Text>
       </Box>
+      <Link href="/download/android/mistcase-android-0.0.1.apk">
+        <Button variant="surface" colorPalette="green">
+          <Icon as={SiAndroid} />
+          《迷雾档案》安卓版 下载
+        </Button>
+      </Link>
       <Wrap width="full" justify="start" gap={4}>
         <Button
           size={{ md: "sm", base: "xs" }}

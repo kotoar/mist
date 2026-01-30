@@ -22,7 +22,7 @@ function ContactDetailsView() {
         variant="outline"
         onClick={() => window.open('https://xhslink.com/m/3keCJl9wtyp', '_blank', 'noopener,noreferrer')}
       >
-        <Icon as={SiXiaohongshu } />
+        <Icon as={SiXiaohongshu} />
         小红书
       </Button>
       <Button
