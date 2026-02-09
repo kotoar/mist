@@ -146,19 +146,19 @@ function ConnectionLinksSection() {
 const recent: RecentItem[] = [
   {
     type: "case",
-    title: "A05 阿尔卑斯城堡案件",
-    cover: "https://egdwsmbwm1nmmqdr.public.blob.vercel-storage.com/cases/a05-cover.jpeg",
-    date: "2025-12-09",
-    author: "天色盐",
-    url: "/detect/case-A05"
+    title: "A07 孤岛工作室案件",
+    cover: "https://egdwsmbwm1nmmqdr.public.blob.vercel-storage.com/cases/a07-cover.jpeg",
+    date: "2026-02-09",
+    author: "DeepClue",
+    url: "/detect/case-A07"
   },
   {
     type: "case",
-    title: "A06 北海道的粉雪",
-    cover: "https://egdwsmbwm1nmmqdr.public.blob.vercel-storage.com/cases/a06-cover.jpeg",
-    date: "2025-12-09",
-    author: "天色盐",
-    url: "/detect/case-A06"
+    title: "A08 独居老人中毒案",
+    cover: "https://egdwsmbwm1nmmqdr.public.blob.vercel-storage.com/cases/a08-cover.jpeg",
+    date: "2026-02-09",
+    author: "DeepClue",
+    url: "/detect/case-A08"
   },
   {
     type: "puzzle",
