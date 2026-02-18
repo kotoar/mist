@@ -1,14 +1,14 @@
 import { z } from "zod";
 
 export const MistStartResponseSchema = z.object({
-  sessionId: z.string(),
   title: z.string(),
   puzzle: z.string(),
   story: z.string().optional(),
   clues: z.array(z.object({
     id: z.string(),
     hint: z.string().optional(),
-    content: z.string().optional()
+    trigger: z.string(),
+    content: z.string(),
   })),
   sections: z.array(z.object({
     id: z.string(),
@@ -19,14 +19,14 @@ export const MistStartResponseSchema = z.object({
 export type MistStartResponse = z.infer<typeof MistStartResponseSchema>;
 
 export interface MistSubmitRequest {
-  sessionId: string;
+  storyId: string;
   input: string;
+  solvedIds: string[];
+  puzzle: string;
+  story: string;
+  clues: { id: string; trigger: string }[];
 }
 export interface MistSubmitResponse {
-  revealed: {
-    id: string;
-    content: string;
-  }[];
+  revealed: string[];
   hint?: string;
-  answer?: string;
 }

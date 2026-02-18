@@ -145,6 +145,22 @@ function ConnectionLinksSection() {
 
 const recent: RecentItem[] = [
   {
+    type: "mist",
+    title: "M03 归还日",
+    cover: "https://egdwsmbwm1nmmqdr.public.blob.vercel-storage.com/mists/mist-03.jpg",
+    date: "2026-02-19",
+    author: "DeepClue",
+    url: "/mist/mist-03"
+  },
+  {
+    type: "mist",
+    title: "M04 白化",
+    cover: "https://egdwsmbwm1nmmqdr.public.blob.vercel-storage.com/mists/mist-04.jpg",
+    date: "2026-02-19",
+    author: "DeepClue",
+    url: "/mist/mist-04"
+  },
+  {
     type: "case",
     title: "A07 孤岛工作室案件",
     cover: "https://egdwsmbwm1nmmqdr.public.blob.vercel-storage.com/cases/a07-cover.jpeg",
