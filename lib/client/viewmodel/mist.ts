@@ -1,5 +1,4 @@
 import { proxy } from "valtio";
-import { MistStartResponse } from "@shared/mist-interface";
 import { MistDelegate } from "@client/model/mist";
 
 export interface ClueRepresent {
@@ -18,6 +17,14 @@ export function sectionCompleted(section: SectionRepresent): boolean {
   return section.clues.every(clue => clue.content !== undefined);
 }
 
+interface MistLoadBundle {
+  title: string;
+  puzzle: string;
+  story?: string;
+  clues: { id: string; hint?: string; content?: string }[];
+  sections: { id: string; title?: string; clueIds: string[] }[];
+}
+
 interface MistViewModel {
   view: "puzzle" | "clues";
   title: string;
@@ -32,7 +39,7 @@ interface MistViewModel {
   count: number;
   showMistHints: boolean;
 
-  load(bundle: MistStartResponse): void;
+  load(bundle: MistLoadBundle): void;
   submit(): void;
   skip(): void;
   endGame(): void;
@@ -52,7 +59,7 @@ export const mistViewModel = proxy<MistViewModel>({
   count: 0,
   showMistHints: true,
 
-  load(bundle: MistStartResponse) {
+  load(bundle: MistLoadBundle) {
     mistViewModel.title = bundle.title;
     mistViewModel.puzzle = bundle.puzzle;
     mistViewModel.sections = bundle.sections.map(section => ({
