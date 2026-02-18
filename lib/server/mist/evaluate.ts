@@ -1,23 +1,19 @@
 import { z } from "zod";
 import { generateObject } from "ai";
 import { google } from "@ai-sdk/google";
-import { MistContext } from "@server/mist/context";
 import { repairText } from "@server/services/ai-utils";
 
 export async function evaluate(props: {
   input: string,
-  context: MistContext
+  triggers: { id: string; trigger: string }[],
+  puzzle: string,
+  story: string,
 }): Promise<{ revealed: string[], hint?: string }> {
   return await evaluateImpl({
     input: props.input,
-    triggers: props.context.storyData.clues
-      .filter(clue => props.context.userData.solvedIds.includes(clue.id) === false)
-      .map(clue => ({
-        id: clue.id,
-        trigger: clue.trigger,
-      })),
-    puzzle: props.context.storyData.puzzle,
-    story: props.context.storyData.story || "",
+    triggers: props.triggers,
+    puzzle: props.puzzle,
+    story: props.story,
   });
 }
 
