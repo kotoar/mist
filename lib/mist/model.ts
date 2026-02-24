@@ -62,6 +62,7 @@ export class MistDelegate {
     const completed = this.localState.solvedIds.length >= this.allClues.length;
 
     mistViewModel.load({
+      id: storyId,
       title: response.title,
       puzzle: response.puzzle,
       story: completed ? response.story : undefined,

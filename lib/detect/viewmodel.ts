@@ -2,6 +2,7 @@ import { proxy } from "valtio";
 import { DetectDelegate } from "./model";
 
 export interface DetectLoadBundle {
+    id: string;
     title: string;
     puzzle: string;
     story?: string;
@@ -11,6 +12,7 @@ export interface DetectLoadBundle {
 }
 
 export interface DetectViewModelType {
+    id: string;
     title: string;
     puzzle: string;
     story?: string;
@@ -34,6 +36,7 @@ export interface DetectViewModelType {
 }
 
 export const detectViewModel = proxy<DetectViewModelType>({
+    id: "",
     title: "",
     puzzle: "",
     story: undefined,
@@ -50,6 +53,7 @@ export const detectViewModel = proxy<DetectViewModelType>({
     view: "puzzle",
 
     load(bundle: DetectLoadBundle) {
+        detectViewModel.id = bundle.id;
         detectViewModel.title = bundle.title;
         detectViewModel.puzzle = bundle.puzzle;
         detectViewModel.story = bundle.story;

@@ -1,7 +1,8 @@
 import { useSnapshot } from "valtio";
 import { useRouter } from "next/navigation";
-import { Alert, Button, Dialog, Portal, Spacer, Text } from "@chakra-ui/react";
+import { Alert, Button, Dialog, Portal, Spacer, Text, VStack } from "@chakra-ui/react";
 import { gameViewModel } from "@lib/case/viewmodel";
+import { GameRating } from "@lib/shared/components/GameRating";
 
 export function StoryBannerView() {
   const viewModel = useSnapshot(gameViewModel);
@@ -25,7 +26,10 @@ export function StoryBannerView() {
                 <Dialog.Title>结局故事</Dialog.Title>
               </Dialog.Header>
               <Dialog.Body>
-                <Text whiteSpace="pre-wrap">{viewModel.story}</Text>
+                <VStack align="stretch" gap="4">
+                  <Text whiteSpace="pre-wrap">{viewModel.story}</Text>
+                  <GameRating game="case" targetId={viewModel.id} />
+                </VStack>
               </Dialog.Body>
               <Dialog.Footer>
                 <Button onClick={() => {

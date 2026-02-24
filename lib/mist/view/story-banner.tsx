@@ -1,9 +1,10 @@
 import { useSnapshot } from "valtio";
 import { useRouter } from "next/navigation";
-import { Alert, Button, Dialog, Portal, Spacer, Text } from "@chakra-ui/react";
+import { Alert, Button, Dialog, Portal, Spacer, Text, VStack } from "@chakra-ui/react";
 import { mistViewModel } from "@lib/mist/viewmodel";
 import { Prose } from "@lib/shared/components/ui/prose";
 import Markdown from "react-markdown";
+import { GameRating } from "@lib/shared/components/GameRating";
 
 export function MistStoryBannerView() {
   const viewModel = useSnapshot(mistViewModel);
@@ -27,11 +28,14 @@ export function MistStoryBannerView() {
                 <Dialog.Title>结局故事</Dialog.Title>
               </Dialog.Header>
               <Dialog.Body>
-                <Prose color="fg">
-                  <Markdown>
-                    {viewModel.story}
-                  </Markdown>
-                </Prose>
+                <VStack align="stretch" gap="4">
+                  <Prose color="fg">
+                    <Markdown>
+                      {viewModel.story}
+                    </Markdown>
+                  </Prose>
+                  <GameRating game="mist" targetId={viewModel.id} />
+                </VStack>
               </Dialog.Body>
               <Dialog.Footer>
                 <Button onClick={() => {

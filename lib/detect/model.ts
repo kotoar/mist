@@ -62,6 +62,7 @@ export class DetectDelegate {
             }));
 
         detectViewModel.load({
+            id: storyId,
             title: response.title,
             puzzle: response.puzzle,
             story: completed ? response.story : undefined,

@@ -52,6 +52,7 @@ export class ContextDelegate {
         const completed = this.localState.solvedIds.length >= response.items.length;
 
         gameViewModel.load({
+            id: storyId,
             title: response.title,
             puzzle: response.puzzle,
             story: completed ? response.story : undefined,

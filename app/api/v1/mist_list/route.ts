@@ -10,7 +10,9 @@ const ApiMistItemSchema = z.object({
   author: z.string().nullable(),
   tags: z.array(z.string()).nullable(),
   metadata: z.array(z.string()).nullable(),
-  cover: z.string().nullable()
+  cover: z.string().nullable(),
+  rating_score: z.number().nullable().default(0),
+  rating_count: z.number().nullable().default(0)
 });
 type ApiMistItem = z.infer<typeof ApiMistItemSchema>;
 
@@ -28,7 +30,7 @@ export async function POST(request: Request) {
 
   const { data, error } = await supabase
     .from('mist_mist')
-    .select('mist_id, index, title, description, author, tags, metadata, cover')
+    .select('mist_id, index, title, description, author, tags, metadata, cover, rating_score, rating_count')
     .in("stage", ["prod"])
     .order("mist_id", { ascending: true });
 

@@ -9,6 +9,7 @@ import { detectViewModel } from "@lib/detect/viewmodel";
 import { DetectDelegate } from "@lib/detect/model";
 import { IMESafeInput } from "@lib/shared/components/IMESafeInput";
 import { LoadingView } from "@lib/shared/components/LoadingView";
+import { GameRating } from "@lib/shared/components/GameRating";
 
 export function MobileDetectView() {
   const viewModel = useSnapshot(detectViewModel);
@@ -100,6 +101,7 @@ function PanelView() {
         <Prose color="fg">
           <Markdown>{viewModel.story}</Markdown>
         </Prose>
+        <GameRating game="detect" targetId={viewModel.id} />
         <HStack justify="end">
           <Button
             colorPalette="red" variant="surface"

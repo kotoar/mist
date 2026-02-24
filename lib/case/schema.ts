@@ -11,6 +11,8 @@ export const CasePreviewSchema = z.object({
     author: z.string().optional(),
     tags: z.array(z.string()).default([]).readonly(),
     cover: z.string().nullable(),
+    ratingScore: z.number().optional().default(0),
+    ratingCount: z.number().optional().default(0),
 });
 
 export const CaseItemSchema = z.object({

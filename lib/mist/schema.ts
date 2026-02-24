@@ -10,6 +10,8 @@ export const MistPreviewSchema = z.object({
     difficulty: z.enum(["easy", "medium", "hard"]).optional(),
     tags: z.array(z.string()).default([]).readonly(),
     cover: z.string().nullable(),
+    ratingScore: z.number().optional().default(0),
+    ratingCount: z.number().optional().default(0),
 });
 
 const MistClueSchema = z.object({

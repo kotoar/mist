@@ -1,4 +1,5 @@
 import { Card, VStack, HStack, Spacer, Show, Badge, Heading, Wrap, For, Text, Image, useBreakpointValue } from "@chakra-ui/react";
+import { Rating } from "@lib/shared/components/ui/rating";
 
 interface CaseViewProps {
   type: "mist" | "case" | "detect";
@@ -8,6 +9,8 @@ interface CaseViewProps {
   tags: readonly string[];
   author?: string;
   cover: string | null;
+  ratingScore?: number;
+  ratingCount?: number;
 }
 export function CaseView(props: CaseViewProps) {
   const isMobile = useBreakpointValue({ base: true, md: false });
@@ -43,6 +46,12 @@ export function CaseView(props: CaseViewProps) {
             <Heading size="sm">
               {props.title}
             </Heading>
+            <Show when={props.ratingCount && props.ratingCount >= 5}>
+              <HStack gap="1" align="center">
+                <Rating readOnly size="xs" colorPalette="orange" defaultValue={props.ratingScore} />
+                <Text fontSize="xs" color="gray.500">({props.ratingScore})</Text>
+              </HStack>
+            </Show>
             <Wrap gap="2px" align="center">
               <For each={props.tags}>
                 {(tag) => (
@@ -74,6 +83,12 @@ export function CaseView(props: CaseViewProps) {
               <Heading size={{ md: "md", base: "sm" }}>
                 {props.title}
               </Heading>
+              <Show when={props.ratingCount && props.ratingCount >= 5}>
+                <HStack gap="1" align="center" paddingLeft="5px">
+                  <Rating readOnly size="sm" colorPalette="orange" defaultValue={props.ratingScore} />
+                  <Text fontSize="sm" color="gray.500">({props.ratingScore})</Text>
+                </HStack>
+              </Show>
               <Spacer />
               <Show when={props.difficulty}>
                 <Badge size={{ md: "sm", base: "xs" }} colorPalette={difficultyColor}>

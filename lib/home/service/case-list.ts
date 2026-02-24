@@ -26,6 +26,8 @@ export async function caseList(): Promise<CasePreview[]> {
     author: item.author || undefined,
     tags: item.tags || [],
     cover: item.cover,
+    ratingScore: item.rating_score || 0,
+    ratingCount: item.rating_count || 0,
   }));
 }
 
@@ -38,5 +40,7 @@ export async function mistList(): Promise<MistPreview[]> {
     author: item.author || undefined,
     tags: item.tags || [],
     cover: item.cover,
+    ratingScore: item.rating_score || 0,
+    ratingCount: item.rating_count || 0,
   }));
 }

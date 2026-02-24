@@ -8,6 +8,7 @@ import { Prose } from "@lib/shared/components/ui/prose";
 import { IMESafeInput } from "@lib/shared/components/IMESafeInput";
 import { LoadingView } from "@lib/shared/components/LoadingView";
 import { detectViewModel } from "@lib/detect/viewmodel";
+import { GameRating } from "@lib/shared/components/GameRating";
 
 export function DesktopDetectView() {
   return (
@@ -99,6 +100,7 @@ function PanelView() {
         <Prose color="fg">
           <Markdown>{viewModel.story}</Markdown>
         </Prose>
+        <GameRating game="detect" targetId={viewModel.id} />
         <HStack justify="end">
           <Button
             colorPalette="red" variant="surface"

@@ -18,6 +18,7 @@ export function sectionCompleted(section: SectionRepresent): boolean {
 }
 
 interface MistLoadBundle {
+  id: string;
   title: string;
   puzzle: string;
   story?: string;
@@ -26,6 +27,7 @@ interface MistLoadBundle {
 }
 
 interface MistViewModel {
+  id: string;
   view: "puzzle" | "clues";
   title: string;
   puzzle: string;
@@ -46,6 +48,7 @@ interface MistViewModel {
 }
 
 export const mistViewModel = proxy<MistViewModel>({
+  id: "",
   view: "puzzle",
   title: "",
   puzzle: "",
@@ -60,6 +63,7 @@ export const mistViewModel = proxy<MistViewModel>({
   showMistHints: true,
 
   load(bundle: MistLoadBundle) {
+    mistViewModel.id = bundle.id;
     mistViewModel.title = bundle.title;
     mistViewModel.puzzle = bundle.puzzle;
     mistViewModel.sections = bundle.sections.map(section => ({

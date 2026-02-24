@@ -14,6 +14,7 @@ export interface QuestionViewModel {
 }
 
 interface CaseLoadBundle {
+    id: string;
     title: string;
     puzzle: string;
     story?: string;
@@ -21,6 +22,7 @@ interface CaseLoadBundle {
 }
 
 interface GameViewModel {
+    id: string;
     view: "puzzle" | "clues";
     title: string;
     puzzle: string;
@@ -32,12 +34,14 @@ interface GameViewModel {
 }
 
 export const gameViewModel = proxy<GameViewModel>({
+    id: "",
     view: "puzzle",
     title: "",
     puzzle: "",
     questions: [],
     story: undefined,
     load(bundle: CaseLoadBundle) {
+        gameViewModel.id = bundle.id;
         gameViewModel.title = bundle.title;
         gameViewModel.puzzle = bundle.puzzle;
         gameViewModel.questions = bundle.items.map(item => proxy<QuestionViewModel>({

@@ -15,6 +15,8 @@ export const MistCaseItemSchema = z.object({
     tags: z.array(z.string()).nullable(),
     metadata: z.array(z.string()).nullable(),
     cover: z.string().nullable(),
+    rating_score: z.number().nullable().default(0),
+    rating_count: z.number().nullable().default(0),
 });
 
 export type MistCaseItem = z.infer<typeof MistCaseItemSchema>;
@@ -23,7 +25,7 @@ export async function fetchMistCaseList(): Promise<MistCaseItem[]> {
     const stages = availableStages();
     const { data, error } = await supabase
         .from('mist_case')
-        .select('case_id, created_at, index, title, description, author, tags, metadata, cover, game, difficulty')
+        .select('case_id, created_at, index, title, description, author, tags, metadata, cover, game, difficulty, rating_score, rating_count')
         .in("stage", stages)
         .in("game", ["case", "detect"])
         .order("case_id", { ascending: true });
