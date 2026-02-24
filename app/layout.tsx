@@ -1,4 +1,4 @@
-import { Provider } from "@/lib/components/ui/provider";
+import { Provider } from "@lib/shared/components/ui/provider";
 import { ClientOnly } from "@chakra-ui/react";
 import type { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/next"

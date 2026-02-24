@@ -3,9 +3,9 @@
 import { useEffect } from "react";
 import { useParams } from "next/navigation";
 import { ClientOnly, useBreakpointValue } from "@chakra-ui/react";
-import { DesktopMistView } from "@client/view/mist/desktop";
-import { MistDelegate } from "@client/model/mist";
-import { MobileMistGameView } from "@/lib/client/view/mist/mobile";
+import { DesktopMistView } from "@lib/mist/view/desktop";
+import { MistDelegate } from "@lib/mist/model";
+import { MobileMistGameView } from "@lib/mist/view/mobile";
 
 export default function MistGamePage() {
   // get parameters from URL if needed

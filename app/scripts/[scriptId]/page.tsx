@@ -1,10 +1,10 @@
 "use client";
 
-import { ScriptView } from "@/lib/client/view/scripts/script";
+import { ScriptView } from "@lib/scripts/view/script";
 import { ClientOnly } from "@chakra-ui/react";
 import { useParams } from "next/navigation";
 import { useEffect } from "react";
-import { scriptViewModel } from "@/lib/client/viewmodel/scripts";
+import { scriptViewModel } from "@lib/scripts/viewmodel";
 
 export default function ScriptPage() {
   // get parameters from URL if needed

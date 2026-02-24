@@ -1,5 +1,5 @@
-import { magicCodeCheck } from "@/lib/api/magic-code-check";
-import { supabase } from "@/lib/server/services/supabase";
+import { magicCodeCheck } from "@lib/shared/api/magic-code-check";
+import { supabase } from "@lib/shared/services/supabase";
 import { z } from "zod";
 
 const magicCode = "case_list_magic_code";
@@ -13,6 +13,8 @@ const ApiCaseItemSchema = z.object({
   description: z.string().nullable(),
   tags: z.array(z.string()).nullable(),
   cover: z.string().nullable(),
+  rating_score: z.number().nullable().default(0),
+  rating_count: z.number().nullable().default(0),
 });
 type ApiCaseItem = z.infer<typeof ApiCaseItemSchema>;
 
@@ -28,7 +30,7 @@ export async function POST(request: Request) {
 
   const { data, error } = await supabase
     .from('mist_case')
-    .select('case_id, created_at, index, title, description, author, tags, cover, game, difficulty')
+    .select('case_id, created_at, index, title, description, author, tags, cover, game, difficulty, rating_score, rating_count')
     .in("stage", ["prod"])
     .in("game", ["detect"])
     .limit(50)
@@ -42,8 +44,8 @@ export async function POST(request: Request) {
   const parsed = data.map((row) => {
     const parsed = ApiCaseItemSchema.safeParse(row);
     if (!parsed.success) {
-        console.error("Error parsing case item:", parsed.error, "Row:", row);
-        return null;
+      console.error("Error parsing case item:", parsed.error, "Row:", row);
+      return null;
     }
     return parsed.data;
   }).filter((item): item is ApiCaseItem => item !== null);

@@ -2,8 +2,8 @@
 
 import { useParams } from "next/navigation";
 import { ClientOnly } from "@chakra-ui/react";
-import { DesktopComposeView } from "@client/view/compose/desktop";
-import { ComposeDelegate } from "@client/model/compose";
+import { DesktopComposeView } from "@lib/compose/view/desktop";
+import { ComposeDelegate } from "@lib/compose/model";
 import { useEffect } from "react";
 
 export default function ComposePage() {
