@@ -3,9 +3,9 @@
 import { useEffect } from "react";
 import { useParams } from "next/navigation";
 import { ClientOnly, useBreakpointValue } from "@chakra-ui/react";
-import { DetectDelegate } from "@client/model/detect";
-import { DesktopDetectView } from "@client/view/detect/desktop";
-import { MobileDetectView } from "@/lib/client/view/detect/mobile";
+import { DetectDelegate } from "@lib/detect/model";
+import { DesktopDetectView } from "@lib/detect/view/desktop";
+import { MobileDetectView } from "@lib/detect/view/mobile";
 
 export default function DetectPage() {
   // get parameters from URL if needed

@@ -3,9 +3,9 @@
 import { useParams } from "next/navigation";
 import { useEffect } from "react";
 import { ClientOnly } from "@chakra-ui/react";
-import { NovelView } from "@/lib/client/view/novel/novel";
-import { novelViewModel } from "@/lib/client/view/novel/viewmodel";
-import { readNovelContent } from "@server/aigc/novel";
+import { NovelView } from "@lib/novel/view/novel";
+import { novelViewModel } from "@lib/novel/viewmodel";
+import { readNovelContent } from "@lib/novel/service/novel";
 
 export default function NovelPage() {
   const params = useParams();

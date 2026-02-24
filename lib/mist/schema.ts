@@ -1,0 +1,74 @@
+import { z } from "zod";
+
+// --- Story data schemas (parsed from YAML content) ---
+
+export const MistPreviewSchema = z.object({
+    id: z.string(),
+    index: z.string(),
+    title: z.string(),
+    author: z.string().optional(),
+    difficulty: z.enum(["easy", "medium", "hard"]).optional(),
+    tags: z.array(z.string()).default([]).readonly(),
+    cover: z.string().nullable(),
+    ratingScore: z.number().optional().default(0),
+    ratingCount: z.number().optional().default(0),
+});
+
+const MistClueSchema = z.object({
+    id: z.string(),
+    hint: z.string().optional(),
+    trigger: z.string().describe("判定输入是否正确的条件"),
+    content: z.string().describe("输入正确后会显示给玩家的内容")
+});
+
+export const MistDataSchema = z.object({
+    id: z.string(),
+    title: z.string(),
+    author: z.string().optional(),
+    tags: z.array(z.string()).default([]),
+    puzzle: z.string(),
+    clues: z.array(MistClueSchema),
+    sections: z.array(z.object({
+        id: z.string(),
+        title: z.string().optional(),
+        clueIds: z.array(z.string()).default([])
+    })),
+    story: z.string().optional(),
+});
+
+export type MistPreview = z.infer<typeof MistPreviewSchema>;
+export type MistClue = z.infer<typeof MistClueSchema>;
+export type MistData = z.infer<typeof MistDataSchema>;
+
+// --- API interfaces ---
+
+export const MistStartResponseSchema = z.object({
+    title: z.string(),
+    puzzle: z.string(),
+    story: z.string().optional(),
+    clues: z.array(z.object({
+        id: z.string(),
+        hint: z.string().optional(),
+        trigger: z.string(),
+        content: z.string(),
+    })),
+    sections: z.array(z.object({
+        id: z.string(),
+        title: z.string().optional(),
+        clueIds: z.array(z.string()).default([])
+    }))
+});
+export type MistStartResponse = z.infer<typeof MistStartResponseSchema>;
+
+export interface MistSubmitRequest {
+    storyId: string;
+    input: string;
+    solvedIds: string[];
+    puzzle: string;
+    story: string;
+    clues: { id: string; trigger: string }[];
+}
+export interface MistSubmitResponse {
+    revealed: string[];
+    hint?: string;
+}

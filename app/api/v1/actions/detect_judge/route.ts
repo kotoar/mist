@@ -1,7 +1,7 @@
 import { z } from "zod";
-import { readRequestBody } from "@/lib/api/request-reader";
-import { magicCodeCheck } from "@/lib/api/magic-code-check";
-import { judgeB } from "@/lib/server/detect/judge";
+import { readRequestBody } from "@lib/shared/api/request-reader";
+import { magicCodeCheck } from "@lib/shared/api/magic-code-check";
+import { judge } from "@lib/case/service/judge";
 
 const magicCode = "detect_judge_magic_code";
 
@@ -23,7 +23,7 @@ export async function POST(request: Request) {
     return new Response(JSON.stringify({ error: "Invalid request body" }), { status: 400 });
   }
 
-  const result = await judgeB(requestData);
+  const result = await judge({ ...requestData, includeHint: true });
 
-  return new Response(JSON.stringify({data: result}), { status: 200 });
+  return new Response(JSON.stringify({ data: result }), { status: 200 });
 }

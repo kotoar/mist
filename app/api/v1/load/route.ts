@@ -1,7 +1,7 @@
 import { z } from "zod";
-import { magicCodeCheck } from "@/lib/api/magic-code-check";
-import { readRequestBody } from "@/lib/api/request-reader";
-import { supabase } from "@/lib/server/services/supabase";
+import { magicCodeCheck } from "@lib/shared/api/magic-code-check";
+import { readRequestBody } from "@lib/shared/api/request-reader";
+import { supabase } from "@lib/shared/services/supabase";
 
 const magicCode = "load_magic_code";
 
