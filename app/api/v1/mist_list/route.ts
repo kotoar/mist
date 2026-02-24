@@ -1,6 +1,6 @@
-import { supabase } from "@/lib/server/services/supabase";
+import { supabase } from "@lib/shared/services/supabase";
 import { z } from "zod";
-import { magicCodeCheck } from "@/lib/api/magic-code-check";
+import { magicCodeCheck } from "@lib/shared/api/magic-code-check";
 
 const ApiMistItemSchema = z.object({
   mist_id: z.string().default(''),

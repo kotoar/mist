@@ -1,7 +1,7 @@
 "use client";
 
-import { ListView } from "@client/view/list/list";
-import { listViewModel } from "@client/viewmodel/list";
+import { ListView } from "@lib/home/view/list";
+import { listViewModel } from "@lib/home/viewmodel";
 import { useEffect } from "react";
 
 export default function Home() {

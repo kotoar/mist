@@ -1,5 +1,5 @@
-import { magicCodeCheck } from "@/lib/api/magic-code-check";
-import { supabase } from "@/lib/server/services/supabase";
+import { magicCodeCheck } from "@lib/shared/api/magic-code-check";
+import { supabase } from "@lib/shared/services/supabase";
 import { z } from "zod";
 
 const magicCode = "case_list_magic_code";

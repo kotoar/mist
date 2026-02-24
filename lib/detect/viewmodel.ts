@@ -1,0 +1,93 @@
+import { proxy } from "valtio";
+import { DetectDelegate } from "./model";
+
+export interface DetectLoadBundle {
+    title: string;
+    puzzle: string;
+    story?: string;
+    logs: { question: string; answer: string }[];
+    currentQuestion?: string;
+    currentIndex: string;
+}
+
+export interface DetectViewModelType {
+    title: string;
+    puzzle: string;
+    story?: string;
+    logs: { question: string; answer: string }[];
+    currentQuestion?: string;
+    currentIndex: string;
+    input: string;
+    interactable: boolean;
+    hint?: string;
+    wrongFlag: boolean;
+    correctFlag: boolean;
+    standardAnswer?: string;
+    percentage: number;
+    view: "puzzle" | "logs";
+
+    load(bundle: DetectLoadBundle): void;
+    submit(): void;
+    skip(): void;
+    nextQuestion(): void;
+    endGame(): void;
+}
+
+export const detectViewModel = proxy<DetectViewModelType>({
+    title: "",
+    puzzle: "",
+    story: undefined,
+    logs: [],
+    currentQuestion: undefined,
+    currentIndex: "",
+    input: "",
+    interactable: true,
+    hint: undefined,
+    wrongFlag: false,
+    correctFlag: false,
+    standardAnswer: undefined,
+    percentage: 0,
+    view: "puzzle",
+
+    load(bundle: DetectLoadBundle) {
+        detectViewModel.title = bundle.title;
+        detectViewModel.puzzle = bundle.puzzle;
+        detectViewModel.story = bundle.story;
+        detectViewModel.logs = bundle.logs;
+        detectViewModel.currentQuestion = bundle.currentQuestion;
+        detectViewModel.currentIndex = bundle.currentIndex;
+        detectViewModel.input = "";
+        detectViewModel.interactable = true;
+        detectViewModel.hint = undefined;
+        detectViewModel.wrongFlag = false;
+        detectViewModel.correctFlag = false;
+        detectViewModel.standardAnswer = undefined;
+        detectViewModel.percentage = 0;
+        detectViewModel.view = "puzzle";
+    },
+
+    submit() {
+        const input = detectViewModel.input.trim();
+        if (!input) { return; }
+        detectViewModel.input = "";
+        detectViewModel.interactable = false;
+        detectViewModel.hint = undefined;
+        DetectDelegate.instance.submit(input).then(() => {
+            detectViewModel.interactable = true;
+        });
+    },
+
+    skip() {
+        detectViewModel.input = "";
+        detectViewModel.hint = undefined;
+        DetectDelegate.instance.skip();
+    },
+
+    nextQuestion() {
+        DetectDelegate.instance.nextQuestion();
+    },
+
+    endGame() {
+        DetectDelegate.instance.endGame();
+    },
+});

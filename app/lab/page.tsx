@@ -1,4 +1,4 @@
-import { LabListView } from "@/lib/client/view/pages/lab";
+import { LabListView } from "@lib/pages/lab";
 
 export default function LabPage() {
   return (
