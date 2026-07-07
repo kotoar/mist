@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { VStack, Text, HStack } from "@chakra-ui/react";
+import { Box, HStack, chakra } from "@chakra-ui/react";
 import { Rating } from "@lib/shared/components/ui/rating";
 
 interface GameRatingProps {
@@ -32,8 +32,10 @@ export function GameRating({ game, targetId }: GameRatingProps) {
     };
 
     return (
-        <VStack align="stretch" p={4} borderWidth="1px" borderRadius="md" bg="bg.muted">
-            <Text fontWeight="bold">为您刚刚的体验打分？</Text>
+        <Box border="1px solid" borderColor="arch.rule" bg="arch.panel" p="14px">
+            <chakra.div fontFamily="mono" fontSize="11px" letterSpacing="1.5px" textTransform="uppercase" color="arch.mut" mb="10px">
+                为你刚刚的体验打分？
+            </chakra.div>
             <HStack align="center" gap={3}>
                 <Rating
                     size="lg"
@@ -42,8 +44,12 @@ export function GameRating({ game, targetId }: GameRatingProps) {
                     onValueChange={handleRatingChange}
                     readOnly={hasRated}
                 />
-                {hasRated && <Text color="green.500" fontSize="sm">感谢您的评价！</Text>}
+                {hasRated && (
+                    <chakra.span fontFamily="mono" fontSize="11px" letterSpacing="1px" color="arch.mist">
+                        感谢你的评价
+                    </chakra.span>
+                )}
             </HStack>
-        </VStack>
+        </Box>
     );
 }
