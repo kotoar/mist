@@ -1,30 +1,51 @@
-import { Prose } from "@lib/shared/components/ui/prose";
-import { Dialog, Button, Portal, CloseButton, Icon } from "@chakra-ui/react";
-import { FaBook } from "react-icons/fa";
-import Markdown from "react-markdown";
+"use client";
+
+import { Dialog, Portal, CloseButton, chakra } from "@chakra-ui/react";
+import { ArchiveMarkdown } from "@lib/shared/components/archive/markdown";
 
 export function GuideButtonView() {
   return (
-    <Dialog.Root size="lg">
+    <Dialog.Root size="lg" placement="center">
       <Dialog.Trigger asChild>
-        <Button size="sm" colorPalette="blue" variant="outline">
-          <Icon as={FaBook} />
-          侦探手册
-        </Button>
+        <chakra.button
+          type="button"
+          fontFamily="mono"
+          fontSize="12px"
+          letterSpacing="1px"
+          color="arch.brass"
+          bg="transparent"
+          border="0"
+          px="3px"
+          py="2px"
+          cursor="pointer"
+          whiteSpace="nowrap"
+          transition="background 0.15s"
+          _hover={{ bg: "arch.hov" }}
+        >
+          [侦探手册]
+        </chakra.button>
       </Dialog.Trigger>
       <Portal>
+        <Dialog.Backdrop bg="blackAlpha.700" />
         <Dialog.Positioner>
-          <Dialog.Content>
-            <Dialog.Header>
-              <Dialog.Title>迷雾档案《侦探手册》</Dialog.Title>
+          <Dialog.Content
+            bg="arch.panel"
+            color="arch.ink"
+            border="1px solid"
+            borderColor="arch.rule"
+            borderRadius="0"
+            boxShadow="none"
+          >
+            <Dialog.Header borderBottom="1px solid" borderColor="arch.rule">
+              <Dialog.Title fontFamily="serif" fontWeight="700" letterSpacing="2px" color="arch.ink">
+                迷雾档案《侦探手册》
+              </Dialog.Title>
             </Dialog.Header>
-            <Dialog.Body>
-              <Prose>
-                <Markdown>{guide}</Markdown>
-              </Prose>
+            <Dialog.Body py="18px">
+              <ArchiveMarkdown>{guide}</ArchiveMarkdown>
             </Dialog.Body>
             <Dialog.CloseTrigger asChild>
-              <CloseButton />
+              <CloseButton color="arch.brass" borderRadius="0" _hover={{ bg: "arch.hov" }} />
             </Dialog.CloseTrigger>
           </Dialog.Content>
         </Dialog.Positioner>
