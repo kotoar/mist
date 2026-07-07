@@ -43,9 +43,16 @@ export class DetectDelegate {
 
     async load(storyId: string): Promise<void> {
         this.storyId = storyId;
+        detectViewModel.status = "loading";
 
-        const response = await start(storyId);
-        if (!response) { return; }
+        let response;
+        try {
+            response = await start(storyId);
+        } catch {
+            detectViewModel.status = "error";
+            return;
+        }
+        if (!response) { detectViewModel.status = "missing"; return; }
 
         this.storyData = response;
         this.localState = readLocalState(storyId);
@@ -99,7 +106,7 @@ export class DetectDelegate {
         }
     }
 
-    private handleCorrect(currentItem: any): void {
+    private handleCorrect(currentItem: DetectStartResponse["items"][number]): void {
         detectViewModel.hint = undefined;
         detectViewModel.wrongFlag = false;
         detectViewModel.correctFlag = true;

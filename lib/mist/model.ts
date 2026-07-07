@@ -51,9 +51,16 @@ export class MistDelegate {
 
   async load(storyId: string): Promise<void> {
     this.storyId = storyId;
+    mistViewModel.status = "loading";
 
-    const response = await start(storyId);
-    if (!response) { return; }
+    let response;
+    try {
+      response = await start(storyId);
+    } catch {
+      mistViewModel.status = "error";
+      return;
+    }
+    if (!response) { mistViewModel.status = "missing"; return; }
 
     this.storyData = response;
     this.allClues = response.clues;

@@ -1,5 +1,6 @@
 import { proxy } from "valtio";
 import { MistDelegate } from "@lib/mist/model";
+import type { GameLoadStatus } from "@lib/shared/components/archive/game-state";
 
 export interface ClueRepresent {
   id: string;
@@ -28,6 +29,7 @@ interface MistLoadBundle {
 
 interface MistViewModel {
   id: string;
+  status: GameLoadStatus;
   view: "puzzle" | "clues";
   title: string;
   puzzle: string;
@@ -49,6 +51,7 @@ interface MistViewModel {
 
 export const mistViewModel = proxy<MistViewModel>({
   id: "",
+  status: "loading",
   view: "puzzle",
   title: "",
   puzzle: "",
@@ -85,6 +88,7 @@ export const mistViewModel = proxy<MistViewModel>({
     mistViewModel.indicated = false;
     mistViewModel.interactable = true;
     mistViewModel.count = 0;
+    mistViewModel.status = "ready";
   },
 
   submit() {
