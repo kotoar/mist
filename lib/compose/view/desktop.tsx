@@ -1,116 +1,141 @@
 "use client";
 
 import { useSnapshot } from "valtio";
-import { Container, VStack, Text, For, Show, Button, HStack, Heading, Box, ProgressCircle, Spacer, useBreakpointValue } from "@chakra-ui/react";
+import { Box, Flex, For, VStack, chakra, Show } from "@chakra-ui/react";
+import { useRouter } from "next/navigation";
 import { composeViewModel } from "@lib/compose/viewmodel";
 import { ComposeDelegate } from "@lib/compose/model";
-import { IMESafeInput } from "@lib/shared/components/IMESafeInput";
-import { useRef, useEffect, useState } from "react";
+import { ArchiveComposer } from "@lib/shared/components/archive/composer";
+import { GameTopbar, GameThemeToggle, GameAction } from "@lib/shared/components/archive/game-topbar";
 
 export function DesktopComposeView() {
   const viewModel = useSnapshot(composeViewModel);
-  const isMobile = useBreakpointValue({ base: true, md: false });
-  const bottomVStackRef = useRef<HTMLDivElement>(null);
-  const [bottomHeight, setBottomHeight] = useState(150);
+  const router = useRouter();
 
-  useEffect(() => {
-    if (bottomVStackRef.current) {
-      setBottomHeight(bottomVStackRef.current.offsetHeight);
-    }
-  }, [viewModel.message, viewModel.valid, viewModel.success, viewModel.selectedIndex, isMobile]);
-
-  function handleSubmit(index: number) {
+  function handleSubmit() {
+    const index = composeViewModel.selectedIndex;
     if (index === undefined) return;
     if (viewModel.input.trim() === "") return;
     if (!viewModel.interactable) return;
     ComposeDelegate.instance.submit(index, composeViewModel.input);
   }
 
+  const selectedSubject =
+    viewModel.selectedIndex !== undefined ? viewModel.sentences[viewModel.selectedIndex]?.subject ?? "" : "";
+
   return (
-    <Container maxW="4xl" height="100vh">
-      <VStack align="stretch" fontFamily='"Noto Serif TC", serif' fontWeight={650} width="full" height="full" paddingY="20px">
-        <Heading size="lg" fontFamily='"Noto Serif TC", serif' fontWeight={800}>{viewModel.title}</Heading>
-        <Text whiteSpace="pre-wrap">{viewModel.setup}</Text>
-        <Box>
-          <For each={viewModel.sentences}>
-            {(sentence, index) => (
-              <Text
-                key={index}
-                as="span"
-                whiteSpace="pre-wrap"
-                cursor="pointer"
-                marginRight="8px"
-                bg={viewModel.selectedIndex === index ? { _dark: "red.600", _light: "red.100" } : { _dark: "yellow.800", _light: "yellow.100" }}
-                onClick={() => composeViewModel.selectedIndex = index}
-              >{sentence.subject}{sentence.content}</Text>
-            )}
-          </For>
-        </Box>
-        <Text whiteSpace="pre-wrap" color="fg.muted">{viewModel.originalEnding}</Text>
-        <Spacer minH={`${bottomHeight}px`} />
-        <VStack
-          ref={bottomVStackRef}
-          position={{ base: "fixed", md: "sticky" }} bottom={{ base: "0", md: "10px" }} left={0} right={0}
-          align="stretch" gap="10px" padding="10px"
-          border="1px solid" borderColor="bg.emphasized" borderRadius="md" bg="bg.muted"
-        >
-          <Show when={viewModel.message || viewModel.success || !viewModel.valid}>
-            <VStack align="start" gap="5px" width="full">
-              <Show when={viewModel.message}>
-                <Text whiteSpace="pre-wrap">{viewModel.message}</Text>
-              </Show>
-              <Show when={viewModel.success}>
-                <Text color="green.500">恭喜你，完成了创作！</Text>
-              </Show>
-              <Show when={!viewModel.valid}>
-                <Text color="red.500" fontWeight="bold">修改不符合逻辑!</Text>
-              </Show>
-            </VStack>
-          </Show>
-          <Show when={viewModel.selectedIndex !== undefined && isMobile}>
-            <Text whiteSpace="nowrap">
-              {viewModel.sentences[viewModel.selectedIndex!]?.subject || ""}
-            </Text>
-          </Show>
-          <HStack align="start">
-            <Show when={viewModel.selectedIndex !== undefined && !isMobile}>
-              <Text whiteSpace="nowrap" paddingTop="7px">
-                {viewModel.sentences[viewModel.selectedIndex!]?.subject || ""}
-              </Text>
-            </Show>
-            <IMESafeInput
-              type="textarea"
-              textareaProps={{
-                placeholder: "最多输入20个字",
-                maxLength: 20,
-                onKeyDown: (e) => {
-                  if (e.key === "Enter" && !e.shiftKey) {
-                    e.preventDefault();
-                    handleSubmit(viewModel.selectedIndex!);
-                  }
-                }
+    <Box h="100vh" overflow="hidden" display="flex" flexDirection="column">
+      <GameTopbar
+        label={`${viewModel.title} · 演绎`}
+        actions={
+          <>
+            <GameThemeToggle />
+            <GameAction danger onClick={() => router.push("/lab")}>
+              结束游戏
+            </GameAction>
+          </>
+        }
+      />
+      <Box flex="1" minH="0" overflowY="auto">
+        <Box maxW="720px" mx="auto" px={{ base: "20px", md: "40px" }} pt="34px" pb="220px">
+          <chakra.div fontFamily="mono" fontSize="11px" letterSpacing="2px" textTransform="uppercase" color="arch.mut">
+            演绎 · 改写
+          </chakra.div>
+          <chakra.h1
+            fontFamily="serif"
+            fontWeight="900"
+            fontSize="clamp(26px,3vw,36px)"
+            letterSpacing="3px"
+            m="12px 0 16px"
+            pb="16px"
+            borderBottom="3px double"
+            borderColor="arch.rule"
+            color="arch.ink"
+          >
+            {viewModel.title}
+          </chakra.h1>
+
+          <chakra.p fontFamily="serif" fontSize="15.5px" lineHeight="2.05" color="arch.dim" whiteSpace="pre-wrap" m="0 0 16px">
+            {viewModel.setup}
+          </chakra.p>
+
+          <chakra.div fontFamily="serif" fontSize="15.5px" lineHeight="2.05" color="arch.dim" mb="16px">
+            <For each={viewModel.sentences}>
+              {(sentence, index) => {
+                const selected = viewModel.selectedIndex === index;
+                return (
+                  <chakra.span
+                    key={index}
+                    cursor="pointer"
+                    whiteSpace="pre-wrap"
+                    bg={selected ? "arch.hov" : "transparent"}
+                    borderBottom="1px dashed"
+                    borderColor={selected ? "arch.brass" : "arch.rule"}
+                    color={selected ? "arch.ink" : "inherit"}
+                    transition="background 0.15s"
+                    _hover={{ bg: "arch.hov" }}
+                    onClick={() => (composeViewModel.selectedIndex = index)}
+                  >
+                    {sentence.subject}
+                    {sentence.content}
+                  </chakra.span>
+                );
               }}
-              value={viewModel.input}
-              onChange={(e) => composeViewModel.input = e}
-            />
-            <Button
-              variant="solid"
-              disabled={viewModel.selectedIndex === undefined || viewModel.input.trim() === "" || !viewModel.interactable}
-              onClick={() => handleSubmit(viewModel.selectedIndex!)}
-            >
-              <Show when={!viewModel.interactable}>
-                <ProgressCircle.Root value={null} size="xs">
-                  <ProgressCircle.Circle>
-                    <ProgressCircle.Track />
-                    <ProgressCircle.Range />
-                  </ProgressCircle.Circle>
-                </ProgressCircle.Root>
+            </For>
+          </chakra.div>
+
+          <chakra.p fontFamily="serif" fontSize="15.5px" lineHeight="2.05" color="arch.mut" whiteSpace="pre-wrap" m="0">
+            {viewModel.originalEnding}
+          </chakra.p>
+        </Box>
+      </Box>
+
+      {/* 底部改写器 */}
+      <Box borderTop="1px solid" borderColor="arch.rule" bg="arch.panel">
+        <Box maxW="720px" mx="auto" px={{ base: "20px", md: "40px" }} py="14px">
+          <VStack align="stretch" gap="9px">
+            <Show when={viewModel.message || viewModel.success || !viewModel.valid}>
+              <Box>
+                <Show when={viewModel.message}>
+                  <chakra.div fontFamily="serif" fontSize="13.5px" color="arch.dim" whiteSpace="pre-wrap">
+                    {viewModel.message}
+                  </chakra.div>
+                </Show>
+                <Show when={viewModel.success}>
+                  <chakra.div fontFamily="mono" fontSize="11.5px" letterSpacing="1px" color="arch.mist">
+                    恭喜你，完成了创作！
+                  </chakra.div>
+                </Show>
+                <Show when={!viewModel.valid}>
+                  <chakra.div fontFamily="mono" fontSize="11.5px" letterSpacing="1px" color="arch.red">
+                    修改不符合逻辑！
+                  </chakra.div>
+                </Show>
+              </Box>
+            </Show>
+            <Flex align="center" gap="10px">
+              <Show when={viewModel.selectedIndex !== undefined}>
+                <chakra.span fontFamily="serif" fontWeight="700" fontSize="14px" color="arch.ink" whiteSpace="nowrap">
+                  {selectedSubject}
+                </chakra.span>
               </Show>
-              提交创作
-            </Button>
-          </HStack>
-        </VStack>
-      </VStack>
-    </Container>
+              <chakra.span flex="1">
+                <ArchiveComposer
+                  value={viewModel.input}
+                  onChange={(v) => (composeViewModel.input = v)}
+                  onSubmit={handleSubmit}
+                  disabled={viewModel.selectedIndex === undefined}
+                  loading={!viewModel.interactable}
+                  rows={1}
+                  maxLength={20}
+                  placeholder={viewModel.selectedIndex === undefined ? "先点选一句要改写的话…" : "最多输入 20 个字"}
+                  submitLabel="提交创作"
+                />
+              </chakra.span>
+            </Flex>
+          </VStack>
+        </Box>
+      </Box>
+    </Box>
   );
 }

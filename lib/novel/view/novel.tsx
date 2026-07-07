@@ -1,11 +1,12 @@
+"use client";
+
 import { useSnapshot } from "valtio";
 import { useState } from "react";
-import { Button, Container, HStack, Icon, Spacer, Text } from "@chakra-ui/react";
-import { Prose } from "@lib/shared/components/ui/prose";
-import Markdown from "react-markdown";
-import { MdThumbUp, MdThumbDown } from "react-icons/md";
+import { Box, Flex } from "@chakra-ui/react";
 import { track } from "@vercel/analytics";
 import { novelViewModel } from "../viewmodel";
+import { ArchiveMarkdown } from "@lib/shared/components/archive/markdown";
+import { GameAction } from "@lib/shared/components/archive/game-topbar";
 
 export function NovelView() {
   const viewModel = useSnapshot(novelViewModel);
@@ -24,27 +25,24 @@ export function NovelView() {
   }
 
   return (
-    <Container maxW="3xl" padding="20px">
-      <Prose>
-        <Markdown>{viewModel.content}</Markdown>
-      </Prose>
-      <HStack width="full">
-        <Spacer />
-        <Button
-          variant={likeSelected === "like" ? "solid" : "outline"}
-          onClick={handleLike}
-        >
-          <Icon as={MdThumbUp} boxSize="24px" />
-          <Text>这篇还可以</Text>
-        </Button>
-        <Button
-          variant={likeSelected === "dislike" ? "solid" : "outline"}
-          onClick={handleDislike}
-        >
-          <Icon as={MdThumbDown} boxSize="24px" />
-          <Text>这篇不行</Text>
-        </Button>
-      </HStack>
-    </Container>
+    <Box maxW="760px" mx="auto" px={{ base: "20px", md: "32px" }} py="30px" minH="100vh">
+      <ArchiveMarkdown>{viewModel.content}</ArchiveMarkdown>
+      <Flex justify="flex-end" gap="14px" mt="24px" pt="18px" borderTop="1px solid" borderColor="arch.rule">
+        <Show when={likeSelected === undefined || likeSelected === "like"}>
+          <GameAction onClick={handleLike}>
+            {likeSelected === "like" ? "✓ 这篇还可以" : "这篇还可以"}
+          </GameAction>
+        </Show>
+        <Show when={likeSelected === undefined || likeSelected === "dislike"}>
+          <GameAction danger onClick={handleDislike}>
+            {likeSelected === "dislike" ? "✓ 这篇不行" : "这篇不行"}
+          </GameAction>
+        </Show>
+      </Flex>
+    </Box>
   );
+}
+
+function Show({ when, children }: { when: boolean; children: React.ReactNode }) {
+  return when ? <>{children}</> : null;
 }
