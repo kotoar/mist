@@ -1,62 +1,83 @@
 "use client";
 
-import { useSnapshot } from "valtio";
+import { Flex, For, VStack, chakra, Show } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
-import { For, HStack, Show, VStack, Heading, Badge, Spacer } from "@chakra-ui/react";
-import Markdown from 'react-markdown';
-import { Prose } from "@lib/shared/components/ui/prose";
+import { useSnapshot } from "valtio";
 import { gameViewModel } from "@lib/case/viewmodel";
 import { QuestionView } from "./question";
 import { StoryBannerView } from "./story-banner";
-import { CaseInfoView } from "@lib/shared/components/info";
+import { ArchiveMarkdown } from "@lib/shared/components/archive/markdown";
+import { MobileGameScreen, Tab } from "@lib/shared/components/archive/game-layout";
+import { GameThemeToggle, GameAction } from "@lib/shared/components/archive/game-topbar";
+import { GameStateNotice } from "@lib/shared/components/archive/game-state";
 
 export function MobileGameView() {
   const viewModel = useSnapshot(gameViewModel);
   const router = useRouter();
+  const solved = viewModel.questions.filter((q) => !!q.answer).length;
+
+  if (viewModel.status !== "ready") {
+    return <GameStateNotice status={viewModel.status} />;
+  }
 
   return (
-    <VStack padding="10px" align="stretch" gap="10px">
-      <HStack width="full" position="sticky" top={0} bg="bg" zIndex={1} paddingBottom="10px">
-        <Heading fontSize="lg" fontWeight="bold">{viewModel.title}</Heading>
-        <Badge
-          size="lg"
-          variant={viewModel.view === "puzzle" ? "solid" : "subtle"}
-          cursor="pointer"
-          onClick={() => { gameViewModel.view = "puzzle"; }}
-        >案件</Badge>
-        <Badge
-          size="lg"
-          variant={viewModel.view === "clues" ? "solid" : "subtle"}
-          cursor="pointer"
-          onClick={() => { gameViewModel.view = "clues"; }}
-        >推理</Badge>
-        <Spacer />
-        <CaseInfoView size="xs" />
-        <Badge
-          size="lg"
-          colorPalette="red"
-          cursor="pointer"
-          onClick={() => {
-            gameViewModel.endGame();
-            router.push("/")
-          }}
-        >结束游戏</Badge>
-      </HStack>
-      <Show when={viewModel.view === "puzzle"}>
-        <Prose color="fg">
-          <Markdown>{viewModel.puzzle}</Markdown>
-        </Prose>
-      </Show>
-      <Show when={viewModel.view === "clues"}>
-        <VStack width="full" gap="25px" align="stretch" padding="10px">
-          <For each={viewModel.questions}>
-            {(_, index) => (
-              <QuestionView key={index} question={gameViewModel.questions[index]} />
-            )}
-          </For>
-          <StoryBannerView />
-        </VStack>
-      </Show>
-    </VStack>
+    <MobileGameScreen
+      label={`${viewModel.title} · 演绎`}
+      actions={
+        <>
+          <GameThemeToggle />
+          <GameAction danger onClick={() => { gameViewModel.endGame(); router.push("/"); }}>
+            结束
+          </GameAction>
+        </>
+      }
+      content={
+        <Show
+          when={viewModel.view === "puzzle"}
+          fallback={
+            <VStack align="stretch" gap="16px">
+              <For each={viewModel.questions}>
+                {(_, index) => <QuestionView key={index} question={gameViewModel.questions[index]} />}
+              </For>
+              <StoryBannerView />
+            </VStack>
+          }
+        >
+          <>
+            <chakra.div fontFamily="mono" fontSize="11px" letterSpacing="2px" textTransform="uppercase" color="arch.mut" mb="8px">
+              案件
+            </chakra.div>
+            <chakra.h1
+              fontFamily="serif"
+              fontWeight="900"
+              fontSize="26px"
+              letterSpacing="2px"
+              m="0 0 14px"
+              pb="14px"
+              borderBottom="3px double"
+              borderColor="arch.rule"
+              color="arch.ink"
+            >
+              {viewModel.title}
+            </chakra.h1>
+            <ArchiveMarkdown>{viewModel.puzzle}</ArchiveMarkdown>
+          </>
+        </Show>
+      }
+      bottom={
+        <Flex align="center" gap="8px">
+          <Tab active={viewModel.view === "puzzle"} onClick={() => (gameViewModel.view = "puzzle")}>
+            案件
+          </Tab>
+          <Tab active={viewModel.view === "clues"} onClick={() => (gameViewModel.view = "clues")}>
+            推理
+          </Tab>
+          <chakra.span flex="1" />
+          <chakra.span fontFamily="mono" fontSize="11px" letterSpacing="1px" color="arch.dim">
+            已解 {solved} / {viewModel.questions.length}
+          </chakra.span>
+        </Flex>
+      }
+    />
   );
 }

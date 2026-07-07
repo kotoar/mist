@@ -1,84 +1,77 @@
 "use client";
 
-import { useSnapshot } from "valtio";
-import { Container, For, VStack, SimpleGrid, GridItem, Heading, ScrollArea, HStack, Spacer, Button } from "@chakra-ui/react"
+import { For, VStack, chakra } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
-import Markdown from 'react-markdown';
-import { Prose } from "@lib/shared/components/ui/prose";
+import { useSnapshot } from "valtio";
 import { gameViewModel } from "@lib/case/viewmodel";
 import { QuestionView } from "./question";
 import { StoryBannerView } from "./story-banner";
-import { CaseInfoView } from "@lib/shared/components/info";
+import { ArchiveMarkdown } from "@lib/shared/components/archive/markdown";
+import { GameScreen, PanelHeader, PanelScroll, Emph } from "@lib/shared/components/archive/game-layout";
+import { GameThemeToggle, GameAction } from "@lib/shared/components/archive/game-topbar";
+import { GameStateNotice } from "@lib/shared/components/archive/game-state";
 
 export function DesktopGameView() {
-	return (
-		<Container maxW="container.lg" height="100vh">
-			<VStack width="full" height="full" align="stretch" gap="10px" paddingY="20px">
-				<SimpleGrid columns={2} gap={4}>
-					<GridItem>
-						<CaseView />
-					</GridItem>
-					<GridItem>
-						<AnswerView />
-					</GridItem>
-				</SimpleGrid>
-			</VStack>
-		</Container>
-	);
-}
+  const viewModel = useSnapshot(gameViewModel);
+  const router = useRouter();
+  const solved = viewModel.questions.filter((q) => !!q.answer).length;
 
-function CaseView() {
-	const viewModel = useSnapshot(gameViewModel);
-	return (
-		<ScrollArea.Root height="95vh" size="sm" variant="always">
-			<ScrollArea.Viewport>
-				<ScrollArea.Content paddingEnd="5">
-					<VStack align="stretch" gap="10px">
-						<HStack position="sticky" top={0} zIndex={1} bg="bg">
-							<Heading fontSize="2xl" fontWeight="bold">案件</Heading>
-							<Spacer />
-						</HStack>
-						<Prose color="fg">
-							<Markdown>{viewModel.puzzle}</Markdown>
-						</Prose>
-					</VStack>
-				</ScrollArea.Content>
-			</ScrollArea.Viewport>
-			<ScrollArea.Scrollbar />
-		</ScrollArea.Root>
-	);
-}
+  if (viewModel.status !== "ready") {
+    return <GameStateNotice status={viewModel.status} />;
+  }
 
-function AnswerView() {
-	const viewModel = useSnapshot(gameViewModel);
-	const router = useRouter();
-	return (
-		<ScrollArea.Root height="95vh" size="sm" variant="always">
-			<ScrollArea.Viewport>
-				<ScrollArea.Content paddingEnd="5">
-					<VStack align="stretch" gap="10px" >
-						<HStack position="sticky" top={0} zIndex={1} bg="bg">
-							<Heading fontSize="2xl" fontWeight="bold">推理</Heading>
-							<Spacer />
-							<CaseInfoView size="sm" />
-							<Button
-								size="sm" colorPalette="red" variant="surface"
-								onClick={() => {
-									gameViewModel.endGame()
-									router.push("/");
-								}}
-							>结束游戏</Button>
-						</HStack>
-						<For each={viewModel.questions}>
-							{(_, index) => (
-								<QuestionView key={index} question={gameViewModel.questions[index]} />
-							)}
-						</For>
-						<StoryBannerView />
-					</VStack>
-				</ScrollArea.Content>
-			</ScrollArea.Viewport>
-			<ScrollArea.Scrollbar />
-		</ScrollArea.Root>
-	);
+  return (
+    <GameScreen
+      label={`${viewModel.title} · 演绎`}
+      actions={
+        <>
+          <GameThemeToggle />
+          <GameAction danger onClick={() => { gameViewModel.endGame(); router.push("/"); }}>
+            结束游戏
+          </GameAction>
+        </>
+      }
+      left={
+        <>
+          <chakra.div fontFamily="mono" fontSize="11px" letterSpacing="2px" textTransform="uppercase" color="arch.mut">
+            案件
+          </chakra.div>
+          <chakra.h1
+            fontFamily="serif"
+            fontWeight="900"
+            fontSize="clamp(26px,3vw,36px)"
+            letterSpacing="3px"
+            m="12px 0 16px"
+            pb="16px"
+            borderBottom="3px double"
+            borderColor="arch.rule"
+            color="arch.ink"
+          >
+            {viewModel.title}
+          </chakra.h1>
+          <ArchiveMarkdown>{viewModel.puzzle}</ArchiveMarkdown>
+        </>
+      }
+      right={
+        <>
+          <PanelHeader
+            title="推理"
+            meta={
+              <>
+                已解 <Emph>{solved}</Emph> / {viewModel.questions.length}
+              </>
+            }
+          />
+          <PanelScroll>
+            <VStack align="stretch" gap="16px">
+              <For each={viewModel.questions}>
+                {(_, index) => <QuestionView key={index} question={gameViewModel.questions[index]} />}
+              </For>
+              <StoryBannerView />
+            </VStack>
+          </PanelScroll>
+        </>
+      }
+    />
+  );
 }
