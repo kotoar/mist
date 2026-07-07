@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&family=Noto+Sans+SC:wght@400;500&family=Noto+Serif+SC:wght@500;600;700;900&display=swap" rel="stylesheet">
+<style>
+.fog{
+  --bg:#0e1116; --panel:#151a21;
+  --rule:rgba(214,226,221,.16); --rule-soft:rgba(214,226,221,.08);
+  --ink:#e6ebe9; --dim:#a8b4af; --mut:#79857f; --mist:#8fb8ab; --red:#b0685e;
+  --hov:rgba(143,184,171,.13);
+  --serif:'Noto Serif SC',serif; --sans:'Inter','Noto Sans SC',sans-serif; --mono:'JetBrains Mono',monospace;
+  background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.6;-webkit-font-smoothing:antialiased;
+  min-height:100vh;display:block;
+  background-image:radial-gradient(90% 46% at 50% 112%,rgba(143,184,171,.07),transparent 60%);
+  background-attachment:fixed;
+}
+.fog.light{
+  --bg:#e7e9e4; --panel:#dee1da;
+  --rule:rgba(28,33,31,.22); --rule-soft:rgba(28,33,31,.10);
+  --ink:#1c211f; --dim:#45504b; --mut:#6d7873; --mist:#3a6b5e; --red:#8f3f34;
+  --hov:rgba(58,107,94,.12);
+  background-image:radial-gradient(90% 46% at 50% 112%,rgba(58,107,94,.09),transparent 60%);
+}
+.fog *{margin:0;padding:0;box-sizing:border-box}
+.fog a{color:inherit;text-decoration:none}
+.fog .wrap{max-width:1360px;margin:0 auto;padding:0 32px}
+
+/* 报头 */
+.fog .masthead{padding-top:24px}
+.fog .nameplate{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-bottom:14px;border-bottom:3px double var(--rule)}
+.fog .nameplate .name{display:flex;align-items:center;gap:14px}
+.fog .nameplate .name svg{width:42px;height:42px;color:var(--ink)}
+.fog .nameplate h1{font-family:var(--serif);font-weight:900;font-size:clamp(24px,3.2vw,38px);letter-spacing:4px}
+.fog .nameplate h1 small{display:block;font-family:var(--mono);font-size:11px;font-weight:400;letter-spacing:2.5px;color:var(--mut);margin-top:4px}
+.fog .utils-group{display:flex;align-items:center;gap:8px;flex-shrink:0}
+.fog .utils{display:flex;align-items:center;gap:6px;background:var(--panel);border:1px solid var(--rule);border-radius:2px;padding:5px 8px}
+.fog .util{display:inline-flex;align-items:center;gap:4px;font-family:var(--mono);font-size:11px;color:var(--mist);background:transparent;border:0;padding:3px 4px;letter-spacing:1px;cursor:pointer;transition:.15s}
+.fog .util::before{content:"["}.fog .util::after{content:"]"}
+.fog .util:hover{background:var(--hov)}
+.fog .sections{display:flex;gap:0;flex-wrap:wrap;align-items:center;padding:11px 0;border-bottom:1px solid var(--rule)}
+.fog .sections a{font-family:var(--mono);font-size:12.5px;letter-spacing:1.5px;color:var(--mist);text-transform:uppercase;padding:3px 8px;border:1px solid transparent;border-radius:1px;transition:.15s}
+.fog .sections a.on{background:var(--hov)}
+.fog .sections a:hover{border-color:var(--rule);background:var(--hov)}
+.fog .sections a::before{content:"["}.fog .sections a::after{content:"]"}
+.fog .sections .sp{flex:1}
+
+/* 分节标头 */
+.fog .secthead{display:flex;align-items:baseline;justify-content:space-between;gap:16px;padding:26px 0 14px;border-bottom:1px solid var(--rule)}
+.fog .secthead h3{font-family:var(--serif);font-weight:600;font-size:21px;letter-spacing:3px}
+.fog .secthead .meta{font-family:var(--mono);font-size:12px;color:var(--mut);letter-spacing:1px}
+.fog .secthead .meta a{color:var(--mist);padding:1px 3px;border-radius:1px;transition:.15s;cursor:pointer}
+.fog .secthead .meta a::before{content:"["}.fog .secthead .meta a::after{content:"]"}
+.fog .secthead .meta a:hover{background:var(--hov)}
+
+/* 最近上新卡 */
+.fog .cards{display:grid;grid-template-columns:repeat(5,1fr);gap:0;border-bottom:1px solid var(--rule)}
+.fog .card{display:block;padding:0 0 18px;border-right:1px solid var(--rule-soft);transition:.15s;cursor:pointer}
+.fog .card:last-child{border-right:0}
+.fog .card:hover{background:var(--hov)}
+.fog .cover{height:96px;border-bottom:1px solid var(--rule-soft);background:repeating-linear-gradient(45deg,transparent,transparent 6px,var(--rule-soft) 6px,var(--rule-soft) 7px);display:flex;align-items:center;justify-content:center}
+.fog .cover span{font-family:var(--mono);font-size:10.5px;letter-spacing:2px;color:var(--mut);text-transform:uppercase}
+.fog .card .body{padding:14px 16px 0}
+.fog .card .cid{font-family:var(--mono);font-size:10.5px;letter-spacing:1.5px;color:var(--mut);text-transform:uppercase;margin-bottom:8px}
+.fog .card .cid .tp{color:var(--red)}
+.fog .card h4{font-family:var(--serif);font-weight:700;font-size:17px;letter-spacing:1px;margin-bottom:8px}
+.fog .card .foot{font-family:var(--mono);font-size:10.5px;letter-spacing:.5px;color:var(--mut)}
+
+/* 快速入口 */
+.fog .quick{display:flex;gap:22px;flex-wrap:wrap;align-items:center;padding:18px 0 26px;border-bottom:1px solid var(--rule)}
+.fog .btn{display:inline-flex;align-items:center;font-family:var(--sans);font-weight:600;font-size:15px;letter-spacing:.02em;color:var(--mist);background:transparent;border:0;padding:2px 3px;transition:.15s;cursor:pointer}
+.fog .btn::before{content:"["}.fog .btn::after{content:"]"}
+.fog .btn:hover{background:var(--hov)}
+
+/* 下部双栏 */
+.fog .lower{display:grid;grid-template-columns:1fr 1fr;gap:44px;padding:0 0 20px}
+.fog .roster a{display:flex;align-items:baseline;gap:14px;font-family:var(--mono);font-size:12.5px;padding:12px 0;border-bottom:1px dotted var(--rule-soft);cursor:pointer}
+.fog .roster a .badge{font-size:10px;letter-spacing:1px;color:var(--mist);border:1px solid var(--mist);padding:2px 7px;border-radius:2px;white-space:nowrap}
+.fog .roster a .k{color:var(--mut);font-size:11px;letter-spacing:1px;white-space:nowrap}
+.fog .roster a .tt{font-family:var(--serif);font-size:15.5px;color:var(--ink);letter-spacing:.5px}
+.fog .roster a .op{color:var(--mist);font-size:11px;letter-spacing:1px;margin-left:auto}
+.fog .roster a .op::before{content:"["}.fog .roster a .op::after{content:"]"}
+.fog .roster a:hover .op{background:var(--hov)}
+.fog .devnote{font-family:var(--serif);font-size:13.5px;color:var(--dim);line-height:1.95;margin-top:14px;white-space:pre-line}
+.fog .dl{display:inline-flex;margin-top:14px;font-family:var(--mono);font-size:12px;letter-spacing:1px;color:var(--mist);cursor:pointer;padding:2px 3px;transition:.15s}
+.fog .dl::before{content:"["}.fog .dl::after{content:"]"}
+.fog .dl:hover{background:var(--hov)}
+.fog .contacts{margin-top:14px}
+.fog .contacts a{display:flex;align-items:baseline;justify-content:space-between;gap:12px;font-family:var(--mono);font-size:12.5px;padding:9px 0;border-bottom:1px dotted var(--rule-soft);color:var(--mist);cursor:pointer}
+.fog .contacts a:last-child{border-bottom:0}
+.fog .contacts a .k{color:var(--mut);font-size:10.5px;letter-spacing:1px}
+.fog .contacts a .nm::before{content:"["}.fog .contacts a .nm::after{content:"]"}
+
+/* 报尾 */
+.fog .colophon{display:flex;align-items:center;gap:8px 22px;flex-wrap:wrap;font-family:var(--mono);font-size:11.5px;letter-spacing:.5px;color:var(--mut);padding:20px 0 56px;margin-top:26px;border-top:2px solid var(--rule)}
+.fog .colophon .sp{flex:1}
+
+@media(max-width:1100px){.fog .cards{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:860px){
+  .fog .cards{grid-template-columns:1fr}
+  .fog .card{border-right:0;border-bottom:1px solid var(--rule-soft)}
+  .fog .lower{grid-template-columns:1fr}
+}
+</style>
+</helmet>
+
+<div class="{{ rootClass }}">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="fogmark" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="24" cy="19" r="12"/><circle cx="24" cy="19" r="3.5" fill="currentColor" stroke="none"/><path d="M7 32h22M15 38h26M10 44h19"/></symbol></svg>
+
+<div class="wrap">
+
+  <!-- ===== 报头 ===== -->
+  <header class="masthead">
+    <div class="nameplate">
+      <a class="name" href="档案首页.dc.html">
+        <svg viewBox="0 0 48 48"><use href="#fogmark"/></svg>
+        <h1>迷雾档案<small>MISTCASE.APP</small></h1>
+      </a>
+      <div class="utils-group">
+        <div class="utils"><button class="util" type="button" onClick="{{ toggleTheme }}">{{ themeLabel }}</button></div>
+      </div>
+    </div>
+    <nav class="sections">
+      <a class="on" href="档案首页.dc.html">主页</a>
+      <a href="档案库.dc.html">档案</a>
+      <a href="迷雾库.dc.html">迷雾</a>
+      <a href="解谜.dc.html">解谜</a>
+      <a href="实验室.dc.html">实验室</a>
+      <span class="sp"></span>
+      <a href="设计系统.dc.html">体例</a>
+    </nav>
+  </header>
+
+  <!-- ===== 最近上新 ===== -->
+  <section>
+    <div class="secthead"><h3>最近上新</h3></div>
+    <div class="cards">
+      <a class="card" href="迷雾界面.dc.html">
+        <div class="cover"><span>COVER</span></div>
+        <div class="body">
+          <div class="cid">迷雾</div>
+          <h4>M03 归还日</h4>
+          <div class="foot">2026-02-19 · DeepClue</div>
+        </div>
+      </a>
+      <a class="card" href="迷雾界面.dc.html">
+        <div class="cover"><span>COVER</span></div>
+        <div class="body">
+          <div class="cid">迷雾</div>
+          <h4>M04 白化</h4>
+          <div class="foot">2026-02-19 · DeepClue</div>
+        </div>
+      </a>
+      <a class="card" href="探案界面.dc.html">
+        <div class="cover"><span>COVER</span></div>
+        <div class="body">
+          <div class="cid"><span class="tp">探案</span></div>
+          <h4>A07 孤岛工作室案件</h4>
+          <div class="foot">2026-02-09 · DeepClue</div>
+        </div>
+      </a>
+      <a class="card" href="探案界面.dc.html">
+        <div class="cover"><span>COVER</span></div>
+        <div class="body">
+          <div class="cid"><span class="tp">探案</span></div>
+          <h4>A08 独居老人中毒案</h4>
+          <div class="foot">2026-02-09 · DeepClue</div>
+        </div>
+      </a>
+      <a class="card" href="解谜.dc.html">
+        <div class="cover"><span>COVER</span></div>
+        <div class="body">
+          <div class="cid">解谜</div>
+          <h4>命栽七号街</h4>
+          <div class="foot">2025-12-06 · 天色盐</div>
+        </div>
+      </a>
+    </div>
+    <div class="quick">
+      <a class="btn" href="档案库.dc.html">所有档案</a>
+      <a class="btn" href="迷雾库.dc.html">所有迷雾</a>
+      <a class="btn" href="解谜.dc.html">大解谜</a>
+      <a class="btn" href="https://deepclue.app" target="_blank" rel="noopener noreferrer">DeepClue ↗</a>
+    </div>
+  </section>
+
+  <!-- ===== 聚众推理 / 开发部 ===== -->
+  <div class="lower">
+    <div>
+      <div class="secthead"><h3>聚众推理</h3></div>
+      <div class="roster">
+        <a href="#"><span class="badge">聚众推理①</span><span class="k">剧本:</span><span class="tt">云端大厦公寓事件</span><span class="op">调阅</span></a>
+      </div>
+    </div>
+    <div>
+      <div class="secthead"><h3>开发部</h3></div>
+      <p class="devnote">《迷雾档案》是一个推理游戏集合的企划。我们会集合各种形式的推理解谜游戏。
+目前我们仍处于开发的早期阶段,各种游戏模式都在更新中,自媒体的内容也在筹备中,欢迎大家关注我们的社交账号!</p>
+      <span class="dl">《迷雾档案》安卓版 下载</span>
+      <div class="contacts">
+        <a><span class="nm">邮箱</span><span class="k">mistcase@deepclue.app</span></a>
+        <a><span class="nm">小红书</span><span class="k">@deepclue</span></a>
+        <a><span class="nm">哔哩哔哩</span><span class="k">@DeepClue侦探事务所</span></a>
+        <a><span class="nm">QQ</span><span class="k">迷雾档案 MistCase</span></a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== 报尾 ===== -->
+  <footer class="colophon">
+    <span>© 2025 MistCase(迷雾档案) by DeepClue</span>
+    <span class="sp"></span>
+  </footer>
+
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1360}}">
+class Component extends DCLogic {
+  state = { light: false };
+  renderVals(){
+    const light = this.state.light;
+    return {
+      rootClass: light ? 'fog light' : 'fog',
+      themeLabel: light ? '☀ 亮色' : '☾ 暗色',
+      toggleTheme: () => this.setState(s => ({ light: !s.light })),
+    };
+  }
+}
+</script>
+</body>
+</html>

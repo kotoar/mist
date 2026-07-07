@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&family=Noto+Sans+SC:wght@400;500&family=Noto+Serif+SC:wght@500;600;700;900&display=swap" rel="stylesheet">
+<style>
+.fog{
+  --bg:#0e1116; --panel:#151a21;
+  --rule:rgba(214,226,221,.16); --rule-soft:rgba(214,226,221,.08);
+  --ink:#e6ebe9; --dim:#a8b4af; --mut:#79857f; --mist:#8fb8ab; --red:#b0685e;
+  --hov:rgba(143,184,171,.13);
+  --serif:'Noto Serif SC',serif; --sans:'Inter','Noto Sans SC',sans-serif; --mono:'JetBrains Mono',monospace;
+  background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.6;-webkit-font-smoothing:antialiased;
+  min-height:100vh;display:block;overflow:hidden;
+  background-image:radial-gradient(90% 46% at 50% 112%,rgba(143,184,171,.07),transparent 60%);
+  background-attachment:fixed;
+}
+.fog.light{
+  --bg:#e7e9e4; --panel:#dee1da;
+  --rule:rgba(28,33,31,.22); --rule-soft:rgba(28,33,31,.10);
+  --ink:#1c211f; --dim:#45504b; --mut:#6d7873; --mist:#3a6b5e; --red:#8f3f34;
+  --hov:rgba(58,107,94,.12);
+  background-image:radial-gradient(90% 46% at 50% 112%,rgba(58,107,94,.09),transparent 60%);
+}
+.fog *{margin:0;padding:0;box-sizing:border-box}
+.fog a{color:inherit;text-decoration:none}
+
+/* 卷宗栏(顶栏) */
+.fog .gamebar{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:13px 24px;border-bottom:1px solid var(--rule)}
+.fog .gamebar .l{display:flex;align-items:center;gap:0}
+.fog .gamebar .brand{display:flex;align-items:center;gap:10px;font-family:var(--serif);font-weight:900;font-size:18px;letter-spacing:2px;color:var(--ink)}
+.fog .gamebar .brand svg{width:26px;height:26px;color:var(--ink)}
+.fog .gamebar .case{font-family:var(--mono);font-size:12px;color:var(--mut);letter-spacing:1px;padding-left:16px;margin-left:16px;border-left:1px solid var(--rule)}
+.fog .gamebar .r{display:flex;align-items:center;gap:10px}
+.fog .gamebar .gu{font-family:var(--mono);font-size:11px;color:var(--mist);letter-spacing:1px;cursor:pointer;padding:4px 6px;background:transparent;border:0;transition:.15s;white-space:nowrap}
+.fog .gamebar .gu::before{content:"["}.fog .gamebar .gu::after{content:"]"}
+.fog .gamebar .gu:hover{background:var(--hov)}
+.fog .gamebar .gu.red{color:var(--red)}
+
+/* 双栏 */
+.fog .frame{display:grid;grid-template-columns:1.4fr 1fr;height:calc(100vh - 52px)}
+.fog .doc{overflow-y:auto;padding:34px 40px 60px;border-right:1px solid var(--rule)}
+.fog .doc .inner{max-width:640px;margin:0 auto}
+.fog .kick{font-family:var(--mono);font-size:11px;letter-spacing:2px;color:var(--mut);text-transform:uppercase}
+.fog .doc h1{font-family:var(--serif);font-weight:900;font-size:clamp(26px,3vw,36px);letter-spacing:3px;margin:12px 0 18px;padding-bottom:16px;border-bottom:3px double var(--rule)}
+.fog .doc p{font-family:var(--serif);font-size:15.5px;line-height:2.05;color:var(--dim);margin-bottom:14px}
+
+/* 迷雾栏 */
+.fog .cluecol{background:var(--panel);overflow-y:auto;display:flex;flex-direction:column}
+.fog .cluehd{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px 22px;border-bottom:1px solid var(--rule);position:sticky;top:0;background:var(--panel);z-index:1}
+.fog .cluehd .k{font-family:var(--mono);font-size:11px;letter-spacing:2px;color:var(--mut);text-transform:uppercase}
+.fog .cluehd .acts{display:flex;align-items:center;gap:8px}
+.fog .cluehd .gu{font-family:var(--mono);font-size:11px;color:var(--mist);letter-spacing:1px;cursor:pointer;padding:3px 5px;background:transparent;border:0;transition:.15s;white-space:nowrap}
+.fog .cluehd .gu::before{content:"["}.fog .cluehd .gu::after{content:"]"}
+.fog .cluehd .gu:hover{background:var(--hov)}
+.fog .cluehd .gu.red{color:var(--red)}
+.fog .cluebody{flex:1;padding:20px 22px 26px}
+
+/* 分节 */
+.fog .sect{border:1px solid var(--rule);padding:14px 16px;margin-bottom:16px}
+.fog .sect .sh{font-family:var(--serif);font-weight:700;font-size:14.5px;color:var(--ink);letter-spacing:1px;padding-bottom:9px;border-bottom:1px solid var(--rule-soft);margin-bottom:4px}
+.fog .sect.untitled .sh{display:none}
+.fog .clue{padding:9px 12px;margin-top:10px;border-left:2px solid var(--mist)}
+.fog .clue .ct{font-family:var(--serif);font-size:13.5px;line-height:1.85;color:var(--dim);white-space:pre-wrap}
+.fog .hband{padding:9px 12px;margin-top:10px;border-left:2px solid var(--rule);background:var(--rule-soft);min-height:36px}
+.fog .hband .h{font-family:var(--mono);font-size:12px;letter-spacing:1px;color:var(--mut);margin-left:10%}
+.fog.nohints .hband .h{visibility:hidden}
+
+/* 雾散揭示 */
+@keyframes fogout{from{opacity:0;filter:blur(7px)}to{opacity:1;filter:blur(0)}}
+.fog .c01shown{display:none}
+.fog.rev .c01hidden{display:none}
+.fog.rev .c01shown{display:block;animation:fogout .5s ease}
+.fog.rev .c01shown .ct{color:var(--red)}
+
+/* 提交面板 */
+.fog .panel{border-top:1px solid var(--rule);background:var(--panel);position:sticky;bottom:0;padding:12px 22px 16px}
+.fog .panel .row1{display:flex;align-items:center;gap:12px;margin-bottom:9px}
+.fog .panel .count{font-family:var(--mono);font-size:12px;color:var(--red);letter-spacing:1px;white-space:nowrap}
+.fog .panel .sp{flex:1}
+.fog .panel .sw{font-family:var(--mono);font-size:11px;color:var(--mist);letter-spacing:1px;cursor:pointer;background:transparent;border:0;padding:2px 4px;transition:.15s;white-space:nowrap}
+.fog .panel .sw::before{content:"["}.fog .panel .sw::after{content:"]"}
+.fog .panel .sw:hover{background:var(--hov)}
+.fog .composer{display:flex;align-items:flex-end;gap:12px;border:1px solid var(--rule);padding:11px 14px}
+.fog .composer:focus-within{border-color:var(--mist)}
+.fog .composer textarea{flex:1;background:transparent;border:0;outline:none;resize:none;color:var(--ink);font-family:var(--sans);font-size:14px;line-height:1.6}
+.fog .composer textarea::placeholder{color:var(--mut)}
+.fog .composer .act{font-family:var(--mono);font-size:13px;color:var(--mist);background:transparent;border:0;cursor:pointer;letter-spacing:1px;padding:5px;transition:.15s}
+.fog .composer .act::before{content:"["}.fog .composer .act::after{content:"]"}
+.fog .composer .act:hover{background:var(--hov)}
+
+@media(max-width:860px){
+  .fog{overflow:auto}
+  .fog .frame{grid-template-columns:1fr;height:auto}
+  .fog .doc{border-right:0;border-bottom:3px double var(--rule);padding:26px 20px 40px}
+  .fog .cluecol{min-height:60vh}
+}
+</style>
+</helmet>
+
+<div class="{{ rootClass }}">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="fogmark" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="24" cy="19" r="12"/><circle cx="24" cy="19" r="3.5" fill="currentColor" stroke="none"/><path d="M7 32h22M15 38h26M10 44h19"/></symbol></svg>
+
+  <div class="gamebar">
+    <div class="l">
+      <a class="brand" href="档案首页.dc.html"><svg viewBox="0 0 48 48"><use href="#fogmark"/></svg>迷雾档案</a>
+      <span class="case">M01 · 神父的愿望 · 迷雾</span>
+    </div>
+    <div class="r">
+      <button class="gu" type="button" onClick="{{ toggleTheme }}">{{ themeLabel }}</button>
+      <button class="gu" type="button">我想看答案</button>
+      <a class="gu red" href="迷雾库.dc.html">结束游戏</a>
+    </div>
+  </div>
+
+  <div class="frame">
+
+    <!-- 左:卷宗正文 -->
+    <div class="doc">
+      <div class="inner">
+        <div class="kick">M01 · 迷雾</div>
+        <h1>神父的愿望</h1>
+        <p>"您面临 —— 来自杀罪的指控,神父先生"</p>
+        <p>"我罪有应得。"</p>
+        <p>"真的不做任何辩护吗?警察和您的信众们都希望搞清楚到底发生了什么,您为什么不和他们说说呢?"</p>
+        <p>"并不需要。"</p>
+        <p>"唉……您真是一位可敬的牧羊人,但可惜,您现在的愿望是实现不了的。"</p>
+        <p>"我听不懂你在说什么。"</p>
+        <p>"您杀死的那个可怜的醉鬼,他刚来到这座小镇两周而已。"</p>
+        <p>沉默</p>
+        <p>"顺便一提,我当律师以前是个警察,而且恰好和这个醉鬼是同乡哦"</p>
+        <p>沉默 以及 一双盯着面前人的眼睛</p>
+        <p>"？？？？？"</p>
+        <p>"魔鬼!魔鬼!"</p>
+      </div>
+    </div>
+
+    <!-- 右:迷雾 -->
+    <div class="cluecol">
+      <div class="cluehd">
+        <span class="k">迷雾</span>
+        <div class="acts">
+          <button class="gu" type="button">我想看答案</button>
+          <button class="gu red" type="button">结束游戏</button>
+        </div>
+      </div>
+      <div class="cluebody">
+
+        <div class="sect">
+          <div class="sh">律师与神父</div>
+          <div class="clue"><div class="ct">神父在教堂中聆听了醉汉的忏悔,这是神父的职责所在</div></div>
+          <div class="hband c01hidden"><span class="h">[醉汉的描述]</span></div>
+          <div class="clue c01shown"><div class="ct">醉汉在忏悔时描述的作案手法与小镇上近些年来发生的连环凶案完全一致</div></div>
+          <div class="hband"><span class="h">[神父的理由]</span></div>
+          <div class="hband"><span class="h">[神父的错误]</span></div>
+          <div class="hband"><span class="h">[律师的身份]</span></div>
+          <div class="hband"><span class="h">[律师的调查]</span></div>
+        </div>
+
+        <div class="sect">
+          <div class="sh">醉鬼的到来</div>
+          <div class="hband"><span class="h">[律师的行为]</span></div>
+          <div class="hband"><span class="h">[律师的身份]</span></div>
+          <div class="hband"><span class="h">[醉鬼的身份]</span></div>
+          <div class="hband"><span class="h">[醉鬼的忏悔]</span></div>
+          <div class="hband"><span class="h">[醉鬼的死因]</span></div>
+        </div>
+
+        <div class="sect untitled">
+          <div class="hband"><span class="h">[为什么神父不辩护]</span></div>
+        </div>
+
+        <div class="sect untitled">
+          <div class="hband"><span class="h">[被隐藏的话]</span></div>
+          <div class="hband"><span class="h">[神父的愿望]</span></div>
+          <div class="hband"><span class="h">[醉鬼的状态]</span></div>
+        </div>
+
+      </div>
+      <div class="panel">
+        <div class="row1">
+          <span class="count">( {{ count }} )</span>
+          <span class="sp"></span>
+          <button class="sw" type="button" onClick="{{ toggleHints }}">显示思路方向 · {{ hintsLabel }}</button>
+        </div>
+        <div class="composer"><textarea rows="1" placeholder="输入你的假设进行验证…(回车提交,Shift+回车换行)"></textarea><button class="act" type="button" onClick="{{ guess }}">提交</button></div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1360}}">
+class Component extends DCLogic {
+  state = { light: false, rev: false, hints: true, count: 1 };
+  renderVals(){
+    const light = this.state.light, rev = this.state.rev, hints = this.state.hints;
+    return {
+      rootClass: 'fog' + (light ? ' light' : '') + (rev ? ' rev' : '') + (hints ? '' : ' nohints'),
+      themeLabel: light ? '☀ 亮色' : '☾ 暗色',
+      count: String(this.state.count),
+      hintsLabel: hints ? '开' : '关',
+      toggleTheme: () => this.setState(s => ({ light: !s.light })),
+      toggleHints: () => this.setState(s => ({ hints: !s.hints })),
+      guess: () => {
+        const el = document.querySelector('.fog .composer textarea');
+        const v = (el && el.value || '').trim();
+        if (!v) return;
+        if (v.includes('手法') || v.includes('一致') || v.includes('凶案')) {
+          this.setState(s => ({ rev: true, count: s.count + 1 }));
+          if (el) el.value = '';
+        } else {
+          this.setState(s => ({ count: s.count + 1 }));
+        }
+      },
+    };
+  }
+}
+</script>
+</body>
+</html>

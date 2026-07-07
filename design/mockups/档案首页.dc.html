@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/deepdesign-7853aedb-e066-4394-9ef6-7e87711efda3/tokens.css">
+<link rel="stylesheet" href="_ds/deepdesign-7853aedb-e066-4394-9ef6-7e87711efda3/styles.css">
+<script src="_ds/deepdesign-7853aedb-e066-4394-9ef6-7e87711efda3/_ds_bundle.js"></script>
+<style>
+html,body{margin:0;padding:0}
+</style>
+</helmet>
+
+<div class="{{ rootClass }}" style="min-height:100vh;background-attachment:fixed" data-screen-label="档案首页">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="fogmark" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="24" cy="19" r="12"></circle><circle cx="24" cy="19" r="3.5" fill="currentColor" stroke="none"></circle><path d="M7 32h22M15 38h26M10 44h19"></path></symbol></svg>
+
+<div style="max-width:1360px;margin:0 auto;padding:0 32px">
+
+  <!-- ===== 报头:铭牌 + 登记行 + 分区导航 ===== -->
+  <header style="padding-top:24px">
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:16px 24px;flex-wrap:wrap;padding-bottom:14px;border-bottom:3px double var(--rule)">
+      <a href="档案首页.dc.html" style="display:flex;align-items:center;gap:14px;color:inherit;text-decoration:none">
+        <img src="uploads/icon.png" alt="迷雾档案" style="width:42px;height:42px;filter:{{ iconFilter }}">
+        <h1 style="font-family:var(--serif);font-weight:900;font-size:clamp(24px,3.2vw,38px);letter-spacing:4px;margin:0;line-height:1.2">迷雾档案<small style="display:block;font-family:var(--mono);font-size:11px;font-weight:400;letter-spacing:2.5px;color:var(--mut);margin-top:4px">MISTCASE.APP</small></h1>
+      </a>
+      <div style="display:flex;align-items:center;gap:16px">
+        <div style="text-align:right">
+          
+          <div style="font-family:var(--serif);font-style:italic;font-size:12px;letter-spacing:1px;color:var(--mut);margin-top:3px">迷雾档案</div><div style="font-family:var(--mono);font-size:11px;letter-spacing:1px;color:var(--dim);text-transform:uppercase">档案 <b style="color:var(--ink);font-weight:500">5</b> · 迷雾 <b style="color:var(--ink);font-weight:500">3</b> · 解谜 <b style="color:var(--ink);font-weight:500">1</b></div>
+        </div>
+        <button type="button" onClick="{{ toggleTheme }}" style="font-family:var(--mono);font-size:11px;color:var(--brass);background:var(--panel);border:1px solid var(--rule);padding:8px 10px;letter-spacing:1px;white-space:nowrap;cursor:pointer;transition:background .15s" style-hover="background:var(--hov)">[{{ themeLabel }}]</button>
+      </div>
+    </div>
+    <nav style="display:flex;flex-wrap:wrap;align-items:center;padding:11px 0;border-bottom:1px solid var(--rule)">
+      <a href="档案首页.dc.html" style="font-family:var(--mono);font-size:12.5px;letter-spacing:1.5px;color:var(--brass);text-transform:uppercase;padding:3px 8px;white-space:nowrap;text-decoration:none;background:var(--hov);transition:background .15s">[主页]</a>
+      <a href="档案库.dc.html" style="font-family:var(--mono);font-size:12.5px;letter-spacing:1.5px;color:var(--brass);text-transform:uppercase;padding:3px 8px;white-space:nowrap;text-decoration:none;transition:background .15s" style-hover="background:var(--hov)">[档案]</a>
+      <a href="迷雾库.dc.html" style="font-family:var(--mono);font-size:12.5px;letter-spacing:1.5px;color:var(--brass);text-transform:uppercase;padding:3px 8px;white-space:nowrap;text-decoration:none;transition:background .15s" style-hover="background:var(--hov)">[迷雾]</a>
+      <a href="解谜.dc.html" style="font-family:var(--mono);font-size:12.5px;letter-spacing:1.5px;color:var(--brass);text-transform:uppercase;padding:3px 8px;white-space:nowrap;text-decoration:none;transition:background .15s" style-hover="background:var(--hov)">[解谜]</a>
+      <span style="flex:1"></span>
+      <a href="实验室.dc.html" style="font-family:var(--mono);font-size:12.5px;letter-spacing:1.5px;color:var(--brass);text-transform:uppercase;padding:3px 8px;white-space:nowrap;text-decoration:none;transition:background .15s" style-hover="background:var(--hov)">[实验室]</a>
+    </nav>
+  </header>
+
+  <!-- ===== 最近上新(快速入口并入分节标头) ===== -->
+  <section>
+    <div style="display:flex;align-items:baseline;justify-content:space-between;gap:16px;padding:26px 0 14px;border-bottom:1px solid var(--rule)">
+      <h3 style="font-family:var(--serif);font-weight:600;font-size:21px;letter-spacing:3px;margin:0">最近上新</h3>
+      
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));border-bottom:1px solid var(--rule)">
+      <a href="迷雾界面.dc.html" style="display:block;padding:0 0 18px;border-right:1px solid var(--rule-soft);background:rgba(95,155,160,.04);text-decoration:none;color:inherit;transition:background .15s" style-hover="background:rgba(95,155,160,.20)">
+        <div style="height:96px;border-bottom:1px solid var(--rule-soft);background:repeating-linear-gradient(45deg,transparent,transparent 6px,rgba(95,155,160,.18) 6px,rgba(95,155,160,.18) 7px);display:flex;align-items:center;justify-content:center"><span style="font-family:var(--mono);font-size:10.5px;letter-spacing:2px;color:var(--mut);text-transform:uppercase">Cover</span></div>
+        <div style="padding:14px 16px 0">
+          <div style="font-family:var(--mono);font-size:10.5px;letter-spacing:1.5px;color:#5F9BA0;text-transform:uppercase;margin-bottom:8px">迷雾</div>
+          <h4 style="font-family:var(--serif);font-weight:700;font-size:17px;letter-spacing:1px;margin:0 0 8px">M03 归还日</h4>
+          <div style="font-family:var(--mono);font-size:10.5px;letter-spacing:.5px;color:var(--mut)">2026-02-19 · DeepClue</div>
+        </div>
+      </a>
+      <a href="迷雾界面.dc.html" style="display:block;padding:0 0 18px;border-right:1px solid var(--rule-soft);background:rgba(95,155,160,.04);text-decoration:none;color:inherit;transition:background .15s" style-hover="background:rgba(95,155,160,.20)">
+        <div style="height:96px;border-bottom:1px solid var(--rule-soft);background:repeating-linear-gradient(45deg,transparent,transparent 6px,rgba(95,155,160,.18) 6px,rgba(95,155,160,.18) 7px);display:flex;align-items:center;justify-content:center"><span style="font-family:var(--mono);font-size:10.5px;letter-spacing:2px;color:var(--mut);text-transform:uppercase">Cover</span></div>
+        <div style="padding:14px 16px 0">
+          <div style="font-family:var(--mono);font-size:10.5px;letter-spacing:1.5px;color:#5F9BA0;text-transform:uppercase;margin-bottom:8px">迷雾</div>
+          <h4 style="font-family:var(--serif);font-weight:700;font-size:17px;letter-spacing:1px;margin:0 0 8px">M04 白化</h4>
+          <div style="font-family:var(--mono);font-size:10.5px;letter-spacing:.5px;color:var(--mut)">2026-02-19 · DeepClue</div>
+        </div>
+      </a>
+      <a href="探案界面.dc.html" style="display:block;padding:0 0 18px;border-right:1px solid var(--rule-soft);background:rgba(194,90,74,.04);text-decoration:none;color:inherit;transition:background .15s" style-hover="background:rgba(194,90,74,.20)">
+        <div style="height:96px;border-bottom:1px solid var(--rule-soft);background:repeating-linear-gradient(45deg,transparent,transparent 6px,rgba(194,90,74,.16) 6px,rgba(194,90,74,.16) 7px);display:flex;align-items:center;justify-content:center"><span style="font-family:var(--mono);font-size:10.5px;letter-spacing:2px;color:var(--mut);text-transform:uppercase">Cover</span></div>
+        <div style="padding:14px 16px 0">
+          <div style="font-family:var(--mono);font-size:10.5px;letter-spacing:1.5px;color:var(--red);text-transform:uppercase;margin-bottom:8px">探案</div>
+          <h4 style="font-family:var(--serif);font-weight:700;font-size:17px;letter-spacing:1px;margin:0 0 8px">A07 孤岛工作室案件</h4>
+          <div style="font-family:var(--mono);font-size:10.5px;letter-spacing:.5px;color:var(--mut)">2026-02-09 · DeepClue</div>
+        </div>
+      </a>
+      <a href="探案界面.dc.html" style="display:block;padding:0 0 18px;border-right:1px solid var(--rule-soft);background:rgba(194,90,74,.04);text-decoration:none;color:inherit;transition:background .15s" style-hover="background:rgba(194,90,74,.20)">
+        <div style="height:96px;border-bottom:1px solid var(--rule-soft);background:repeating-linear-gradient(45deg,transparent,transparent 6px,rgba(194,90,74,.16) 6px,rgba(194,90,74,.16) 7px);display:flex;align-items:center;justify-content:center"><span style="font-family:var(--mono);font-size:10.5px;letter-spacing:2px;color:var(--mut);text-transform:uppercase">Cover</span></div>
+        <div style="padding:14px 16px 0">
+          <div style="font-family:var(--mono);font-size:10.5px;letter-spacing:1.5px;color:var(--red);text-transform:uppercase;margin-bottom:8px">探案</div>
+          <h4 style="font-family:var(--serif);font-weight:700;font-size:17px;letter-spacing:1px;margin:0 0 8px">A08 独居老人中毒案</h4>
+          <div style="font-family:var(--mono);font-size:10.5px;letter-spacing:.5px;color:var(--mut)">2026-02-09 · DeepClue</div>
+        </div>
+      </a>
+      <a href="解谜.dc.html" style="display:block;padding:0 0 18px;background:rgba(155,123,181,.04);text-decoration:none;color:inherit;transition:background .15s" style-hover="background:rgba(155,123,181,.20)">
+        <div style="height:96px;border-bottom:1px solid var(--rule-soft);background:repeating-linear-gradient(45deg,transparent,transparent 6px,rgba(155,123,181,.18) 6px,rgba(155,123,181,.18) 7px);display:flex;align-items:center;justify-content:center"><span style="font-family:var(--mono);font-size:10.5px;letter-spacing:2px;color:var(--mut);text-transform:uppercase">Cover</span></div>
+        <div style="padding:14px 16px 0">
+          <div style="font-family:var(--mono);font-size:10.5px;letter-spacing:1.5px;color:#9B7BB5;text-transform:uppercase;margin-bottom:8px">解谜</div>
+          <h4 style="font-family:var(--serif);font-weight:700;font-size:17px;letter-spacing:1px;margin:0 0 8px">命栽七号街</h4>
+          <div style="font-family:var(--mono);font-size:10.5px;letter-spacing:.5px;color:var(--mut)">2025-12-06 · 天色盐</div>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- ===== 开发部 ===== -->
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:0 44px;padding:0 0 20px">
+    <div>
+      <div style="display:flex;align-items:baseline;justify-content:space-between;gap:16px;padding:26px 0 14px;border-bottom:1px solid var(--rule)">
+        <h3 style="font-family:var(--serif);font-weight:600;font-size:21px;letter-spacing:3px;margin:0">开发部</h3>
+      </div>
+      <p style="font-family:var(--serif);font-size:13.5px;color:var(--dim);line-height:1.95;margin:14px 0 0;white-space:pre-line">《迷雾档案》是一个推理游戏集合的企划。我们会集合各种形式的推理解谜游戏。
+目前我们仍处于开发的早期阶段,各种游戏模式都在更新中,自媒体的内容也在筹备中,欢迎大家关注我们的社交账号!</p>
+      <a href="#" style="display:inline-flex;margin-top:16px;font-family:var(--mono);font-size:12px;letter-spacing:1px;color:var(--brass);text-decoration:none;white-space:nowrap;cursor:pointer;padding:2px 3px;transition:background .15s" style-hover="background:var(--hov)">[《迷雾档案》安卓版 下载]</a>
+    </div>
+    <div>
+      <div style="display:flex;align-items:baseline;justify-content:space-between;gap:16px;padding:26px 0 14px;border-bottom:1px solid var(--rule)">
+        <h3 style="font-family:var(--serif);font-weight:600;font-size:21px;letter-spacing:3px;margin:0">联络</h3>
+      </div>
+      <div style="margin-top:6px">
+        <a href="#" style="display:flex;align-items:baseline;justify-content:space-between;gap:12px;font-family:var(--mono);font-size:12.5px;padding:9px 0;border-bottom:1px dotted var(--rule-soft);color:var(--brass);text-decoration:none;cursor:pointer"><span style="white-space:nowrap">[邮箱]</span><span style="color:var(--mut);font-size:10.5px;letter-spacing:1px">mistcase@deepclue.app</span></a>
+        <a href="#" style="display:flex;align-items:baseline;justify-content:space-between;gap:12px;font-family:var(--mono);font-size:12.5px;padding:9px 0;border-bottom:1px dotted var(--rule-soft);color:var(--brass);text-decoration:none;cursor:pointer"><span style="white-space:nowrap">[小红书]</span><span style="color:var(--mut);font-size:10.5px;letter-spacing:1px">@deepclue</span></a>
+        <a href="#" style="display:flex;align-items:baseline;justify-content:space-between;gap:12px;font-family:var(--mono);font-size:12.5px;padding:9px 0;border-bottom:1px dotted var(--rule-soft);color:var(--brass);text-decoration:none;cursor:pointer"><span style="white-space:nowrap">[哔哩哔哩]</span><span style="color:var(--mut);font-size:10.5px;letter-spacing:1px">@DeepClue侦探事务所</span></a>
+        <a href="#" style="display:flex;align-items:baseline;justify-content:space-between;gap:12px;font-family:var(--mono);font-size:12.5px;padding:9px 0;color:var(--brass);text-decoration:none;cursor:pointer"><span style="white-space:nowrap">[QQ]</span><span style="color:var(--mut);font-size:10.5px;letter-spacing:1px">迷雾档案 MistCase</span></a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== 报尾 ===== -->
+  <footer style="display:flex;align-items:center;gap:8px 22px;flex-wrap:wrap;font-family:var(--mono);font-size:11.5px;letter-spacing:.5px;color:var(--mut);padding:20px 0 56px;margin-top:26px;border-top:2px solid var(--rule)">
+    <span>© 2025 MistCase(迷雾档案) by <a href="https://deepclue.app" target="_blank" rel="noopener noreferrer" style="color:var(--brass);text-decoration:none;white-space:nowrap;padding:1px 3px;transition:background .15s" style-hover="background:var(--hov)">[DeepClue ↗]</a></span>
+    <span style="flex:1"></span>
+  </footer>
+
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1360},&quot;light&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;主题&quot;}}">
+class Component extends DCLogic {
+  state = { light: null };
+  renderVals(){
+    const light = this.state.light ?? (this.props.light ?? false);
+    return {
+      rootClass: light ? 'arch light' : 'arch',
+      themeLabel: light ? '☀ 亮色' : '☾ 暗色',
+      iconFilter: light ? 'none' : 'invert(1)',
+      toggleTheme: () => this.setState({ light: !light }),
+    };
+  }
+}
+</script>
+</body>
+</html>

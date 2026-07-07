@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&family=Noto+Sans+SC:wght@400;500&family=Noto+Serif+SC:wght@500;600;700;900&display=swap" rel="stylesheet">
+<style>
+.fog{
+  --bg:#0e1116; --panel:#151a21;
+  --rule:rgba(214,226,221,.16); --rule-soft:rgba(214,226,221,.08);
+  --ink:#e6ebe9; --dim:#a8b4af; --mut:#79857f; --mist:#8fb8ab; --red:#b0685e;
+  --hov:rgba(143,184,171,.13);
+  --serif:'Noto Serif SC',serif; --sans:'Inter','Noto Sans SC',sans-serif; --mono:'JetBrains Mono',monospace;
+  background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.6;-webkit-font-smoothing:antialiased;
+  min-height:100vh;display:block;overflow:hidden;
+  background-image:radial-gradient(90% 46% at 50% 112%,rgba(143,184,171,.07),transparent 60%);
+  background-attachment:fixed;
+}
+.fog.light{
+  --bg:#e7e9e4; --panel:#dee1da;
+  --rule:rgba(28,33,31,.22); --rule-soft:rgba(28,33,31,.10);
+  --ink:#1c211f; --dim:#45504b; --mut:#6d7873; --mist:#3a6b5e; --red:#8f3f34;
+  --hov:rgba(58,107,94,.12);
+  background-image:radial-gradient(90% 46% at 50% 112%,rgba(58,107,94,.09),transparent 60%);
+}
+.fog *{margin:0;padding:0;box-sizing:border-box}
+.fog a{color:inherit;text-decoration:none}
+
+/* 卷宗栏(顶栏) */
+.fog .gamebar{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:13px 24px;border-bottom:1px solid var(--rule)}
+.fog .gamebar .l{display:flex;align-items:center;gap:0}
+.fog .gamebar .brand{display:flex;align-items:center;gap:10px;font-family:var(--serif);font-weight:900;font-size:18px;letter-spacing:2px;color:var(--ink)}
+.fog .gamebar .brand svg{width:26px;height:26px;color:var(--ink)}
+.fog .gamebar .case{font-family:var(--mono);font-size:12px;color:var(--mut);letter-spacing:1px;padding-left:16px;margin-left:16px;border-left:1px solid var(--rule)}
+.fog .gamebar .r{display:flex;align-items:center;gap:10px}
+.fog .gamebar .gu{font-family:var(--mono);font-size:11px;color:var(--mist);letter-spacing:1px;cursor:pointer;padding:4px 6px;background:transparent;border:0;transition:.15s;white-space:nowrap}
+.fog .gamebar .gu::before{content:"["}.fog .gamebar .gu::after{content:"]"}
+.fog .gamebar .gu:hover{background:var(--hov)}
+.fog .gamebar .gu.red{color:var(--red)}
+
+/* 双栏 */
+.fog .frame{display:grid;grid-template-columns:1.4fr 1fr;height:calc(100vh - 52px)}
+.fog .doc{overflow-y:auto;padding:34px 40px 60px;border-right:1px solid var(--rule)}
+.fog .doc .inner{max-width:640px;margin:0 auto}
+.fog .kick{font-family:var(--mono);font-size:11px;letter-spacing:2px;color:var(--mut);text-transform:uppercase}
+.fog .doc h1{font-family:var(--serif);font-weight:900;font-size:clamp(26px,3vw,36px);letter-spacing:3px;margin:12px 0 6px}
+.fog .doc .byline{font-family:var(--mono);font-size:11px;letter-spacing:1px;color:var(--mut);padding-bottom:16px;border-bottom:3px double var(--rule);margin-bottom:22px}
+.fog .doc p{font-family:var(--serif);font-size:15.5px;line-height:2.05;color:var(--dim);margin-bottom:16px;white-space:pre-line}
+
+/* 推理栏 */
+.fog .qcol{background:var(--panel);overflow-y:auto;display:flex;flex-direction:column}
+.fog .qhd{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px 22px;border-bottom:1px solid var(--rule);position:sticky;top:0;background:var(--panel);z-index:1}
+.fog .qhd .k{font-family:var(--mono);font-size:11px;letter-spacing:2px;color:var(--mut);text-transform:uppercase}
+.fog .qhd .gu{font-family:var(--mono);font-size:11px;color:var(--red);letter-spacing:1px;cursor:pointer;padding:3px 5px;background:transparent;border:0;transition:.15s}
+.fog .qhd .gu::before{content:"["}.fog .qhd .gu::after{content:"]"}
+.fog .qhd .gu:hover{background:var(--hov)}
+.fog .qbody{flex:1;padding:20px 22px 30px}
+
+/* 问题卡 */
+.fog .q{border-left:2px solid var(--rule);padding:12px 15px;margin-bottom:16px}
+.fog .q.done{border-left-color:var(--mist)}
+.fog .q .qt{font-family:var(--serif);font-weight:700;font-size:15px;line-height:1.7;color:var(--ink);margin-bottom:8px}
+.fog .q .qa{font-family:var(--serif);font-size:13.5px;line-height:1.85;color:var(--dim)}
+.fog .q .row{display:flex;align-items:flex-end;gap:10px;margin-top:4px}
+.fog .q textarea{flex:1;background:transparent;border:1px solid var(--rule);padding:8px 11px;outline:none;resize:none;color:var(--ink);font-family:var(--sans);font-size:13.5px;line-height:1.6}
+.fog .q textarea:focus{border-color:var(--mist)}
+.fog .q textarea::placeholder{color:var(--mut)}
+.fog .q .act{font-family:var(--mono);font-size:12.5px;color:var(--mist);background:transparent;border:0;cursor:pointer;letter-spacing:1px;padding:5px;transition:.15s;white-space:nowrap}
+.fog .q .act::before{content:"["}.fog .q .act::after{content:"]"}
+.fog .q .act:hover{background:var(--hov)}
+
+/* 雾散揭示 */
+@keyframes fogout{from{opacity:0;filter:blur(7px)}to{opacity:1;filter:blur(0)}}
+.fog .q2shown{display:none}
+.fog.rev .q2hidden{display:none}
+.fog.rev .q2shown{display:block;animation:fogout .5s ease}
+.fog .miss{display:none}
+.fog.miss .miss{display:block;font-family:var(--mono);font-size:11.5px;letter-spacing:.5px;color:var(--red);margin-bottom:8px}
+
+@media(max-width:860px){
+  .fog{overflow:auto}
+  .fog .frame{grid-template-columns:1fr;height:auto}
+  .fog .doc{border-right:0;border-bottom:3px double var(--rule);padding:26px 20px 40px}
+  .fog .qcol{min-height:60vh}
+}
+</style>
+</helmet>
+
+<div class="{{ rootClass }}">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="fogmark" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="24" cy="19" r="12"/><circle cx="24" cy="19" r="3.5" fill="currentColor" stroke="none"/><path d="M7 32h22M15 38h26M10 44h19"/></symbol></svg>
+
+  <div class="gamebar">
+    <div class="l">
+      <a class="brand" href="档案首页.dc.html"><svg viewBox="0 0 48 48"><use href="#fogmark"/></svg>迷雾档案</a>
+      <span class="case">C01 · 湖边的灯光 · 演绎</span>
+    </div>
+    <div class="r">
+      <button class="gu" type="button" onClick="{{ toggleTheme }}">{{ themeLabel }}</button>
+      <a class="gu red" href="档案库.dc.html">结束游戏</a>
+    </div>
+  </div>
+
+  <div class="frame">
+
+    <!-- 左:案件 -->
+    <div class="doc">
+      <div class="inner">
+        <div class="kick">案件</div>
+        <h1>湖边的灯光</h1>
+        <div class="byline">本格 · 原创 · 作者 天色盐</div>
+        <p>昨晚约 23:00,插画师 艾伦 被发现死在镇外湖边的长椅上。
+他头部有严重撞击伤,但现场没有搏斗痕迹,手机与钱包均完好。
+最初的判断认为这是一起谋杀案。</p>
+        <p>房客们都认识艾伦:他性格安静,经常深夜到湖边写生。
+谁会想杀他?又为什么?</p>
+        <p>房东 玛丽 告诉警方她昨晚一直在家,并抱怨最近家里"丢了几样东西"。
+她显得紧张而焦虑。
+然而,有邻居称在 22:40 看到一名身形与玛丽相似的女性匆忙往湖边方向走。</p>
+        <p>尸体被发现的长椅离湖岸不远。
+艾伦随身的画板被找到在湖边的小亭子旁,似乎是他作画时随手放下的。
+附近地面并无混乱迹象。</p>
+        <p>警方在现场记录中提到:
+"居民曾报告快递被投错。"
+但这条信息与案件是否相关暂时无法确定。</p>
+        <p>随着更多记录整理出来,案情却变得更加奇怪。
+如果没有搏斗、没有抢劫、也没有仇恨动机——
+艾伦究竟是怎么死的?</p>
+      </div>
+    </div>
+
+    <!-- 右:推理 -->
+    <div class="qcol">
+      <div class="qhd">
+        <span class="k">推理</span>
+        <button class="gu" type="button">结束游戏</button>
+      </div>
+      <div class="qbody">
+
+        <div class="q done">
+          <div class="qt">艾伦的真正死因是什么?</div>
+          <div class="qa">在与玛丽的争执中,被拉扯失足跌倒,头部撞到湖边石头致死</div>
+        </div>
+
+        <div class="q q2hidden">
+          <div class="qt">玛丽为什么要去湖边?</div>
+          <div class="miss">不完全正确。进度:40%</div>
+          <div class="row"><textarea rows="1" placeholder="写下你的推理…(回车提交,Shift+回车换行)"></textarea><button class="act" type="button" onClick="{{ guess }}">提交</button></div>
+        </div>
+        <div class="q done q2shown">
+          <div class="qt">玛丽为什么要去湖边?</div>
+          <div class="qa">她以为艾伦"偷了自己家里丢的东西",追到湖边去质问他。</div>
+        </div>
+
+        <div class="q">
+          <div class="qt">玛丽所丢的东西实际上发生了什么?</div>
+          <div class="row"><textarea rows="1" placeholder="写下你的推理…"></textarea><button class="act" type="button">提交</button></div>
+        </div>
+
+        <div class="q">
+          <div class="qt">为什么尸体会出现在长椅上,而不是倒在地上?</div>
+          <div class="row"><textarea rows="1" placeholder="写下你的推理…"></textarea><button class="act" type="button">提交</button></div>
+        </div>
+
+        <div class="q">
+          <div class="qt">是谁把艾伦移动到长椅上的?</div>
+          <div class="row"><textarea rows="1" placeholder="写下你的推理…"></textarea><button class="act" type="button">提交</button></div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1360}}">
+class Component extends DCLogic {
+  state = { light: false, rev: false, miss: false };
+  renderVals(){
+    const light = this.state.light, rev = this.state.rev, miss = this.state.miss;
+    return {
+      rootClass: 'fog' + (light ? ' light' : '') + (rev ? ' rev' : '') + (miss ? ' miss' : ''),
+      themeLabel: light ? '☀ 亮色' : '☾ 暗色',
+      toggleTheme: () => this.setState(s => ({ light: !s.light })),
+      guess: () => {
+        const el = document.querySelector('.fog .q2hidden textarea');
+        const v = (el && el.value || '').trim();
+        if (!v) return;
+        if (v.includes('偷') || v.includes('质问') || v.includes('丢')) {
+          this.setState({ rev: true, miss: false });
+        } else {
+          this.setState({ miss: true });
+        }
+      },
+    };
+  }
+}
+</script>
+</body>
+</html>

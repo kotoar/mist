@@ -1,0 +1,57 @@
+/* ============================================================
+   DeepClue 档案体例 · Design Tokens
+   来源: deepclue_monorepo/design/mockups/设计系统.dc.html (v0.5.1)
+   两套主题——案卷夜读(暗,默认)与旧纸日间(亮)——共用同一组语义变量。
+   用法: 容器挂 .arch 类(暗色); 加 .light 切亮色。
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&family=Noto+Sans+SC:wght@400;500&family=Noto+Serif+SC:wght@500;600;700;900&display=swap');
+
+.arch {
+  /* —— 用色 —— */
+  --bg: #100f13;                        /* 底 · 案卷夜读 */
+  --panel: #17161c;                     /* 面 · 浮层 / 卡底 */
+  --ink: #e9e3d4;                       /* 墨 · 正文标题 */
+  --dim: #a59d8a;                       /* 次 · 摘要副文 */
+  --mut: #6e6857;                       /* 弱 · 标签注脚 */
+  --brass: #d9a75a;                     /* 铜 · 唯一可点击色 */
+  --red: #c25a4a;                       /* 朱 · 机密 / 警示 */
+  --rule: rgba(232, 226, 212, .17);     /* 线 · 分栏分节 */
+  --rule-soft: rgba(232, 226, 212, .08);/* 线 · 明细轻分隔 */
+  --hov: rgba(217, 167, 90, .14);       /* 铜底 · 悬停 / 当前态 */
+
+  /* —— 字体 —— */
+  --serif: 'Noto Serif SC', serif;               /* @kind font */ /* 标题 · 头条 · 正文摘要 */
+  --sans: 'Inter', 'Noto Sans SC', sans-serif;   /* @kind font */ /* 界面正文 · 行动按钮文字 */
+  --mono: 'JetBrains Mono', monospace;           /* @kind font */ /* 标签 · 期号 · 状态 · 列头 */
+
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--sans);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  /* 顶部黄铜光晕,档案馆的一盏台灯 */
+  background-image: radial-gradient(90% 40% at 50% -10%, rgba(217, 167, 90, .07), transparent 60%);
+}
+
+.arch.light {
+  --bg: #e9e2d0;
+  --panel: #e1d9c3;
+  --ink: #241f14;
+  --dim: #544a37;
+  --mut: #7c715a;
+  --brass: #9a6c20;
+  --red: #9d3a2b;
+  --rule: rgba(38, 31, 18, .22);
+  --rule-soft: rgba(38, 31, 18, .10);
+  --hov: rgba(154, 108, 32, .12);
+  background-image: radial-gradient(90% 40% at 50% -10%, rgba(154, 108, 32, .10), transparent 60%);
+}
+
+/* ============================================================
+   铁律(详见 README):
+   1. 凡铜必可点,凡可点必铜——且套 [直角括号]。静态文字永不用铜。
+   2. 朱红只作机密 / 警示 / 法务收口。
+   3. 以线分栏:细线分行,点线分明细,双线收口。无阴影、无圆角(≤2px)。
+   4. 动效一律 0.15s 纯色过渡,不缩放不弹跳。
+   ============================================================ */

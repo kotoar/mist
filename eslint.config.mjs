@@ -12,6 +12,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // 设计稿与导出的第三方 mockup 代码, 不参与 lint。
+    "design/**",
   ]),
 ]);
 
