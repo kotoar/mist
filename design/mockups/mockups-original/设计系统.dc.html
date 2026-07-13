@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&family=Noto+Sans+SC:wght@400;500&family=Noto+Serif+SC:wght@500;600;700;900&display=swap" rel="stylesheet">
+<style>
+.fog{
+  --bg:#0e1116; --panel:#151a21;
+  --rule:rgba(214,226,221,.16); --rule-soft:rgba(214,226,221,.08);
+  --ink:#e6ebe9; --dim:#a8b4af; --mut:#79857f; --mist:#8fb8ab; --red:#b0685e;
+  --hov:rgba(143,184,171,.13);
+  --serif:'Noto Serif SC',serif; --sans:'Inter','Noto Sans SC',sans-serif; --mono:'JetBrains Mono',monospace;
+  background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.6;-webkit-font-smoothing:antialiased;
+  min-height:100vh;display:block;
+  background-image:radial-gradient(90% 46% at 50% 112%,rgba(143,184,171,.07),transparent 60%);
+  background-attachment:fixed;
+}
+.fog.light{
+  --bg:#e7e9e4; --panel:#dee1da;
+  --rule:rgba(28,33,31,.22); --rule-soft:rgba(28,33,31,.10);
+  --ink:#1c211f; --dim:#45504b; --mut:#6d7873; --mist:#3a6b5e; --red:#8f3f34;
+  --hov:rgba(58,107,94,.12);
+  background-image:radial-gradient(90% 46% at 50% 112%,rgba(58,107,94,.09),transparent 60%);
+}
+.fog *{margin:0;padding:0;box-sizing:border-box}
+.fog a{color:inherit;text-decoration:none}
+.fog .wrap{max-width:1360px;margin:0 auto;padding:0 32px}
+
+/* 报头 */
+.fog .masthead{padding-top:24px}
+.fog .nameplate{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-bottom:14px}
+.fog .nameplate .name{display:flex;align-items:center;gap:14px}
+.fog .nameplate .name svg{width:42px;height:42px;color:var(--ink)}
+.fog .nameplate h1{font-family:var(--serif);font-weight:900;font-size:clamp(24px,3.2vw,38px);letter-spacing:4px}
+.fog .nameplate h1 small{display:block;font-family:var(--mono);font-size:11px;font-weight:400;letter-spacing:2.5px;color:var(--mut);margin-top:4px}
+.fog .utils-group{display:flex;align-items:center;gap:8px;flex-shrink:0}
+.fog .utils{display:flex;align-items:center;gap:6px;background:var(--panel);border:1px solid var(--rule);border-radius:2px;padding:5px 8px}
+.fog .util{display:inline-flex;align-items:center;gap:4px;font-family:var(--mono);font-size:11px;color:var(--mist);background:transparent;border:0;padding:3px 4px;letter-spacing:1px;cursor:pointer;transition:.15s}
+.fog .util::before{content:"["}.fog .util::after{content:"]"}
+.fog .util:hover{background:var(--hov)}
+.fog .dateline{display:flex;flex-wrap:wrap;gap:6px 30px;justify-content:space-between;font-family:var(--mono);font-size:11px;letter-spacing:1.5px;color:var(--dim);text-transform:uppercase;border-top:1px solid var(--rule);border-bottom:3px double var(--rule);padding:9px 0}
+.fog .dateline b{color:var(--ink);font-weight:500}.fog .dateline .red{color:var(--red)}
+.fog .sections{display:flex;gap:0;flex-wrap:wrap;align-items:center;padding:11px 0;border-bottom:1px solid var(--rule)}
+.fog .sections a{font-family:var(--mono);font-size:12.5px;letter-spacing:1.5px;color:var(--mist);text-transform:uppercase;padding:3px 8px;border:1px solid transparent;border-radius:1px;transition:.15s}
+.fog .sections a.on{background:var(--hov)}
+.fog .sections a:hover{border-color:var(--rule);background:var(--hov)}
+.fog .sections a::before{content:"["}.fog .sections a::after{content:"]"}
+.fog .sections .sp{flex:1}
+
+/* 体例 section */
+.fog .ds-sec{padding:46px 0 8px}
+.fog .ds-head{display:flex;align-items:baseline;gap:16px;border-bottom:1px solid var(--rule);padding-bottom:14px;margin-bottom:30px}
+.fog .ds-head .ix{font-family:var(--mono);font-size:12px;color:var(--mut);letter-spacing:2px}
+.fog .ds-head h2{font-family:var(--serif);font-weight:600;font-size:26px;letter-spacing:3px}
+.fog .ds-head .en{font-family:var(--mono);font-size:11px;color:var(--mut);letter-spacing:2px;text-transform:uppercase}
+.fog .ds-head .sp{flex:1}
+.fog .ds-note{font-family:var(--serif);font-size:13.5px;color:var(--dim);line-height:1.8;max-width:62ch;margin:-14px 0 28px}
+
+/* 配色 swatches */
+.fog .swatches{display:grid;grid-template-columns:repeat(auto-fill,minmax(196px,1fr));gap:0;border:1px solid var(--rule)}
+.fog .sw{padding:0;border-right:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+.fog .sw .col{height:88px;border-bottom:1px solid var(--rule)}
+.fog .sw .meta{padding:12px 14px}
+.fog .sw .var{font-family:var(--mono);font-size:12px;color:var(--ink);letter-spacing:.5px}
+.fog .sw .role{font-family:var(--serif);font-size:12.5px;color:var(--dim);margin:3px 0 5px}
+.fog .sw .hex{font-family:var(--mono);font-size:10.5px;color:var(--mut);letter-spacing:1px;text-transform:uppercase}
+
+/* 字体样张 */
+.fog .type-row{display:grid;grid-template-columns:150px 1fr;gap:24px;padding:22px 0;border-bottom:1px solid var(--rule);align-items:baseline}
+.fog .type-row .lbl{font-family:var(--mono);font-size:10.5px;color:var(--mut);letter-spacing:1.5px;text-transform:uppercase;line-height:1.7}
+.fog .type-row .lbl b{display:block;color:var(--mut);font-weight:400;font-size:11px;margin-bottom:4px}
+.fog .families{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid var(--rule)}
+.fog .fam{padding:24px;border-right:1px solid var(--rule)}
+.fog .fam:last-child{border-right:0}
+.fog .fam .fk{font-family:var(--mono);font-size:10.5px;color:var(--mut);letter-spacing:2px;text-transform:uppercase;margin-bottom:14px}
+.fog .fam .big{font-size:46px;line-height:1;margin-bottom:12px}
+.fog .fam .role{font-family:var(--serif);font-size:13px;color:var(--dim);line-height:1.7}
+.fog .fam .stack{font-family:var(--mono);font-size:10px;color:var(--mut);margin-top:10px;letter-spacing:.5px}
+
+/* 规则线 */
+.fog .rules-demo{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
+.fog .rules-demo .rd{padding:18px 0}
+.fog .rules-demo .rk{font-family:var(--mono);font-size:10.5px;color:var(--mut);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:14px}
+
+/* 行动语言 */
+.fog .btn{display:inline-flex;align-items:center;font-family:var(--sans);font-weight:600;font-size:15px;letter-spacing:.02em;color:var(--mist);background:transparent;border:0;padding:2px 3px;transition:.15s;cursor:pointer}
+.fog .btn::before{content:"["}.fog .btn::after{content:"]"}
+.fog .btn:hover{background:var(--hov)}
+.fog .open{display:inline-flex;align-items:center;font-family:var(--mono);font-size:12px;letter-spacing:1px;color:var(--mist);border:0;background:transparent;padding:2px 3px;transition:.15s;cursor:pointer}
+.fog .open::before{content:"["}.fog .open::after{content:"]"}
+.fog .open:hover{background:var(--hov)}
+.fog .open.red{color:var(--red)}
+.fog .chip{font-family:var(--mono);font-size:12px;letter-spacing:.5px;color:var(--mist);border:1px solid var(--mist);background:transparent;padding:6px 11px;border-radius:1px;cursor:pointer;transition:.15s}
+.fog .chip::before{content:"["}.fog .chip::after{content:"]"}
+.fog .chip.on{background:var(--hov)}
+.fog .act-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule)}
+.fog .act-cell{background:var(--bg);padding:24px;display:flex;flex-direction:column;gap:14px;align-items:flex-start}
+.fog .act-cell .ak{font-family:var(--mono);font-size:10px;color:var(--mut);letter-spacing:1.5px;text-transform:uppercase}
+.fog .act-cell .row{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+
+/* 组件演示 */
+.fog .comp{border:1px solid var(--rule);margin-bottom:26px}
+.fog .comp .cbar{display:flex;align-items:baseline;gap:12px;padding:11px 18px;border-bottom:1px solid var(--rule);background:var(--rule-soft)}
+.fog .comp .cbar .ck{font-family:var(--mono);font-size:11px;color:var(--mut);letter-spacing:1.5px;text-transform:uppercase}
+.fog .comp .cbar .cd{font-family:var(--serif);font-size:12.5px;color:var(--dim)}
+.fog .comp .cbody{padding:24px}
+
+.fog .secthead{display:flex;align-items:baseline;justify-content:space-between;gap:16px;padding:16px 0;border-bottom:1px solid var(--rule)}
+.fog .secthead h3{font-family:var(--serif);font-weight:600;font-size:21px;letter-spacing:3px}
+.fog .secthead .meta{font-family:var(--mono);font-size:12px;color:var(--mut);letter-spacing:1px}
+.fog .secthead .meta a{color:var(--mist);padding:1px 3px;border-radius:1px;transition:.15s;cursor:pointer}
+.fog .secthead .meta a::before{content:"["}.fog .secthead .meta a::after{content:"]"}
+.fog .secthead .meta a:hover{background:var(--hov)}
+
+/* 线索卡 */
+.fog .clue{border-left:2px solid var(--mist);padding:10px 14px;max-width:460px}
+.fog .clue .ct{font-family:var(--serif);font-size:13.5px;line-height:1.8;color:var(--dim)}
+.fog .hband{padding:10px 14px;max-width:460px;border-left:2px solid var(--rule);background:var(--rule-soft)}
+.fog .hband .h{font-family:var(--mono);font-size:12px;letter-spacing:1px;color:var(--mut);margin-left:10%}
+
+/* 输入器 */
+.fog .composer{display:flex;align-items:flex-end;gap:14px;border:1px solid var(--rule);padding:12px 14px;max-width:480px}
+.fog .composer:focus-within{border-color:var(--mist)}
+.fog .composer input{flex:1;background:transparent;border:0;outline:none;color:var(--ink);font-family:var(--sans);font-size:14px;line-height:1.6}
+.fog .composer input::placeholder{color:var(--mut)}
+.fog .composer .act{font-family:var(--mono);font-size:13px;color:var(--mist);background:transparent;border:0;cursor:pointer;letter-spacing:1px;padding:5px;transition:.15s}
+.fog .composer .act::before{content:"["}.fog .composer .act::after{content:"]"}
+.fog .composer .act:hover{background:var(--hov)}
+
+/* 雾散揭示 */
+@keyframes fogout{from{opacity:0;filter:blur(7px)}to{opacity:1;filter:blur(0)}}
+.fog .fogdemo .shown{display:none}
+.fog.rev .fogdemo .hidden{display:none}
+.fog.rev .fogdemo .shown{display:block;animation:fogout .5s ease}
+
+/* 文案体例 */
+.fog .voice{border:1px solid var(--rule);padding:24px;max-width:760px}
+.fog .voice p{font-family:var(--serif);font-size:13.5px;color:var(--dim);line-height:1.9}
+.fog .voice p b{color:var(--ink);font-weight:700}
+.fog .voice .vk{font-family:var(--mono);font-size:11px;color:var(--mut);letter-spacing:2px;text-transform:uppercase;margin-bottom:10px}
+
+.fog .colophon{display:flex;align-items:center;gap:8px 22px;flex-wrap:wrap;font-family:var(--mono);font-size:11.5px;letter-spacing:.5px;color:var(--mut);padding:20px 0 56px;margin-top:46px;border-top:2px solid var(--rule)}
+.fog .colophon .sp{flex:1}
+.fog .colophon a.ext{color:var(--mist);text-decoration:none;padding:1px 3px;border-radius:1px;transition:.15s;cursor:pointer}
+.fog .colophon a.ext::before{content:"["}.fog .colophon a.ext::after{content:"]"}
+.fog .colophon a.ext:hover{background:var(--hov)}
+
+@media(max-width:860px){
+  .fog .families,.fog .rules-demo{grid-template-columns:1fr}
+  .fog .fam{border-right:0;border-bottom:1px solid var(--rule)}
+  .fog .type-row{grid-template-columns:1fr;gap:8px}
+}
+</style>
+</helmet>
+
+<div class="{{ rootClass }}">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="fogmark" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="24" cy="19" r="12"/><circle cx="24" cy="19" r="3.5" fill="currentColor" stroke="none"/><path d="M7 32h22M15 38h26M10 44h19"/></symbol></svg>
+
+<div class="wrap">
+
+  <!-- ===== 报头 ===== -->
+  <header class="masthead">
+    <div class="nameplate">
+      <a class="name" href="档案首页.dc.html">
+        <svg viewBox="0 0 48 48"><use href="#fogmark"/></svg>
+        <h1>迷雾档案<small>设计规范 STYLE GUIDE</small></h1>
+      </a>
+      <div class="utils-group">
+        <div class="utils"><button class="util" type="button" onClick="{{ toggleTheme }}">{{ themeLabel }}</button></div>
+      </div>
+    </div>
+    <div class="dateline">
+      <span>体例规范 STYLE GUIDE</span>
+      <span>版本 REV <b>v0.2</b></span>
+      <span>同宗 <b>DEEPCLUE 体例 v0.5.1</b></span>
+      <span class="red">内部 · INTERNAL</span>
+    </div>
+    <nav class="sections">
+      <a href="档案首页.dc.html">主页</a>
+      <a href="档案库.dc.html">档案</a>
+      <a href="迷雾库.dc.html">迷雾</a>
+      <a href="解谜.dc.html">解谜</a>
+      <a href="实验室.dc.html">实验室</a>
+      <span class="sp"></span>
+      <a class="on" href="设计系统.dc.html">体例</a>
+    </nav>
+  </header>
+
+  <!-- ===== 序 ===== -->
+  <section class="ds-sec">
+    <div class="ds-head"><span class="ix">00</span><h2>迷雾科 · 排版体例</h2><span class="en">FOUNDATIONS</span></div>
+    <p class="ds-note" style="max-width:74ch;font-size:15px">迷雾档案与 DeepClue 侦探事务所同出一馆:同一套语法——语义变量、三族字体、以线分栏、[方括号] 行动——只换情绪。事务所是黄铜与旧纸,迷雾档案是夜雾与冷墨。本次为换皮改版:<b style="color:var(--ink)">页面信息与文案一律沿用现有站内文本,不增删、不改写</b>;本册只规定皮怎么画。凡此处未立之规,从 DeepClue 体例。</p>
+  </section>
+
+  <!-- ===== 配色 ===== -->
+  <section class="ds-sec">
+    <div class="ds-head"><span class="ix">01</span><h2>用色</h2><span class="en">PALETTE</span><span class="sp"></span><span class="en">{{ themeName }}</span></div>
+    <p class="ds-note">底色取夜雾未散之黑,墨字泛冷,雾光自页底升起。雾青 mist 是全站唯一的「可点击」色——凡可点必泛雾光,凡雾光必可点,静态文字一律不用;朱红 red 只作错误提示、危险操作(结束游戏)与命中线索的标红。两套主题——暗与亮——共用同一组语义变量。</p>
+    <div class="swatches">
+      <div class="sw"><div class="col" style="background:var(--bg)"></div><div class="meta"><div class="var">--bg</div><div class="role">底 · 页面背景</div><div class="hex">{{ hexBg }}</div></div></div>
+      <div class="sw"><div class="col" style="background:var(--panel)"></div><div class="meta"><div class="var">--panel</div><div class="role">面 · 浮层 / 线索栏</div><div class="hex">{{ hexPanel }}</div></div></div>
+      <div class="sw"><div class="col" style="background:var(--ink)"></div><div class="meta"><div class="var">--ink</div><div class="role">墨 · 正文标题</div><div class="hex">{{ hexInk }}</div></div></div>
+      <div class="sw"><div class="col" style="background:var(--dim)"></div><div class="meta"><div class="var">--dim</div><div class="role">次 · 叙事副文</div><div class="hex">{{ hexDim }}</div></div></div>
+      <div class="sw"><div class="col" style="background:var(--mut)"></div><div class="meta"><div class="var">--mut</div><div class="role">弱 · 标签注脚</div><div class="hex">{{ hexMut }}</div></div></div>
+      <div class="sw"><div class="col" style="background:var(--mist)"></div><div class="meta"><div class="var">--mist</div><div class="role">雾 · 唯一可点击色</div><div class="hex">{{ hexMist }}</div></div></div>
+      <div class="sw"><div class="col" style="background:var(--red)"></div><div class="meta"><div class="var">--red</div><div class="role">朱 · 错误 / 危险操作</div><div class="hex">{{ hexRed }}</div></div></div>
+      <div class="sw"><div class="col" style="background:var(--rule)"></div><div class="meta"><div class="var">--rule</div><div class="role">线 · 分栏分节</div><div class="hex">墨 · 16%</div></div></div>
+    </div>
+  </section>
+
+  <!-- ===== 字体 ===== -->
+  <section class="ds-sec">
+    <div class="ds-head"><span class="ix">02</span><h2>字体</h2><span class="en">TYPE</span></div>
+    <p class="ds-note">三族分工同事务所体例:衬线作标题与叙事正文,无衬线作界面文字与输入框,等宽作一切编号、标签、状态。迷雾档案纯中文,Noto Serif SC 独自挑大梁——不引入 Cinzel,那是事务所的门脸;两馆要认得出彼此,但不该撞脸。以下样张全部取自站内现有文本。</p>
+    <div class="families">
+      <div class="fam"><div class="fk">衬线 · SERIF</div><div class="big" style="font-family:var(--serif);font-weight:900">雾</div><div class="big" style="font-family:var(--serif);font-weight:900;font-size:30px;margin-top:-4px">Aa 案</div><div class="role">标题 · 卷宗正文 · 线索内容。冷,但可读。</div><div class="stack">Noto Serif SC · 500/700/900</div></div>
+      <div class="fam"><div class="fk">无衬线 · SANS</div><div class="big" style="font-family:var(--sans);font-weight:600">查</div><div class="big" style="font-family:var(--sans);font-weight:600;font-size:30px;margin-top:-4px">Aa 录</div><div class="role">界面正文 · 输入框。清晰、克制。</div><div class="stack">Inter · Noto Sans SC · 400/500/600</div></div>
+      <div class="fam"><div class="fk">等宽 · MONO</div><div class="big" style="font-family:var(--mono);font-weight:500">M</div><div class="big" style="font-family:var(--mono);font-weight:500;font-size:30px;margin-top:-4px">M01 · 雾</div><div class="role">编号 · 标签 · 计数 · 导航。档案登记声纹。</div><div class="stack">JetBrains Mono · 400/500/700</div></div>
+    </div>
+    <div style="margin-top:8px">
+      <div class="type-row"><div class="lbl"><b>HEADLINE</b>标题 · 900</div><div style="font-family:var(--serif);font-weight:900;font-size:clamp(34px,5vw,56px);line-height:1.1;letter-spacing:3px">神父的愿望</div></div>
+      <div class="type-row"><div class="lbl"><b>LEAD-CLAUSE</b>领句 · 700</div><div style="font-family:var(--serif);font-weight:700;font-size:26px;letter-spacing:1.5px;line-height:1.5;color:var(--ink)">"您杀死的那个可怜的醉鬼,他刚来到这座小镇两周而已。"</div></div>
+      <div class="type-row"><div class="lbl"><b>STANDFIRST</b>引文 · 衬线</div><div style="font-family:var(--serif);font-size:17px;color:var(--dim);line-height:1.85;max-width:46ch">我们的目标是作为侦探的你能在 15-20 分钟内体验一个短篇幅的案件,同时享受推理解谜的乐趣。</div></div>
+      <div class="type-row"><div class="lbl"><b>BODY</b>正文 · 无衬线</div><div style="font-family:var(--sans);font-size:15px;color:var(--dim);line-height:1.7;max-width:54ch">推理过程是不严密的,玩家需要不断的提出新的假设,然后输入进行验证。</div></div>
+      <div class="type-row"><div class="lbl"><b>LABEL</b>标签 · 等宽</div><div style="font-family:var(--mono);font-size:12px;color:var(--mut);letter-spacing:2px;text-transform:uppercase">C01 · 演绎 · 本格 · 原创 · 作者 天色盐</div></div>
+    </div>
+  </section>
+
+  <!-- ===== 规则线 ===== -->
+  <section class="ds-sec">
+    <div class="ds-head"><span class="ix">03</span><h2>分隔线</h2><span class="en">RULES</span></div>
+    <p class="ds-note">不用阴影、不用圆角卡片作分隔。版面靠线说话:细线分行分栏,点线分明细,双线收一节之口;线索卡以左侧竖线记状态——灰为未解,雾青为已解。</p>
+    <div class="rules-demo">
+      <div class="rd"><div class="rk">细线 · HAIRLINE</div><div style="border-bottom:1px solid var(--rule)"></div><div class="rk" style="margin:14px 0 0">分行 · 分栏 · 分节</div></div>
+      <div class="rd"><div class="rk">点线 · DOTTED</div><div style="border-bottom:1px dotted var(--rule-soft)"></div><div class="rk" style="margin:14px 0 0">明细 · 名录 · 轻分隔</div></div>
+      <div class="rd"><div class="rk">双线 · DOUBLE</div><div style="border-bottom:3px double var(--rule)"></div><div class="rk" style="margin:14px 0 0">报头 · 标题 · 一节收口</div></div>
+    </div>
+  </section>
+
+  <!-- ===== 行动语言 ===== -->
+  <section class="ds-sec">
+    <div class="ds-head"><span class="ix">04</span><h2>行动语言</h2><span class="en">ACTIONS</span></div>
+    <p class="ds-note"><b style="color:var(--ink)">凡雾青,必可点;凡可点,必雾青。</b>双重信号:凡可点之处,既是雾青,又套 [直角括号]——导航、行动、筛选概莫例外,悬停再浮一层极浅雾底;当前页导航项雾底常驻。<b style="color:var(--ink)">按钮文字沿用站内原文</b>(提交、结束游戏、我想看答案、跳过当前问题、侦探手册、所有档案……),只换包装,不换词;危险操作(结束游戏)用朱红。</p>
+    <div class="act-grid">
+      <div class="act-cell"><span class="ak">主行动 · PRIMARY</span><div class="row"><button class="btn" type="button">所有档案</button><button class="btn" type="button">所有迷雾</button></div></div>
+      <div class="act-cell"><span class="ak">行内行动 · INLINE</span><div class="row"><button class="open" type="button">提交</button><button class="open" type="button">侦探手册</button><button class="open red" type="button">结束游戏</button></div></div>
+      <div class="act-cell"><span class="ak">筛选 · FILTER [ ]</span><div class="row"><button class="chip on" type="button">全部</button><button class="chip" type="button">演绎</button><button class="chip" type="button">探案</button></div></div>
+      <div class="act-cell"><span class="ak">导航 · NAV(当前页浮底)</span><div class="row"><span style="font-family:var(--mono);font-size:12.5px;letter-spacing:1.5px;color:var(--mist);text-transform:uppercase;background:var(--hov);padding:3px 6px">[迷雾]</span><span style="font-family:var(--mono);font-size:12.5px;letter-spacing:1.5px;color:var(--mist);text-transform:uppercase;padding:3px 6px">[档案]</span></div></div>
+      <div class="act-cell"><span class="ak">静态 · 永不用雾青</span><div class="row"><span style="font-family:var(--mono);font-size:12px;letter-spacing:1.5px;color:var(--mut);text-transform:uppercase">M01 · 迷雾</span><span style="font-family:var(--serif);font-size:14px;color:var(--dim)">神父的愿望</span></div></div>
+    </div>
+  </section>
+
+  <!-- ===== 组件 ===== -->
+  <section class="ds-sec">
+    <div class="ds-head"><span class="ix">05</span><h2>组件</h2><span class="en">COMPONENTS</span></div>
+    <p class="ds-note">以下为全站复用的装置,示例内容均取自站内现有文本。每一件都从上面的色、字、线、行动语言长出来。</p>
+
+    <div class="comp">
+      <div class="cbar"><span class="ck">分节标头 · SECTION HEAD</span><span class="cd">每一节之起手,左题右注</span></div>
+      <div class="cbody"><div class="secthead"><h3>最近上新</h3><div class="meta"><a>所有档案</a></div></div></div>
+    </div>
+
+    <div class="comp">
+      <div class="cbar"><span class="ck">线索卡 · CLUE</span><span class="cd">左竖线记状态:雾青为已解;未解只留思路方向(可开关)</span></div>
+      <div class="cbody" style="display:flex;flex-direction:column;gap:16px">
+        <div class="clue"><div class="ct">神父在教堂中聆听了醉汉的忏悔,这是神父的职责所在</div></div>
+        <div class="hband"><span class="h">[醉汉的描述]</span></div>
+      </div>
+    </div>
+
+    <div class="comp">
+      <div class="cbar"><span class="ck">输入器 · INPUT</span><span class="cd">全站唯一输入;聚焦时边框转雾青</span></div>
+      <div class="cbody"><div class="composer"><input type="text" placeholder="输入你的假设进行验证…"><button class="act" type="button">提交</button></div></div>
+    </div>
+  </section>
+
+  <!-- ===== 雾的规矩 ===== -->
+  <section class="ds-sec">
+    <div class="ds-head"><span class="ix">06</span><h2>雾的规矩</h2><span class="en">FOG RULES</span></div>
+    <p class="ds-note">全站过渡一律 0.15 秒纯色,不缩放、不弹跳。唯一的例外是「揭示」:验证命中的那一刻,线索从雾里显形——0.5 秒,模糊由 7px 散尽,透明度由零升满(命中的线索按站内现有逻辑标红)。这是迷雾档案唯一的动效特权,只给这一个时刻,不得挪用。</p>
+    <div class="comp">
+      <div class="cbar"><span class="ck">雾散揭示 · REVEAL</span><span class="cd">点 [{{ revealLabel }}] 试一次 · 示例取自《神父的愿望》</span></div>
+      <div class="cbody">
+        <div class="fogdemo" style="display:flex;flex-direction:column;gap:16px;align-items:flex-start">
+          <div class="hband hidden"><span class="h">[醉汉的描述]</span></div>
+          <div class="clue shown"><div class="ct" style="color:var(--red)">醉汉在忏悔时描述的作案手法与小镇上近些年来发生的连环凶案完全一致</div></div>
+          <button class="open" type="button" onClick="{{ toggleReveal }}">{{ revealLabel }}</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 文案体例 ===== -->
+  <section class="ds-sec">
+    <div class="ds-head"><span class="ix">07</span><h2>文案体例</h2><span class="en">COPY</span></div>
+    <div class="voice">
+      <div class="vk">换皮不换词</div>
+      <p>本次改版<b>只重制 UI 风格,不改动信息与文案</b>:页面结构、栏目名(主页 / 档案 / 迷雾 / 解谜 / 实验室)、按钮动词(提交 / 结束游戏 / 我想看答案 / 跳过当前问题 / 侦探手册)、提示语(不完全正确。进度:N% / 回答错误 (N / 100) / 恭喜完成故事!)、开发部与侦探手册全文,一律沿用站内现有文本。将来若要为迷雾档案另立叙事化文案,单独提案,不随换皮夹带。</p>
+    </div>
+  </section>
+
+  <!-- ===== 报尾 ===== -->
+  <footer class="colophon">
+    <span>© 2025 MistCase by <a class="ext" href="https://deepclue.app" target="_blank" rel="noopener noreferrer">DeepClue ↗</a></span>
+    <span class="sp"></span>
+  </footer>
+
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1360}}">
+class Component extends DCLogic {
+  state = { light: false, rev: false };
+  renderVals(){
+    const light = this.state.light, rev = this.state.rev;
+    const dark = { bg:'#0E1116', panel:'#151A21', ink:'#E6EBE9', dim:'#A8B4AF', mut:'#79857F', mist:'#8FB8AB', red:'#B0685E' };
+    const lite = { bg:'#E7E9E4', panel:'#DEE1DA', ink:'#1C211F', dim:'#45504B', mut:'#6D7873', mist:'#3A6B5E', red:'#8F3F34' };
+    const c = light ? lite : dark;
+    return {
+      rootClass: 'fog' + (light ? ' light' : '') + (rev ? ' rev' : ''),
+      themeLabel: light ? '☀ 亮色' : '☾ 暗色',
+      themeName: light ? '亮 · LIGHT' : '暗 · DARK',
+      revealLabel: rev ? '复雾' : '揭示',
+      hexBg: c.bg, hexPanel: c.panel, hexInk: c.ink, hexDim: c.dim, hexMut: c.mut, hexMist: c.mist, hexRed: c.red,
+      toggleTheme: () => this.setState(s => ({ light: !s.light })),
+      toggleReveal: () => this.setState(s => ({ rev: !s.rev })),
+    };
+  }
+}
+</script>
+</body>
+</html>

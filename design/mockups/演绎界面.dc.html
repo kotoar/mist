@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/deepdesign-7853aedb-e066-4394-9ef6-7e87711efda3/tokens.css">
+<link rel="stylesheet" href="_ds/deepdesign-7853aedb-e066-4394-9ef6-7e87711efda3/styles.css">
+<script src="_ds/deepdesign-7853aedb-e066-4394-9ef6-7e87711efda3/_ds_bundle.js"></script>
+<style>
+html,body{margin:0;padding:0}
+@keyframes fogout{from{opacity:0;filter:blur(7px)}to{opacity:1;filter:blur(0)}}
+</style>
+</helmet>
+
+<div class="{{ rootClass }}" style="min-height:100vh;overflow:hidden;background-attachment:fixed" data-screen-label="演绎界面">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="fogmark" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="24" cy="19" r="12"></circle><circle cx="24" cy="19" r="3.5" fill="currentColor" stroke="none"></circle><path d="M7 32h22M15 38h26M10 44h19"></path></symbol></svg>
+
+  <!-- ===== 卷宗栏 ===== -->
+  <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:13px 24px;border-bottom:1px solid var(--rule)">
+    <div style="display:flex;align-items:center">
+      <a href="档案首页.dc.html" style="display:flex;align-items:center;gap:10px;font-family:var(--serif);font-weight:900;font-size:18px;letter-spacing:2px;color:var(--ink);text-decoration:none"><img src="uploads/icon.png" alt="迷雾档案" style="width:26px;height:26px;filter:{{ iconFilter }}">迷雾档案</a>
+      <span style="font-family:var(--mono);font-size:12px;color:var(--mut);letter-spacing:1px;padding-left:16px;margin-left:16px;border-left:1px solid var(--rule)">C01 · 湖边的灯光 · 演绎</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px">
+      <button type="button" onClick="{{ toggleTheme }}" style="font-family:var(--mono);font-size:11px;color:var(--brass);letter-spacing:1px;cursor:pointer;padding:4px 6px;background:transparent;border:0;transition:background .15s;white-space:nowrap" style-hover="background:var(--hov)">[{{ themeLabel }}]</button>
+      <a href="档案库.dc.html" style="font-family:var(--mono);font-size:11px;color:var(--red);letter-spacing:1px;cursor:pointer;padding:4px 6px;text-decoration:none;transition:background .15s;white-space:nowrap" style-hover="background:var(--hov)">[结束游戏]</a>
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1.4fr 1fr;height:calc(100vh - 52px)">
+
+    <!-- ===== 左:案件 ===== -->
+    <div style="overflow-y:auto;padding:34px 40px 60px;border-right:1px solid var(--rule)">
+      <div style="max-width:640px;margin:0 auto">
+        <div style="font-family:var(--mono);font-size:11px;letter-spacing:2px;color:var(--mut);text-transform:uppercase">案件</div>
+        <h1 style="font-family:var(--serif);font-weight:900;font-size:clamp(26px,3vw,36px);letter-spacing:3px;margin:12px 0 6px">湖边的灯光</h1>
+        <div style="font-family:var(--mono);font-size:11px;letter-spacing:1px;color:var(--mut);padding-bottom:16px;border-bottom:3px double var(--rule);margin-bottom:22px">本格 · 原创 · 作者 天色盐</div>
+        <p style="font-family:var(--serif);font-size:15.5px;line-height:2.05;color:var(--dim);margin:0 0 16px;white-space:pre-line">昨晚约 23:00,插画师 艾伦 被发现死在镇外湖边的长椅上。
+他头部有严重撞击伤,但现场没有搏斗痕迹,手机与钱包均完好。
+最初的判断认为这是一起谋杀案。</p>
+        <p style="font-family:var(--serif);font-size:15.5px;line-height:2.05;color:var(--dim);margin:0 0 16px;white-space:pre-line">房客们都认识艾伦:他性格安静,经常深夜到湖边写生。
+谁会想杀他?又为什么?</p>
+        <p style="font-family:var(--serif);font-size:15.5px;line-height:2.05;color:var(--dim);margin:0 0 16px;white-space:pre-line">房东 玛丽 告诉警方她昨晚一直在家,并抱怨最近家里"丢了几样东西"。
+她显得紧张而焦虑。
+然而,有邻居称在 22:40 看到一名身形与玛丽相似的女性匆忙往湖边方向走。</p>
+        <p style="font-family:var(--serif);font-size:15.5px;line-height:2.05;color:var(--dim);margin:0 0 16px;white-space:pre-line">尸体被发现的长椅离湖岸不远。
+艾伦随身的画板被找到在湖边的小亭子旁,似乎是他作画时随手放下的。
+附近地面并无混乱迹象。</p>
+        <p style="font-family:var(--serif);font-size:15.5px;line-height:2.05;color:var(--dim);margin:0 0 16px;white-space:pre-line">警方在现场记录中提到:
+"居民曾报告快递被投错。"
+但这条信息与案件是否相关暂时无法确定。</p>
+        <p style="font-family:var(--serif);font-size:15.5px;line-height:2.05;color:var(--dim);margin:0 0 16px;white-space:pre-line">随着更多记录整理出来,案情却变得更加奇怪。
+如果没有搏斗、没有抢劫、也没有仇恨动机——
+艾伦究竟是怎么死的?</p>
+      </div>
+    </div>
+
+    <!-- ===== 右:推理 ===== -->
+    <div style="background:var(--panel);overflow-y:auto;display:flex;flex-direction:column">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px 22px;border-bottom:1px solid var(--rule);position:sticky;top:0;background:var(--panel);z-index:1">
+        <span style="font-family:var(--mono);font-size:11px;letter-spacing:2px;color:var(--mut);text-transform:uppercase">推理</span>
+        <span style="font-family:var(--mono);font-size:11px;letter-spacing:1px;color:var(--dim)">已解 <b style="color:var(--ink);font-weight:500">{{ solved }}</b> / 5</span>
+      </div>
+      <div style="flex:1;padding:20px 22px 30px">
+
+        <div style="border-left:2px solid var(--brass);padding:12px 15px;margin-bottom:16px">
+          <div style="font-family:var(--serif);font-weight:700;font-size:15px;line-height:1.7;color:var(--ink);margin-bottom:8px">艾伦的真正死因是什么?</div>
+          <div style="font-family:var(--serif);font-size:13.5px;line-height:1.85;color:var(--dim)">在与玛丽的争执中,被拉扯失足跌倒,头部撞到湖边石头致死</div>
+        </div>
+
+        <sc-if value="{{ notRevealed }}" hint-placeholder-val="{{ true }}">
+          <div style="border-left:2px solid var(--rule);padding:12px 15px;margin-bottom:16px">
+            <div style="font-family:var(--serif);font-weight:700;font-size:15px;line-height:1.7;color:var(--ink);margin-bottom:8px">玛丽为什么要去湖边?</div>
+            <sc-if value="{{ miss }}" hint-placeholder-val="{{ false }}">
+              <div style="font-family:var(--mono);font-size:11.5px;letter-spacing:.5px;color:var(--red);margin-bottom:8px">不完全正确。进度:40%</div>
+            </sc-if>
+            <div style="display:flex;align-items:flex-end;gap:10px;margin-top:4px">
+              <textarea rows="1" placeholder="写下你的推理…(回车提交,Shift+回车换行)" data-q="q2" style="flex:1;background:transparent;border:1px solid var(--rule);padding:8px 11px;outline:none;resize:none;color:var(--ink);font-family:var(--sans);font-size:13.5px;line-height:1.6;transition:border-color .15s" style-focus="border-color:var(--brass)"></textarea>
+              <button type="button" onClick="{{ guess }}" style="font-family:var(--mono);font-size:12.5px;color:var(--brass);background:transparent;border:0;cursor:pointer;letter-spacing:1px;padding:5px;transition:background .15s;white-space:nowrap" style-hover="background:var(--hov)">[提交]</button>
+            </div>
+          </div>
+        </sc-if>
+        <sc-if value="{{ revealed }}" hint-placeholder-val="{{ false }}">
+          <div style="border-left:2px solid var(--brass);padding:12px 15px;margin-bottom:16px;animation:fogout .5s ease">
+            <div style="font-family:var(--serif);font-weight:700;font-size:15px;line-height:1.7;color:var(--ink);margin-bottom:8px">玛丽为什么要去湖边?</div>
+            <div style="font-family:var(--serif);font-size:13.5px;line-height:1.85;color:var(--dim)">她以为艾伦"偷了自己家里丢的东西",追到湖边去质问他。</div>
+          </div>
+        </sc-if>
+
+        <div style="border-left:2px solid var(--rule);padding:12px 15px;margin-bottom:16px">
+          <div style="font-family:var(--serif);font-weight:700;font-size:15px;line-height:1.7;color:var(--ink);margin-bottom:8px">玛丽所丢的东西实际上发生了什么?</div>
+          <div style="display:flex;align-items:flex-end;gap:10px;margin-top:4px">
+            <textarea rows="1" placeholder="写下你的推理…" style="flex:1;background:transparent;border:1px solid var(--rule);padding:8px 11px;outline:none;resize:none;color:var(--ink);font-family:var(--sans);font-size:13.5px;line-height:1.6;transition:border-color .15s" style-focus="border-color:var(--brass)"></textarea>
+            <button type="button" style="font-family:var(--mono);font-size:12.5px;color:var(--brass);background:transparent;border:0;cursor:pointer;letter-spacing:1px;padding:5px;transition:background .15s;white-space:nowrap" style-hover="background:var(--hov)">[提交]</button>
+          </div>
+        </div>
+
+        <div style="border-left:2px solid var(--rule);padding:12px 15px;margin-bottom:16px">
+          <div style="font-family:var(--serif);font-weight:700;font-size:15px;line-height:1.7;color:var(--ink);margin-bottom:8px">为什么尸体会出现在长椅上,而不是倒在地上?</div>
+          <div style="display:flex;align-items:flex-end;gap:10px;margin-top:4px">
+            <textarea rows="1" placeholder="写下你的推理…" style="flex:1;background:transparent;border:1px solid var(--rule);padding:8px 11px;outline:none;resize:none;color:var(--ink);font-family:var(--sans);font-size:13.5px;line-height:1.6;transition:border-color .15s" style-focus="border-color:var(--brass)"></textarea>
+            <button type="button" style="font-family:var(--mono);font-size:12.5px;color:var(--brass);background:transparent;border:0;cursor:pointer;letter-spacing:1px;padding:5px;transition:background .15s;white-space:nowrap" style-hover="background:var(--hov)">[提交]</button>
+          </div>
+        </div>
+
+        <div style="border-left:2px solid var(--rule);padding:12px 15px;margin-bottom:16px">
+          <div style="font-family:var(--serif);font-weight:700;font-size:15px;line-height:1.7;color:var(--ink);margin-bottom:8px">是谁把艾伦移动到长椅上的?</div>
+          <div style="display:flex;align-items:flex-end;gap:10px;margin-top:4px">
+            <textarea rows="1" placeholder="写下你的推理…" style="flex:1;background:transparent;border:1px solid var(--rule);padding:8px 11px;outline:none;resize:none;color:var(--ink);font-family:var(--sans);font-size:13.5px;line-height:1.6;transition:border-color .15s" style-focus="border-color:var(--brass)"></textarea>
+            <button type="button" style="font-family:var(--mono);font-size:12.5px;color:var(--brass);background:transparent;border:0;cursor:pointer;letter-spacing:1px;padding:5px;transition:background .15s;white-space:nowrap" style-hover="background:var(--hov)">[提交]</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1360},&quot;light&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;主题&quot;},&quot;revealed&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;演示状态&quot;}}">
+class Component extends DCLogic {
+  state = { light: null, rev: null, miss: false };
+  renderVals(){
+    const light = this.state.light ?? (this.props.light ?? false);
+    const rev = this.state.rev ?? (this.props.revealed ?? false);
+    return {
+      rootClass: light ? 'arch light' : 'arch',
+      themeLabel: light ? '☀ 亮色' : '☾ 暗色',
+      iconFilter: light ? 'none' : 'invert(1)',
+      toggleTheme: () => this.setState({ light: !light }),
+      revealed: rev,
+      notRevealed: !rev,
+      solved: rev ? '2' : '1',
+      miss: this.state.miss,
+      guess: () => {
+        const el = document.querySelector('textarea[data-q="q2"]');
+        const v = (el && el.value || '').trim();
+        if (!v) return;
+        if (v.includes('偷') || v.includes('质问') || v.includes('丢')) {
+          this.setState({ rev: true, miss: false });
+        } else {
+          this.setState({ miss: true });
+        }
+      },
+    };
+  }
+}
+</script>
+</body>
+</html>

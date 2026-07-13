@@ -1,5 +1,6 @@
 import { proxy } from "valtio";
 import { ContextDelegate } from "@lib/case/model";
+import type { GameLoadStatus } from "@lib/shared/components/archive/game-state";
 
 export interface QuestionViewModel {
     id: string;
@@ -23,6 +24,7 @@ interface CaseLoadBundle {
 
 interface GameViewModel {
     id: string;
+    status: GameLoadStatus;
     view: "puzzle" | "clues";
     title: string;
     puzzle: string;
@@ -35,6 +37,7 @@ interface GameViewModel {
 
 export const gameViewModel = proxy<GameViewModel>({
     id: "",
+    status: "loading",
     view: "puzzle",
     title: "",
     puzzle: "",
@@ -65,6 +68,7 @@ export const gameViewModel = proxy<GameViewModel>({
             }
         }));
         gameViewModel.story = bundle.story;
+        gameViewModel.status = "ready";
     },
     endGame() {
         ContextDelegate.instance.endGame();

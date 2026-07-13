@@ -1,5 +1,6 @@
 import { proxy } from "valtio";
 import { DetectDelegate } from "./model";
+import type { GameLoadStatus } from "@lib/shared/components/archive/game-state";
 
 export interface DetectLoadBundle {
     id: string;
@@ -13,6 +14,7 @@ export interface DetectLoadBundle {
 
 export interface DetectViewModelType {
     id: string;
+    status: GameLoadStatus;
     title: string;
     puzzle: string;
     story?: string;
@@ -37,6 +39,7 @@ export interface DetectViewModelType {
 
 export const detectViewModel = proxy<DetectViewModelType>({
     id: "",
+    status: "loading",
     title: "",
     puzzle: "",
     story: undefined,
@@ -68,6 +71,7 @@ export const detectViewModel = proxy<DetectViewModelType>({
         detectViewModel.standardAnswer = undefined;
         detectViewModel.percentage = 0;
         detectViewModel.view = "puzzle";
+        detectViewModel.status = "ready";
     },
 
     submit() {

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/deepdesign-7853aedb-e066-4394-9ef6-7e87711efda3/tokens.css">
+<link rel="stylesheet" href="_ds/deepdesign-7853aedb-e066-4394-9ef6-7e87711efda3/styles.css">
+<script src="_ds/deepdesign-7853aedb-e066-4394-9ef6-7e87711efda3/_ds_bundle.js"></script>
+<style>
+html,body{margin:0;padding:0}
+@keyframes fogout{from{opacity:0;filter:blur(7px)}to{opacity:1;filter:blur(0)}}
+</style>
+</helmet>
+
+<div class="{{ rootClass }}" style="min-height:100vh;overflow:hidden;background-attachment:fixed" data-screen-label="迷雾界面">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="fogmark" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="24" cy="19" r="12"></circle><circle cx="24" cy="19" r="3.5" fill="currentColor" stroke="none"></circle><path d="M7 32h22M15 38h26M10 44h19"></path></symbol></svg>
+
+  <!-- ===== 卷宗栏 ===== -->
+  <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:13px 24px;border-bottom:1px solid var(--rule)">
+    <div style="display:flex;align-items:center">
+      <a href="档案首页.dc.html" style="display:flex;align-items:center;gap:10px;font-family:var(--serif);font-weight:900;font-size:18px;letter-spacing:2px;color:var(--ink);text-decoration:none"><img src="uploads/icon.png" alt="迷雾档案" style="width:26px;height:26px;filter:{{ iconFilter }}">迷雾档案</a>
+      <span style="font-family:var(--mono);font-size:12px;color:var(--mut);letter-spacing:1px;padding-left:16px;margin-left:16px;border-left:1px solid var(--rule)">M01 · 神父的愿望 · 迷雾</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px">
+      <button type="button" onClick="{{ toggleTheme }}" style="font-family:var(--mono);font-size:11px;color:var(--brass);letter-spacing:1px;cursor:pointer;padding:4px 6px;background:transparent;border:0;transition:background .15s;white-space:nowrap" style-hover="background:var(--hov)">[{{ themeLabel }}]</button>
+      <button type="button" style="font-family:var(--mono);font-size:11px;color:var(--brass);letter-spacing:1px;cursor:pointer;padding:4px 6px;background:transparent;border:0;transition:background .15s;white-space:nowrap" style-hover="background:var(--hov)">[我想看答案]</button>
+      <a href="迷雾库.dc.html" style="font-family:var(--mono);font-size:11px;color:var(--red);letter-spacing:1px;cursor:pointer;padding:4px 6px;text-decoration:none;transition:background .15s;white-space:nowrap" style-hover="background:var(--hov)">[结束游戏]</a>
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1.4fr 1fr;height:calc(100vh - 52px)">
+
+    <!-- ===== 左:卷宗正文 ===== -->
+    <div style="overflow-y:auto;padding:34px 40px 60px;border-right:1px solid var(--rule)">
+      <div style="max-width:640px;margin:0 auto">
+        <div style="font-family:var(--mono);font-size:11px;letter-spacing:2px;color:var(--mut);text-transform:uppercase">M01 · 迷雾</div>
+        <h1 style="font-family:var(--serif);font-weight:900;font-size:clamp(26px,3vw,36px);letter-spacing:3px;margin:12px 0 18px;padding-bottom:16px;border-bottom:3px double var(--rule)">神父的愿望</h1>
+        <p style="font-family:var(--serif);font-size:15.5px;line-height:2.05;color:var(--dim);margin:0 0 14px">"您面临 —— 来自杀罪的指控,神父先生"</p>
+        <p style="font-family:var(--serif);font-size:15.5px;line-height:2.05;color:var(--dim);margin:0 0 14px">"我罪有应得。"</p>
+        <p style="font-family:var(--serif);font-size:15.5px;line-height:2.05;color:var(--dim);margin:0 0 14px">"真的不做任何辩护吗?警察和您的信众们都希望搞清楚到底发生了什么,您为什么不和他们说说呢?"</p>
+        <p style="font-family:var(--serif);font-size:15.5px;line-height:2.05;color:var(--dim);margin:0 0 14px">"并不需要。"</p>
+        <p style="font-family:var(--serif);font-size:15.5px;line-height:2.05;color:var(--dim);margin:0 0 14px">"唉……您真是一位可敬的牧羊人,但可惜,您现在的愿望是实现不了的。"</p>
+        <p style="font-family:var(--serif);font-size:15.5px;line-height:2.05;color:var(--dim);margin:0 0 14px">"我听不懂你在说什么。"</p>
+        <p style="font-family:var(--serif);font-size:15.5px;line-height:2.05;color:var(--dim);margin:0 0 14px">"您杀死的那个可怜的醉鬼,他刚来到这座小镇两周而已。"</p>
+        <p style="font-family:var(--serif);font-size:15.5px;line-height:2.05;color:var(--dim);margin:0 0 14px">沉默</p>
+        <p style="font-family:var(--serif);font-size:15.5px;line-height:2.05;color:var(--dim);margin:0 0 14px">"顺便一提,我当律师以前是个警察,而且恰好和这个醉鬼是同乡哦"</p>
+        <p style="font-family:var(--serif);font-size:15.5px;line-height:2.05;color:var(--dim);margin:0 0 14px">沉默 以及 一双盯着面前人的眼睛</p>
+        <p style="font-family:var(--serif);font-size:15.5px;line-height:2.05;color:var(--dim);margin:0 0 14px">"？？？？？"</p>
+        <p style="font-family:var(--serif);font-size:15.5px;line-height:2.05;color:var(--dim);margin:0 0 14px">"魔鬼!魔鬼!"</p>
+      </div>
+    </div>
+
+    <!-- ===== 右:迷雾 ===== -->
+    <div style="background:var(--panel);overflow-y:auto;display:flex;flex-direction:column">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px 22px;border-bottom:1px solid var(--rule);position:sticky;top:0;background:var(--panel);z-index:1">
+        <span style="font-family:var(--mono);font-size:11px;letter-spacing:2px;color:var(--mut);text-transform:uppercase">迷雾</span>
+        <span style="font-family:var(--mono);font-size:11px;letter-spacing:1px;color:var(--dim)">已解 <b style="color:var(--ink);font-weight:500">{{ solved }}</b> / 15</span>
+      </div>
+      <div style="flex:1;padding:20px 22px 26px">
+
+        <div style="border:1px solid var(--rule);padding:14px 16px;margin-bottom:16px">
+          <div style="font-family:var(--serif);font-weight:700;font-size:14.5px;color:var(--ink);letter-spacing:1px;padding-bottom:9px;border-bottom:1px solid var(--rule-soft);margin-bottom:4px">律师与神父</div>
+          <div style="padding:9px 12px;margin-top:10px;border-left:2px solid var(--brass)"><div style="font-family:var(--serif);font-size:13.5px;line-height:1.85;color:var(--dim);white-space:pre-wrap">神父在教堂中聆听了醉汉的忏悔,这是神父的职责所在</div></div>
+          <sc-if value="{{ notRevealed }}" hint-placeholder-val="{{ true }}">
+            <div style="padding:9px 12px;margin-top:10px;border-left:2px solid var(--rule);background:var(--rule-soft);min-height:36px"><span style="font-family:var(--mono);font-size:12px;letter-spacing:1px;color:var(--mut);margin-left:10%;visibility:{{ hintVis }}">[醉汉的描述]</span></div>
+          </sc-if>
+          <sc-if value="{{ revealed }}" hint-placeholder-val="{{ false }}">
+            <div style="padding:9px 12px;margin-top:10px;border-left:2px solid var(--brass);animation:fogout .5s ease"><div style="font-family:var(--serif);font-size:13.5px;line-height:1.85;color:var(--red);white-space:pre-wrap">醉汉在忏悔时描述的作案手法与小镇上近些年来发生的连环凶案完全一致</div></div>
+          </sc-if>
+          <div style="padding:9px 12px;margin-top:10px;border-left:2px solid var(--rule);background:var(--rule-soft);min-height:36px"><span style="font-family:var(--mono);font-size:12px;letter-spacing:1px;color:var(--mut);margin-left:10%;visibility:{{ hintVis }}">[神父的理由]</span></div>
+          <div style="padding:9px 12px;margin-top:10px;border-left:2px solid var(--rule);background:var(--rule-soft);min-height:36px"><span style="font-family:var(--mono);font-size:12px;letter-spacing:1px;color:var(--mut);margin-left:10%;visibility:{{ hintVis }}">[神父的错误]</span></div>
+          <div style="padding:9px 12px;margin-top:10px;border-left:2px solid var(--rule);background:var(--rule-soft);min-height:36px"><span style="font-family:var(--mono);font-size:12px;letter-spacing:1px;color:var(--mut);margin-left:10%;visibility:{{ hintVis }}">[律师的身份]</span></div>
+          <div style="padding:9px 12px;margin-top:10px;border-left:2px solid var(--rule);background:var(--rule-soft);min-height:36px"><span style="font-family:var(--mono);font-size:12px;letter-spacing:1px;color:var(--mut);margin-left:10%;visibility:{{ hintVis }}">[律师的调查]</span></div>
+        </div>
+
+        <div style="border:1px solid var(--rule);padding:14px 16px;margin-bottom:16px">
+          <div style="font-family:var(--serif);font-weight:700;font-size:14.5px;color:var(--ink);letter-spacing:1px;padding-bottom:9px;border-bottom:1px solid var(--rule-soft);margin-bottom:4px">醉鬼的到来</div>
+          <div style="padding:9px 12px;margin-top:10px;border-left:2px solid var(--rule);background:var(--rule-soft);min-height:36px"><span style="font-family:var(--mono);font-size:12px;letter-spacing:1px;color:var(--mut);margin-left:10%;visibility:{{ hintVis }}">[律师的行为]</span></div>
+          <div style="padding:9px 12px;margin-top:10px;border-left:2px solid var(--rule);background:var(--rule-soft);min-height:36px"><span style="font-family:var(--mono);font-size:12px;letter-spacing:1px;color:var(--mut);margin-left:10%;visibility:{{ hintVis }}">[律师的身份]</span></div>
+          <div style="padding:9px 12px;margin-top:10px;border-left:2px solid var(--rule);background:var(--rule-soft);min-height:36px"><span style="font-family:var(--mono);font-size:12px;letter-spacing:1px;color:var(--mut);margin-left:10%;visibility:{{ hintVis }}">[醉鬼的身份]</span></div>
+          <div style="padding:9px 12px;margin-top:10px;border-left:2px solid var(--rule);background:var(--rule-soft);min-height:36px"><span style="font-family:var(--mono);font-size:12px;letter-spacing:1px;color:var(--mut);margin-left:10%;visibility:{{ hintVis }}">[醉鬼的忏悔]</span></div>
+          <div style="padding:9px 12px;margin-top:10px;border-left:2px solid var(--rule);background:var(--rule-soft);min-height:36px"><span style="font-family:var(--mono);font-size:12px;letter-spacing:1px;color:var(--mut);margin-left:10%;visibility:{{ hintVis }}">[醉鬼的死因]</span></div>
+        </div>
+
+        <div style="border:1px solid var(--rule);padding:14px 16px;margin-bottom:16px">
+          <div style="padding:9px 12px;margin-top:0;border-left:2px solid var(--rule);background:var(--rule-soft);min-height:36px"><span style="font-family:var(--mono);font-size:12px;letter-spacing:1px;color:var(--mut);margin-left:10%;visibility:{{ hintVis }}">[为什么神父不辩护]</span></div>
+        </div>
+
+        <div style="border:1px solid var(--rule);padding:14px 16px;margin-bottom:16px">
+          <div style="padding:9px 12px;margin-top:0;border-left:2px solid var(--rule);background:var(--rule-soft);min-height:36px"><span style="font-family:var(--mono);font-size:12px;letter-spacing:1px;color:var(--mut);margin-left:10%;visibility:{{ hintVis }}">[被隐藏的话]</span></div>
+          <div style="padding:9px 12px;margin-top:10px;border-left:2px solid var(--rule);background:var(--rule-soft);min-height:36px"><span style="font-family:var(--mono);font-size:12px;letter-spacing:1px;color:var(--mut);margin-left:10%;visibility:{{ hintVis }}">[神父的愿望]</span></div>
+          <div style="padding:9px 12px;margin-top:10px;border-left:2px solid var(--rule);background:var(--rule-soft);min-height:36px"><span style="font-family:var(--mono);font-size:12px;letter-spacing:1px;color:var(--mut);margin-left:10%;visibility:{{ hintVis }}">[醉鬼的状态]</span></div>
+        </div>
+
+      </div>
+      <div style="border-top:1px solid var(--rule);background:var(--panel);position:sticky;bottom:0;padding:12px 22px 16px">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:9px">
+          <span style="font-family:var(--mono);font-size:12px;color:var(--red);letter-spacing:1px;white-space:nowrap">已尝试 {{ count }} 次</span>
+          <span style="flex:1"></span>
+          <button type="button" onClick="{{ toggleHints }}" style="font-family:var(--mono);font-size:11px;color:var(--brass);letter-spacing:1px;cursor:pointer;background:transparent;border:0;padding:2px 4px;transition:background .15s;white-space:nowrap" style-hover="background:var(--hov)">[显示思路方向 · {{ hintsLabel }}]</button>
+        </div>
+        <div style="display:flex;align-items:flex-end;gap:12px;border:1px solid var(--rule);padding:11px 14px;transition:border-color .15s" style-focus="border-color:var(--brass)">
+          <textarea rows="1" placeholder="输入你的假设进行验证…(回车提交,Shift+回车换行)" style="flex:1;background:transparent;border:0;outline:none;resize:none;color:var(--ink);font-family:var(--sans);font-size:14px;line-height:1.6"></textarea>
+          <button type="button" onClick="{{ guess }}" style="font-family:var(--mono);font-size:13px;color:var(--brass);background:transparent;border:0;cursor:pointer;letter-spacing:1px;padding:5px;white-space:nowrap;transition:background .15s" style-hover="background:var(--hov)">[提交]</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1360},&quot;light&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;主题&quot;},&quot;revealed&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;演示状态&quot;},&quot;showHints&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;演示状态&quot;}}">
+class Component extends DCLogic {
+  state = { light: null, rev: null, hints: null, count: 1 };
+  renderVals(){
+    const light = this.state.light ?? (this.props.light ?? false);
+    const rev = this.state.rev ?? (this.props.revealed ?? false);
+    const hints = this.state.hints ?? (this.props.showHints ?? true);
+    return {
+      rootClass: light ? 'arch light' : 'arch',
+      themeLabel: light ? '☀ 亮色' : '☾ 暗色',
+      iconFilter: light ? 'none' : 'invert(1)',
+      toggleTheme: () => this.setState({ light: !light }),
+      revealed: rev,
+      notRevealed: !rev,
+      solved: rev ? '2' : '1',
+      hintVis: hints ? 'visible' : 'hidden',
+      hintsLabel: hints ? '开' : '关',
+      toggleHints: () => this.setState({ hints: !hints }),
+      count: String(this.state.count),
+      guess: () => {
+        const el = document.querySelector('textarea');
+        const v = (el && el.value || '').trim();
+        if (!v) return;
+        if (v.includes('手法') || v.includes('一致') || v.includes('凶案')) {
+          this.setState(s => ({ rev: true, count: s.count + 1 }));
+          if (el) el.value = '';
+        } else {
+          this.setState(s => ({ count: s.count + 1 }));
+        }
+      },
+    };
+  }
+}
+</script>
+</body>
+</html>

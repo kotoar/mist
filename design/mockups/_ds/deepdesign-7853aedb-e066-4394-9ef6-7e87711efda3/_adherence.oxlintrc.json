@@ -1,0 +1,80 @@
+{
+  "plugins": [
+    "react",
+    "import"
+  ],
+  "rules": {
+    "react/forbid-elements": [
+      "warn",
+      {
+        "forbid": []
+      }
+    ],
+    "no-restricted-imports": [
+      "warn",
+      {
+        "patterns": []
+      }
+    ],
+    "no-restricted-syntax": [
+      "warn",
+      {
+        "selector": "Literal[value=/#[0-9a-fA-F]{3,8}\\b/]",
+        "message": "Raw hex color — use a design-system color token via var()."
+      },
+      {
+        "selector": "Literal[value=/font-family\\s*:\\s*(?!['\\\"]?(?:Inter|JetBrains Mono|Noto Sans SC|Noto Serif SC))/i]",
+        "message": "Font not provided by the design system. Available: Inter, JetBrains Mono, Noto Sans SC, Noto Serif SC."
+      }
+    ]
+  },
+  "overrides": [
+    {
+      "files": [
+        "**/index.js"
+      ],
+      "rules": {
+        "no-restricted-imports": "off"
+      }
+    }
+  ],
+  "x-omelette": {
+    "components": {},
+    "tokens": [
+      "--bg",
+      "--brass",
+      "--dim",
+      "--hov",
+      "--ink",
+      "--mono",
+      "--mut",
+      "--panel",
+      "--red",
+      "--rule",
+      "--rule-soft",
+      "--sans",
+      "--serif"
+    ],
+    "tokenKinds": {
+      "--bg": "color",
+      "--panel": "color",
+      "--ink": "color",
+      "--dim": "color",
+      "--mut": "color",
+      "--brass": "color",
+      "--red": "color",
+      "--rule": "color",
+      "--rule-soft": "color",
+      "--hov": "color",
+      "--serif": "font",
+      "--sans": "font",
+      "--mono": "font"
+    },
+    "fontFamilies": [
+      "Inter",
+      "JetBrains Mono",
+      "Noto Sans SC",
+      "Noto Serif SC"
+    ]
+  }
+}

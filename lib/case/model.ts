@@ -42,9 +42,16 @@ export class ContextDelegate {
 
     async load(storyId: string): Promise<void> {
         this.storyId = storyId;
+        gameViewModel.status = "loading";
 
-        const response = await start(storyId);
-        if (!response) { return; }
+        let response;
+        try {
+            response = await start(storyId);
+        } catch {
+            gameViewModel.status = "error";
+            return;
+        }
+        if (!response) { gameViewModel.status = "missing"; return; }
 
         this.storyData = response;
         this.localState = readLocalState(storyId);

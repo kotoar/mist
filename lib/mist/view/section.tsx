@@ -1,46 +1,69 @@
-import { Box, VStack, HStack, Show, Icon, For, Text } from "@chakra-ui/react";
-import { CiCircleCheck } from "react-icons/ci";
+"use client";
+
+import { Box, VStack, chakra } from "@chakra-ui/react";
 import { useSnapshot } from "valtio";
 import { SectionRepresent, mistViewModel, ClueRepresent, sectionCompleted } from "@lib/mist/viewmodel";
 
+/** 一节迷雾: 边框盒 + 标题 + 线索槽(已解铜线, 未解细线占位)。 */
 export function SectionView({ section }: { section: SectionRepresent }) {
-	const viewModel = useSnapshot(mistViewModel);
+  const viewModel = useSnapshot(mistViewModel);
+  const completed = sectionCompleted(section);
 
-	function ClueView({ clue }: { clue: ClueRepresent }) {
-		if (clue.content) {
-			return (
-				<Box bg="bg.muted" width="full">
-					<Text
-						whiteSpace="pre-wrap"
-						color={viewModel.indicatedId.includes(clue.id) ? "red.500" : "fg.default"}
-					>{clue.content}</Text>
-				</Box>
-			);
-		}
-		return (
-			<Box bg="bg.emphasized" width="full">
-				<Text whiteSpace="pre-wrap" color="fg.subtle" marginLeft="10%">
-					{clue.hint && viewModel.showMistHints ? `[${clue.hint}]` : " "}
-				</Text>
-			</Box>
-		);
-	}
+  return (
+    <Box border="1px solid" borderColor="arch.rule" px="16px" py="14px">
+      {section.title ? (
+        <chakra.div
+          display="flex"
+          alignItems="center"
+          gap="8px"
+          fontFamily="serif"
+          fontWeight="700"
+          fontSize="14.5px"
+          letterSpacing="1px"
+          color="arch.ink"
+          pb="9px"
+          mb="4px"
+          borderBottom="1px solid"
+          borderColor="arch.ruleSoft"
+        >
+          {completed ? (
+            <chakra.span color="arch.mist" fontFamily="mono" fontSize="13px">
+              ✓
+            </chakra.span>
+          ) : null}
+          {section.title}
+        </chakra.div>
+      ) : null}
+      <VStack align="stretch" gap="10px" mt={section.title ? "10px" : "0"}>
+        {section.clues.map((clue, index) => (
+          <ClueSlot key={index} clue={clue} indicated={viewModel.indicatedId.includes(clue.id)} showHints={viewModel.showMistHints} />
+        ))}
+      </VStack>
+    </Box>
+  );
+}
 
-	return (
-		<VStack align="stretch" gap="18px">
-			<HStack justify="start">
-				<Show when={sectionCompleted(section)}>
-					<Icon size="lg" as={CiCircleCheck} color="green.500" />
-				</Show>
-				<Show when={section.title}>
-					<Text fontWeight="bold">{section.title}</Text>
-				</Show>
-			</HStack>
-			<For each={section.clues}>
-				{(clue, index) => (
-					<ClueView key={index} clue={clue} />
-				)}
-			</For>
-		</VStack>
-	)
+function ClueSlot({ clue, indicated, showHints }: { clue: ClueRepresent; indicated: boolean; showHints: boolean }) {
+  if (clue.content) {
+    return (
+      <Box px="12px" py="9px" borderLeft="2px solid" borderColor="arch.brass">
+        <chakra.div
+          fontFamily="serif"
+          fontSize="13.5px"
+          lineHeight="1.85"
+          whiteSpace="pre-wrap"
+          color={indicated ? "arch.red" : "arch.dim"}
+        >
+          {clue.content}
+        </chakra.div>
+      </Box>
+    );
+  }
+  return (
+    <Box px="12px" py="9px" borderLeft="2px solid" borderColor="arch.rule" bg="arch.ruleSoft" minH="36px">
+      <chakra.span fontFamily="mono" fontSize="12px" letterSpacing="1px" color="arch.mut" ml="10%" visibility={clue.hint && showHints ? "visible" : "hidden"}>
+        [{clue.hint ?? " "}]
+      </chakra.span>
+    </Box>
+  );
 }

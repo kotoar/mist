@@ -1,141 +1,81 @@
 "use client";
 
-import { useSnapshot } from "valtio";
-import { Container, For, VStack, Text, Spacer, HStack, Button, SimpleGrid, GridItem, Heading, ScrollArea, Show, Card, Box, Switch } from "@chakra-ui/react"
+import { For, VStack, chakra } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
-import { IMESafeInput } from "@lib/shared/components/IMESafeInput";
-import { LoadingView } from "@lib/shared/components/LoadingView";
+import { useSnapshot } from "valtio";
 import { mistViewModel } from "@lib/mist/viewmodel";
-import { MistStoryBannerView } from "./story-banner";
 import { SectionView } from "./section";
-import { MistInfoView } from "@lib/shared/components/info";
-import { Prose } from "@lib/shared/components/ui/prose";
-import Markdown from "react-markdown";
+import { MistStoryBannerView } from "./story-banner";
+import { MistPanel } from "./panel";
+import { ArchiveMarkdown } from "@lib/shared/components/archive/markdown";
+import { GameScreen, PanelHeader, PanelScroll, PanelFooter, Emph } from "@lib/shared/components/archive/game-layout";
+import { GameThemeToggle, GameAction } from "@lib/shared/components/archive/game-topbar";
+import { GameStateNotice } from "@lib/shared/components/archive/game-state";
 
 export function DesktopMistView() {
-	const viewModel = useSnapshot(mistViewModel);
-	const router = useRouter();
+  const viewModel = useSnapshot(mistViewModel);
+  const router = useRouter();
+  const clues = viewModel.sections.flatMap((s) => s.clues);
+  const solved = clues.filter((c) => c.content).length;
 
-	return (
-		<Container maxW="container.lg" height="100vh">
-			<VStack width="full" height="full" align="stretch" gap="10px" paddingY="20px">
-				<SimpleGrid columns={2} gap={4}>
-					<GridItem>
-						<ScrollArea.Root height="95vh" size="sm" variant="always">
-							<ScrollArea.Viewport>
-								<ScrollArea.Content paddingEnd="5">
-									<VStack align="stretch" gap="10px" padding="15px">
-										<HStack position="sticky" top={0} zIndex={1} bg="bg">
-											<Heading fontSize="2xl" fontWeight="bold">{viewModel.title}</Heading>
-										</HStack>
-										<Prose color="fg">
-											<Markdown>
-												{viewModel.puzzle}
-											</Markdown>
-										</Prose>
-									</VStack>
-								</ScrollArea.Content>
-							</ScrollArea.Viewport>
-							<ScrollArea.Scrollbar />
-						</ScrollArea.Root>
-					</GridItem>
-					<GridItem>
-						<ScrollArea.Root height="95vh" size="sm" variant="always">
-							<ScrollArea.Viewport>
-								<ScrollArea.Content paddingEnd="5">
-									<VStack gap="10px" align="stretch">
-										<VStack position="sticky" top={0} paddingY="4px" zIndex={1} bg="bg">
-											<HStack width="full">
-												<Heading fontSize="2xl" fontWeight="bold">迷雾</Heading>
-												<Spacer />
-												<MistInfoView size="sm" />
-												<Button
-													size="sm" colorPalette="pink" variant="surface"
-													onClick={() => mistViewModel.skip()}
-												>我想看答案</Button>
-												<Button
-													size="sm" colorPalette="red" variant="surface"
-													onClick={() => {
-														mistViewModel.endGame()
-														router.push("/");
-													}}
-												>结束游戏</Button>
-											</HStack>
-											<Show when={viewModel.story}>
-												<MistStoryBannerView />
-											</Show>
-										</VStack>
-										<For each={viewModel.sections}>
-											{(section, index) => (
-												<Card.Root key={index}>
-													<Card.Body>
-														<SectionView key={index} section={section} />
-													</Card.Body>
-												</Card.Root>
-											)}
-										</For>
-										<Spacer />
-										<Box position="sticky" bottom={0} bg="bg" paddingY="10px" zIndex={1}>
-											<PanelView />
-										</Box>
-									</VStack>
-								</ScrollArea.Content>
-							</ScrollArea.Viewport>
-							<ScrollArea.Scrollbar />
-						</ScrollArea.Root>
-					</GridItem>
-				</SimpleGrid>
-			</VStack>
-		</Container>
-	);
-}
+  if (viewModel.status !== "ready") {
+    return <GameStateNotice status={viewModel.status} />;
+  }
 
-function PanelView() {
-	const viewModel = useSnapshot(mistViewModel);
-	return (
-		<VStack width="full" align="stretch" gap="10px">
-			<HStack align="start">
-				<Text color="red.500" whiteSpace="nowrap">( {viewModel.count} )</Text>
-				<Show when={viewModel.message}>
-					<Text color="red.500">{viewModel.message}</Text>
-				</Show>
-				<Spacer />
-				<Switch.Root
-					size="sm"
-					checked={viewModel.showMistHints}
-					onCheckedChange={(e) => mistViewModel.showMistHints = e.checked}
-				>
-					<Switch.HiddenInput />
-					<Switch.Control>
-						<Switch.Thumb />
-					</Switch.Control>
-					<Switch.Label whiteSpace="nowrap">显示思路方向</Switch.Label>
-				</Switch.Root>
-			</HStack>
-			<HStack align="start">
-				<IMESafeInput
-					type="textarea"
-					value={viewModel.input}
-					onChange={(newValue) => (mistViewModel.input = newValue)}
-					textareaProps={{
-						onKeyDown: (e) => {
-							if (e.key === 'Enter' && !e.shiftKey && viewModel.input.trim() !== '') {
-								e.preventDefault();
-								mistViewModel.submit();
-							}
-						}
-					}}
-				/>
-				<Button
-					disabled={!viewModel.interactable || viewModel.input.trim() === ''}
-					onClick={() => mistViewModel.submit()}
-				>
-					<Show when={!viewModel.interactable}>
-						<LoadingView />
-					</Show>
-					<Text>提交</Text>
-				</Button>
-			</HStack>
-		</VStack>
-	);
+  return (
+    <GameScreen
+      label={`${viewModel.title} · 迷雾`}
+      actions={
+        <>
+          <GameThemeToggle />
+          <GameAction onClick={() => mistViewModel.skip()}>我想看答案</GameAction>
+          <GameAction danger onClick={() => { mistViewModel.endGame(); router.push("/"); }}>
+            结束游戏
+          </GameAction>
+        </>
+      }
+      left={
+        <>
+          <chakra.div fontFamily="mono" fontSize="11px" letterSpacing="2px" textTransform="uppercase" color="arch.mut">
+            迷雾
+          </chakra.div>
+          <chakra.h1
+            fontFamily="serif"
+            fontWeight="900"
+            fontSize="clamp(26px,3vw,36px)"
+            letterSpacing="3px"
+            m="12px 0 18px"
+            pb="16px"
+            borderBottom="3px double"
+            borderColor="arch.rule"
+            color="arch.ink"
+          >
+            {viewModel.title}
+          </chakra.h1>
+          <ArchiveMarkdown>{viewModel.puzzle}</ArchiveMarkdown>
+        </>
+      }
+      right={
+        <>
+          <PanelHeader
+            title="迷雾"
+            meta={
+              <>
+                已解 <Emph>{solved}</Emph> / {clues.length}
+              </>
+            }
+          />
+          <PanelScroll>
+            <VStack align="stretch" gap="16px">
+              <MistStoryBannerView />
+              <For each={viewModel.sections}>{(section, index) => <SectionView key={index} section={section} />}</For>
+            </VStack>
+          </PanelScroll>
+          <PanelFooter>
+            <MistPanel />
+          </PanelFooter>
+        </>
+      }
+    />
+  );
 }

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/deepdesign-7853aedb-e066-4394-9ef6-7e87711efda3/tokens.css">
+<link rel="stylesheet" href="_ds/deepdesign-7853aedb-e066-4394-9ef6-7e87711efda3/styles.css">
+<script src="_ds/deepdesign-7853aedb-e066-4394-9ef6-7e87711efda3/_ds_bundle.js"></script>
+<style>
+html,body{margin:0;padding:0}
+</style>
+</helmet>
+
+<div class="{{ rootClass }}" style="min-height:100vh;overflow:hidden;background-attachment:fixed" data-screen-label="探案界面">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="fogmark" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="24" cy="19" r="12"></circle><circle cx="24" cy="19" r="3.5" fill="currentColor" stroke="none"></circle><path d="M7 32h22M15 38h26M10 44h19"></path></symbol></svg>
+
+  <!-- ===== 卷宗栏 ===== -->
+  <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:13px 24px;border-bottom:1px solid var(--rule)">
+    <div style="display:flex;align-items:center">
+      <a href="档案首页.dc.html" style="display:flex;align-items:center;gap:10px;font-family:var(--serif);font-weight:900;font-size:18px;letter-spacing:2px;color:var(--ink);text-decoration:none"><img src="uploads/icon.png" alt="迷雾档案" style="width:26px;height:26px;filter:{{ iconFilter }}">迷雾档案</a>
+      <span style="font-family:var(--mono);font-size:12px;color:var(--mut);letter-spacing:1px;padding-left:16px;margin-left:16px;border-left:1px solid var(--rule)">D01 · 收藏家之死 · 探案</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px">
+      <button type="button" onClick="{{ toggleTheme }}" style="font-family:var(--mono);font-size:11px;color:var(--brass);letter-spacing:1px;cursor:pointer;padding:4px 6px;background:transparent;border:0;transition:background .15s;white-space:nowrap" style-hover="background:var(--hov)">[{{ themeLabel }}]</button>
+      <button type="button" style="font-family:var(--mono);font-size:11px;color:var(--brass);letter-spacing:1px;cursor:pointer;padding:4px 6px;background:transparent;border:0;transition:background .15s;white-space:nowrap" style-hover="background:var(--hov)">[跳过当前问题]</button>
+      <a href="档案库.dc.html" style="font-family:var(--mono);font-size:11px;color:var(--red);letter-spacing:1px;cursor:pointer;padding:4px 6px;text-decoration:none;transition:background .15s;white-space:nowrap" style-hover="background:var(--hov)">[结束游戏]</a>
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1.4fr 1fr;height:calc(100vh - 52px)">
+
+    <!-- ===== 左:案件 ===== -->
+    <div style="overflow-y:auto;padding:34px 40px 60px;border-right:1px solid var(--rule)">
+      <div style="max-width:640px;margin:0 auto">
+        <div style="font-family:var(--mono);font-size:11px;letter-spacing:2px;color:var(--mut);text-transform:uppercase">案件</div>
+        <h1 style="font-family:var(--serif);font-weight:900;font-size:clamp(26px,3vw,36px);letter-spacing:3px;margin:12px 0 6px">收藏家之死</h1>
+        <div style="font-family:var(--mono);font-size:11px;letter-spacing:1px;color:var(--mut);padding-bottom:16px;border-bottom:3px double var(--rule);margin-bottom:22px">本格 · 作者 DeepClue</div>
+        <h2 style="font-family:var(--serif);font-weight:700;font-size:19px;letter-spacing:2px;margin:0 0 14px">警方调查笔记</h2>
+        <p style="font-family:var(--serif);font-size:15px;line-height:1.95;color:var(--dim);margin:0 0 12px"><b style="color:var(--ink);font-weight:700">事由:</b> 理查德·布莱克伍德死亡案初步调查报告</p>
+        <p style="font-family:var(--serif);font-size:15px;line-height:1.95;color:var(--dim);margin:0 0 12px"><b style="color:var(--ink);font-weight:700">初步结论:</b> 意外中毒。有理由相信死者误将桌上一瓶无标签的化学液体当作白兰地饮用。但仍存在疑点,建议外部顾问(即你)介入复核。</p>
+
+        <h3 style="font-family:var(--mono);font-size:12px;letter-spacing:1.5px;color:var(--mut);text-transform:uppercase;margin:24px 0 10px;padding-top:16px;border-top:1px solid var(--rule-soft)">1. 死者信息</h3>
+        <ul style="list-style:none;margin:0 0 12px;padding:0;display:flex;flex-direction:column;gap:6px">
+          <li style="font-family:var(--serif);font-size:14.5px;line-height:1.9;color:var(--dim);padding:6px 0 6px 14px;border-left:2px solid var(--rule)"><b style="color:var(--ink);font-weight:700">姓名:</b> 理查德·布莱克伍德</li>
+          <li style="font-family:var(--serif);font-size:14.5px;line-height:1.9;color:var(--dim);padding:6px 0 6px 14px;border-left:2px solid var(--rule)"><b style="color:var(--ink);font-weight:700">身份:</b> 著名艺术品收藏家</li>
+          <li style="font-family:var(--serif);font-size:14.5px;line-height:1.9;color:var(--dim);padding:6px 0 6px 14px;border-left:2px solid var(--rule)"><b style="color:var(--ink);font-weight:700">发现地点:</b> 死者位于家中的书房,门从内部上锁。</li>
+        </ul>
+
+        <h3 style="font-family:var(--mono);font-size:12px;letter-spacing:1.5px;color:var(--mut);text-transform:uppercase;margin:24px 0 10px;padding-top:16px;border-top:1px solid var(--rule-soft)">2. 现场勘查摘要</h3>
+        <ul style="list-style:none;margin:0 0 12px;padding:0;display:flex;flex-direction:column;gap:6px">
+          <li style="font-family:var(--serif);font-size:14.5px;line-height:1.9;color:var(--dim);padding:6px 0 6px 14px;border-left:2px solid var(--rule)"><b style="color:var(--ink);font-weight:700">桌面:</b> 发现一个半满的白兰地酒杯,旁边是一只被打翻的无标签瓶子。</li>
+          <li style="font-family:var(--serif);font-size:14.5px;line-height:1.9;color:var(--dim);padding:6px 0 6px 14px;border-left:2px solid var(--rule)"><b style="color:var(--ink);font-weight:700">环境:</b> 空气中可闻到一股微弱的、类似杏仁的化学气味。</li>
+          <li style="font-family:var(--serif);font-size:14.5px;line-height:1.9;color:var(--dim);padding:6px 0 6px 14px;border-left:2px solid var(--rule)"><b style="color:var(--ink);font-weight:700">地面:</b> 在书架脚边的地板上,发现一道极细微的新划痕。</li>
+          <li style="font-family:var(--serif);font-size:14.5px;line-height:1.9;color:var(--dim);padding:6px 0 6px 14px;border-left:2px solid var(--rule)"><b style="color:var(--ink);font-weight:700">文件:</b> 一份死者最近更新的遗嘱摊开在书桌上。遗嘱内容显示,其大部分艺术品藏品将由策展人伊莎贝拉·罗西继承,而其子女埃莉诺与朱利安仅获得象征性份额。</li>
+        </ul>
+
+        <h3 style="font-family:var(--mono);font-size:12px;letter-spacing:1.5px;color:var(--mut);text-transform:uppercase;margin:24px 0 10px;padding-top:16px;border-top:1px solid var(--rule-soft)">3. 相关人员及口供记录</h3>
+        <div style="border:1px solid var(--rule);padding:13px 16px;margin-bottom:12px">
+          <div style="font-family:var(--serif);font-weight:700;font-size:15.5px;color:var(--ink);margin-bottom:6px">埃莉诺·布莱克伍德</div>
+          <p style="font-family:var(--serif);font-size:13.5px;line-height:1.95;color:var(--dim);margin:0 0 6px"><b style="color:var(--ink);font-weight:700">身份:</b> 死者之女,商人。</p>
+          <p style="font-family:var(--serif);font-size:13.5px;line-height:1.95;color:var(--dim);margin:0"><b style="color:var(--ink);font-weight:700">记录:</b> 经查,埃莉诺在案发前一天曾因其父在艺术品上的"鲁莽"开销与死者发生激烈争执。有佣人听到她说:"我会确保这个家族的遗产得到保护。"</p>
+        </div>
+        <div style="border:1px solid var(--rule);padding:13px 16px;margin-bottom:12px">
+          <div style="font-family:var(--serif);font-weight:700;font-size:15.5px;color:var(--ink);margin-bottom:6px">朱利安·布莱克伍德</div>
+          <p style="font-family:var(--serif);font-size:13.5px;line-height:1.95;color:var(--dim);margin:0 0 6px"><b style="color:var(--ink);font-weight:700">身份:</b> 死者之子,艺术家,有显著的债务问题。</p>
+          <p style="font-family:var(--serif);font-size:13.5px;line-height:1.95;color:var(--dim);margin:0"><b style="color:var(--ink);font-weight:700">记录:</b> 有目击者称,案发当晚看到朱利安在书房外徘徊。朱利安本人辩称,他只是想"看一眼"父亲新获得的一座价值连城的雕塑。</p>
+        </div>
+        <div style="border:1px solid var(--rule);padding:13px 16px;margin-bottom:12px">
+          <div style="font-family:var(--serif);font-weight:700;font-size:15.5px;color:var(--ink);margin-bottom:6px">伊莎贝拉·罗西</div>
+          <p style="font-family:var(--serif);font-size:13.5px;line-height:1.95;color:var(--dim);margin:0 0 6px"><b style="color:var(--ink);font-weight:700">身份:</b> 死者的艺术品策展人,新遗嘱的主要受益人。</p>
+          <p style="font-family:var(--serif);font-size:13.5px;line-height:1.95;color:var(--dim);margin:0 0 6px"><b style="color:var(--ink);font-weight:700">背景:</b> 拥有艺术品修复硕士学位,专业知识包含化学。</p>
+          <p style="font-family:var(--serif);font-size:13.5px;line-height:1.95;color:var(--dim);margin:0"><b style="color:var(--ink);font-weight:700">记录:</b> 伊莎贝拉在接受问询时表现出极度悲伤。她主动提供了一条信息:布莱克伍德先生最近正在服用一种新的心脏病药物。</p>
+        </div>
+        <div style="border:1px solid var(--rule);padding:13px 16px;margin-bottom:12px">
+          <div style="font-family:var(--serif);font-weight:700;font-size:15.5px;color:var(--ink);margin-bottom:6px">亚瑟·潘德尔顿</div>
+          <p style="font-family:var(--serif);font-size:13.5px;line-height:1.95;color:var(--dim);margin:0 0 6px"><b style="color:var(--ink);font-weight:700">身份:</b> 管家,尸体第一发现人。</p>
+          <p style="font-family:var(--serif);font-size:13.5px;line-height:1.95;color:var(--dim);margin:0"><b style="color:var(--ink);font-weight:700">记录:</b> 亚瑟称,死者在去世前一天刚刚完成其全部藏品的保险目录编制工作。他还提供了一个重要情况:"布莱克伍德先生对保持藏品的完美状态一向非常讲究。他甚至为那座新雕塑准备了一瓶特殊的、昂贵的抛光剂,装在一个无标签的瓶子里。"</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== 右:讯问记录 ===== -->
+    <div style="background:var(--panel);overflow-y:auto;display:flex;flex-direction:column">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;padding:12px 22px;border-bottom:1px solid var(--rule);position:sticky;top:0;background:var(--panel);z-index:1">
+        <span style="font-family:var(--mono);font-size:11px;letter-spacing:2px;color:var(--mut);text-transform:uppercase">讯问记录</span>
+        <span style="font-family:var(--mono);font-size:11px;letter-spacing:1px;color:var(--dim)">已答 <b style="color:var(--ink);font-weight:500">2</b> · 当前第 <b style="color:var(--ink);font-weight:500">3</b> 问</span>
+      </div>
+      <div style="flex:1;padding:20px 22px 26px">
+
+        <div style="border-left:2px solid var(--brass);padding:11px 14px;margin-bottom:16px">
+          <div style="font-family:var(--serif);font-weight:700;font-size:14.5px;line-height:1.7;color:var(--ink);margin-bottom:7px"><span style="font-family:var(--mono);font-size:12px;color:var(--brass)">Q: </span>遗嘱被摊开在桌上,凶手这样做的意图很可能是什么?</div>
+          <div style="font-family:var(--serif);font-size:13.5px;line-height:1.85;color:var(--dim)">非常正确。将遗嘱摊开是一种经典的误导手法,意在立即将警方的注意力引向遗嘱的直接受益人(埃莉诺、朱利安和伊莎贝拉),从而为真凶创造掩护。</div>
+        </div>
+
+        <div style="border-left:2px solid var(--brass);padding:11px 14px;margin-bottom:16px">
+          <div style="font-family:var(--serif);font-weight:700;font-size:14.5px;line-height:1.7;color:var(--ink);margin-bottom:7px"><span style="font-family:var(--mono);font-size:12px;color:var(--brass)">Q: </span>空气中类似杏仁的气味和伊莎贝拉提到的心脏病药物,从这两者中能看出什么?</div>
+          <div style="font-family:var(--serif);font-size:13.5px;line-height:1.85;color:var(--dim)">你的嗅觉很敏锐。杏仁味是氰化物中毒的典型特征。而心脏病药物的提及,可能是凶手故意留下的另一个"伪线索",试图将死亡引向药物不良反应或意外过量,从而制造更多的混乱。</div>
+        </div>
+
+      </div>
+      <div style="border-top:1px solid var(--rule);background:var(--panel);position:sticky;bottom:0;padding:14px 22px 18px">
+        <div style="display:flex;align-items:baseline;gap:10px;font-family:var(--serif);font-weight:700;font-size:15px;line-height:1.7;color:var(--ink);margin-bottom:9px">
+          <span style="font-family:var(--mono);font-size:11px;letter-spacing:1px;color:var(--mut);white-space:nowrap">3</span>
+          <span>管家提到,那瓶特殊的雕塑抛光剂与装"清洁剂"的瓶子非常相似。这暗示了什么?</span>
+        </div>
+        <div style="font-family:var(--mono);font-size:11.5px;letter-spacing:.5px;color:var(--red);margin-bottom:9px">回答错误 (34 / 100)</div>
+        <div style="display:flex;align-items:flex-end;gap:12px;border:1px solid var(--rule);padding:11px 14px;transition:border-color .15s" style-focus="border-color:var(--brass)">
+          <textarea rows="2" placeholder="写下你的回答…(回车提交,Shift+回车换行)" style="flex:1;background:transparent;border:0;outline:none;resize:none;color:var(--ink);font-family:var(--sans);font-size:14px;line-height:1.6"></textarea>
+          <button type="button" style="font-family:var(--mono);font-size:13px;color:var(--brass);background:transparent;border:0;cursor:pointer;letter-spacing:1px;padding:5px;white-space:nowrap;transition:background .15s" style-hover="background:var(--hov)">[提交]</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1360},&quot;light&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;主题&quot;}}">
+class Component extends DCLogic {
+  state = { light: null };
+  renderVals(){
+    const light = this.state.light ?? (this.props.light ?? false);
+    return {
+      rootClass: light ? 'arch light' : 'arch',
+      themeLabel: light ? '☀ 亮色' : '☾ 暗色',
+      iconFilter: light ? 'none' : 'invert(1)',
+      toggleTheme: () => this.setState({ light: !light }),
+    };
+  }
+}
+</script>
+</body>
+</html>

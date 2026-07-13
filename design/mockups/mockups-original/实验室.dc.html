@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&family=Noto+Sans+SC:wght@400;500&family=Noto+Serif+SC:wght@500;600;700;900&display=swap" rel="stylesheet">
+<style>
+.fog{
+  --bg:#0e1116; --panel:#151a21;
+  --rule:rgba(214,226,221,.16); --rule-soft:rgba(214,226,221,.08);
+  --ink:#e6ebe9; --dim:#a8b4af; --mut:#79857f; --mist:#8fb8ab; --red:#b0685e;
+  --hov:rgba(143,184,171,.13);
+  --serif:'Noto Serif SC',serif; --sans:'Inter','Noto Sans SC',sans-serif; --mono:'JetBrains Mono',monospace;
+  background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.6;-webkit-font-smoothing:antialiased;
+  min-height:100vh;display:block;
+  background-image:radial-gradient(90% 46% at 50% 112%,rgba(143,184,171,.07),transparent 60%);
+  background-attachment:fixed;
+}
+.fog.light{
+  --bg:#e7e9e4; --panel:#dee1da;
+  --rule:rgba(28,33,31,.22); --rule-soft:rgba(28,33,31,.10);
+  --ink:#1c211f; --dim:#45504b; --mut:#6d7873; --mist:#3a6b5e; --red:#8f3f34;
+  --hov:rgba(58,107,94,.12);
+  background-image:radial-gradient(90% 46% at 50% 112%,rgba(58,107,94,.09),transparent 60%);
+}
+.fog *{margin:0;padding:0;box-sizing:border-box}
+.fog a{color:inherit;text-decoration:none}
+.fog .wrap{max-width:1360px;margin:0 auto;padding:0 32px}
+
+/* 报头 */
+.fog .masthead{padding-top:24px}
+.fog .nameplate{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-bottom:14px;border-bottom:3px double var(--rule)}
+.fog .nameplate .name{display:flex;align-items:center;gap:14px}
+.fog .nameplate .name svg{width:42px;height:42px;color:var(--ink)}
+.fog .nameplate h1{font-family:var(--serif);font-weight:900;font-size:clamp(24px,3.2vw,38px);letter-spacing:4px}
+.fog .nameplate h1 small{display:block;font-family:var(--mono);font-size:11px;font-weight:400;letter-spacing:2.5px;color:var(--mut);margin-top:4px}
+.fog .utils-group{display:flex;align-items:center;gap:8px;flex-shrink:0}
+.fog .utils{display:flex;align-items:center;gap:6px;background:var(--panel);border:1px solid var(--rule);border-radius:2px;padding:5px 8px}
+.fog .util{display:inline-flex;align-items:center;gap:4px;font-family:var(--mono);font-size:11px;color:var(--mist);background:transparent;border:0;padding:3px 4px;letter-spacing:1px;cursor:pointer;transition:.15s}
+.fog .util::before{content:"["}.fog .util::after{content:"]"}
+.fog .util:hover{background:var(--hov)}
+.fog .sections{display:flex;gap:0;flex-wrap:wrap;align-items:center;padding:11px 0;border-bottom:1px solid var(--rule)}
+.fog .sections a{font-family:var(--mono);font-size:12.5px;letter-spacing:1.5px;color:var(--mist);text-transform:uppercase;padding:3px 8px;border:1px solid transparent;border-radius:1px;transition:.15s}
+.fog .sections a.on{background:var(--hov)}
+.fog .sections a:hover{border-color:var(--rule);background:var(--hov)}
+.fog .sections a::before{content:"["}.fog .sections a::after{content:"]"}
+.fog .sections .sp{flex:1}
+
+/* 分节标头 */
+.fog .secthead{display:flex;align-items:baseline;gap:14px;padding:30px 0 14px;border-bottom:1px solid var(--rule)}
+.fog .secthead h3{font-family:var(--serif);font-weight:600;font-size:22px;letter-spacing:3px}
+.fog .secthead .tag{font-family:var(--mono);font-size:10px;letter-spacing:1.5px;color:var(--mist);border:1px solid var(--mist);padding:2px 7px;border-radius:2px;text-transform:uppercase}
+.fog .secthead .sp{flex:1}
+.fog .note{font-family:var(--serif);font-size:13.5px;color:var(--dim);line-height:1.95;max-width:66ch;margin:16px 0 22px;white-space:pre-line;border-left:2px solid var(--rule);padding-left:16px}
+
+/* 蝴蝶效应卡 */
+.fog .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid var(--rule)}
+.fog .card{display:block;padding:22px 24px;border-right:1px solid var(--rule);transition:.15s;cursor:pointer}
+.fog .card:last-child{border-right:0}
+.fog .card:hover{background:var(--hov)}
+.fog .card h4{font-family:var(--serif);font-weight:700;font-size:20px;letter-spacing:1px;margin-bottom:9px}
+.fog .card .sum{font-family:var(--serif);font-size:13px;color:var(--dim);line-height:1.85}
+.fog .card .foot{display:flex;justify-content:flex-end;margin-top:14px;font-family:var(--mono);font-size:11px;letter-spacing:1px}
+.fog .card .foot .go{color:var(--mist)}
+.fog .card .foot .go::before{content:"["}.fog .card .foot .go::after{content:"]"}
+
+/* 夜读名录 */
+.fog .novels a{display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;font-family:var(--mono);font-size:12px;padding:13px 0;border-bottom:1px dotted var(--rule-soft);cursor:pointer}
+.fog .novels a .tt{font-family:var(--serif);font-size:16px;color:var(--ink);letter-spacing:.5px;font-weight:700}
+.fog .novels a .tg{color:var(--mut);font-size:10.5px;letter-spacing:1px;border:1px solid var(--rule);padding:2px 7px;border-radius:2px}
+.fog .novels a .du{color:var(--mut);font-size:11px;letter-spacing:.5px}
+.fog .novels a .sp{flex:1}
+.fog .novels a .ai{color:var(--mut);font-size:11px;letter-spacing:.5px}
+.fog .novels a .op{color:var(--mist);font-size:11px;letter-spacing:1px}
+.fog .novels a .op::before{content:"["}.fog .novels a .op::after{content:"]"}
+.fog .novels a:hover .op{background:var(--hov)}
+
+/* 报尾 */
+.fog .colophon{display:flex;align-items:center;gap:8px 22px;flex-wrap:wrap;font-family:var(--mono);font-size:11.5px;letter-spacing:.5px;color:var(--mut);padding:20px 0 56px;margin-top:46px;border-top:2px solid var(--rule)}
+.fog .colophon .sp{flex:1}
+.fog .colophon a.ext{color:var(--mist);text-decoration:none;padding:1px 3px;border-radius:1px;transition:.15s;cursor:pointer}
+.fog .colophon a.ext::before{content:"["}.fog .colophon a.ext::after{content:"]"}
+.fog .colophon a.ext:hover{background:var(--hov)}
+
+@media(max-width:860px){
+  .fog .cards{grid-template-columns:1fr}
+  .fog .card{border-right:0;border-bottom:1px solid var(--rule)}
+  .fog .card:last-child{border-bottom:0}
+}
+</style>
+</helmet>
+
+<div class="{{ rootClass }}">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="fogmark" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="24" cy="19" r="12"/><circle cx="24" cy="19" r="3.5" fill="currentColor" stroke="none"/><path d="M7 32h22M15 38h26M10 44h19"/></symbol></svg>
+
+<div class="wrap">
+
+  <header class="masthead">
+    <div class="nameplate">
+      <a class="name" href="档案首页.dc.html">
+        <svg viewBox="0 0 48 48"><use href="#fogmark"/></svg>
+        <h1>迷雾档案:实验室<small>MISTCASE.APP</small></h1>
+      </a>
+      <div class="utils-group">
+        <div class="utils"><button class="util" type="button" onClick="{{ toggleTheme }}">{{ themeLabel }}</button></div>
+      </div>
+    </div>
+    <nav class="sections">
+      <a href="档案首页.dc.html">主页</a>
+      <a href="档案库.dc.html">档案</a>
+      <a href="迷雾库.dc.html">迷雾</a>
+      <a href="解谜.dc.html">解谜</a>
+      <a class="on" href="实验室.dc.html">实验室</a>
+      <span class="sp"></span>
+      <a href="设计系统.dc.html">体例</a>
+    </nav>
+  </header>
+
+  <!-- ===== 蝴蝶效应 ===== -->
+  <section>
+    <div class="secthead"><h3>蝴蝶效应</h3><span class="tag">BETA</span><span class="sp"></span></div>
+    <p class="note">失败并非不可避免,你的一个小改变可能会改变整个故事的走向。
+在《蝴蝶效应》中,你可以选择故事中的一个片段进行改写,看看故事会如何发展下去。
+你的目标是让原本没有发生的事件发生,或者让已经发生的事件不再发生。</p>
+    <div class="cards">
+      <a class="card" href="#">
+        <h4>P01 广场上的枪声</h4>
+        <p class="sum">市长遭瞄准之际,狙击手却神秘倒下,枪声未响,真相暗涌</p>
+        <div class="foot"><span class="go">进入</span></div>
+      </a>
+      <a class="card" href="#">
+        <h4>P02 沉默的祝酒词</h4>
+        <p class="sum">毒酒未入口,侍者却被枪击倒地;教父大寿之夜的暗杀在爆响中逆转</p>
+        <div class="foot"><span class="go">进入</span></div>
+      </a>
+    </div>
+  </section>
+
+  <!-- ===== AIGC 推理实验室 ===== -->
+  <section>
+    <div class="secthead"><h3>AIGC 推理实验室</h3><span class="sp"></span></div>
+    <p class="note">迷雾档案 AIGC 实验室是一个专注于AI生成推理故事的展示平台。我们会分析推理故事的一般结构,并利用AI技术生成尽可能精彩的推理谜题和故事。
+目前来看,AI在创作推理故事时仍然面临诸多挑战,不可避免的会在很多地方,特别是核心诡计和整体行文方面不得不人工参与。
+
+在这里,每一篇故事都会标注我们估计的「AI参与比例」,以帮助读者了解AI在创作过程中的作用。
+对于其中我们觉得满意的故事,我们会将其纳入迷雾档案的正式档案库中。成为大家"摸鱼"时候的素材。而高质量的饱含人工巧思的正经出版物,则可以留到有精力的整段的时间来慢慢品味。</p>
+    <div class="novels">
+      <a href="#"><span class="tt">N01 未署名的附录</span><span class="tg">本格</span><span class="tg">社会派</span><span class="du">约25分钟</span><span class="sp"></span><span class="ai">AI参与度:70% · 作者:天色盐</span><span class="op">阅读</span></a>
+    </div>
+  </section>
+
+  <footer class="colophon">
+    <span>© 2025 MistCase by <a class="ext" href="https://deepclue.app" target="_blank" rel="noopener noreferrer">DeepClue ↗</a></span>
+    <span class="sp"></span>
+  </footer>
+
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1360}}">
+class Component extends DCLogic {
+  state = { light: false };
+  renderVals(){
+    const light = this.state.light;
+    return {
+      rootClass: light ? 'fog light' : 'fog',
+      themeLabel: light ? '☀ 亮色' : '☾ 暗色',
+      toggleTheme: () => this.setState(s => ({ light: !s.light })),
+    };
+  }
+}
+</script>
+</body>
+</html>

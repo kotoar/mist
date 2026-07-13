@@ -43,12 +43,13 @@ export async function readMistCaseData(caseId: string): Promise<CaseData | null>
         .from('mist_case')
         .select('content')
         .eq('case_id', caseId)
-        .single();
+        .maybeSingle();
 
     if (error) {
         throw new Error(`Failed to read mist case: ${error.message}`);
     }
 
+    // maybeSingle 在无匹配行时返回 null(不再抛错), 交由上层作 404 处理。
     if (!data) {
         return null;
     }

@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&family=Noto+Sans+SC:wght@400;500&family=Noto+Serif+SC:wght@500;600;700;900&display=swap" rel="stylesheet">
+<style>
+.fog{
+  --bg:#0e1116; --panel:#151a21;
+  --rule:rgba(214,226,221,.16); --rule-soft:rgba(214,226,221,.08);
+  --ink:#e6ebe9; --dim:#a8b4af; --mut:#79857f; --mist:#8fb8ab; --red:#b0685e;
+  --hov:rgba(143,184,171,.13);
+  --serif:'Noto Serif SC',serif; --sans:'Inter','Noto Sans SC',sans-serif; --mono:'JetBrains Mono',monospace;
+  background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.6;-webkit-font-smoothing:antialiased;
+  min-height:100vh;display:block;
+  background-image:radial-gradient(90% 46% at 50% 112%,rgba(143,184,171,.07),transparent 60%);
+  background-attachment:fixed;
+}
+.fog.light{
+  --bg:#e7e9e4; --panel:#dee1da;
+  --rule:rgba(28,33,31,.22); --rule-soft:rgba(28,33,31,.10);
+  --ink:#1c211f; --dim:#45504b; --mut:#6d7873; --mist:#3a6b5e; --red:#8f3f34;
+  --hov:rgba(58,107,94,.12);
+  background-image:radial-gradient(90% 46% at 50% 112%,rgba(58,107,94,.09),transparent 60%);
+}
+.fog *{margin:0;padding:0;box-sizing:border-box}
+.fog a{color:inherit;text-decoration:none}
+.fog .wrap{max-width:1360px;margin:0 auto;padding:0 32px}
+
+/* 报头 */
+.fog .masthead{padding-top:24px}
+.fog .nameplate{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-bottom:14px;border-bottom:3px double var(--rule)}
+.fog .nameplate .name{display:flex;align-items:center;gap:14px}
+.fog .nameplate .name svg{width:42px;height:42px;color:var(--ink)}
+.fog .nameplate h1{font-family:var(--serif);font-weight:900;font-size:clamp(24px,3.2vw,38px);letter-spacing:4px}
+.fog .nameplate h1 small{display:block;font-family:var(--mono);font-size:11px;font-weight:400;letter-spacing:2.5px;color:var(--mut);margin-top:4px}
+.fog .utils-group{display:flex;align-items:center;gap:8px;flex-shrink:0}
+.fog .utils{display:flex;align-items:center;gap:6px;background:var(--panel);border:1px solid var(--rule);border-radius:2px;padding:5px 8px}
+.fog .util{display:inline-flex;align-items:center;gap:4px;font-family:var(--mono);font-size:11px;color:var(--mist);background:transparent;border:0;padding:3px 4px;letter-spacing:1px;cursor:pointer;transition:.15s}
+.fog .util::before{content:"["}.fog .util::after{content:"]"}
+.fog .util:hover{background:var(--hov)}
+.fog .sections{display:flex;gap:0;flex-wrap:wrap;align-items:center;padding:11px 0;border-bottom:1px solid var(--rule)}
+.fog .sections a{font-family:var(--mono);font-size:12.5px;letter-spacing:1.5px;color:var(--mist);text-transform:uppercase;padding:3px 8px;border:1px solid transparent;border-radius:1px;transition:.15s}
+.fog .sections a.on{background:var(--hov)}
+.fog .sections a:hover{border-color:var(--rule);background:var(--hov)}
+.fog .sections a::before{content:"["}.fog .sections a::after{content:"]"}
+.fog .sections .sp{flex:1}
+
+/* 筛选行 */
+.fog .filterbar{display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding:22px 0 24px}
+.fog .filterbar .fk{font-family:var(--mono);font-size:11px;letter-spacing:2px;color:var(--mut);text-transform:uppercase}
+.fog .filterbar .sp{flex:1}
+.fog .chip{font-family:var(--mono);font-size:12px;letter-spacing:.5px;color:var(--mist);border:1px solid var(--mist);background:transparent;padding:6px 11px;border-radius:1px;cursor:pointer;transition:.15s}
+.fog .chip::before{content:"["}.fog .chip::after{content:"]"}
+.fog .chip.on{background:var(--hov)}
+.fog .chip:hover{background:var(--hov)}
+.fog .open{display:inline-flex;align-items:center;font-family:var(--mono);font-size:12px;letter-spacing:1px;color:var(--mist);border:0;background:transparent;padding:2px 3px;transition:.15s;cursor:pointer}
+.fog .open::before{content:"["}.fog .open::after{content:"]"}
+.fog .open:hover{background:var(--hov)}
+
+/* 卷宗卡 */
+.fog .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-top:1px solid var(--rule);border-left:1px solid var(--rule)}
+.fog .card{display:block;padding:0;border-right:1px solid var(--rule);border-bottom:1px solid var(--rule);transition:.15s;cursor:pointer}
+.fog .card:hover{background:var(--hov)}
+.fog .cover{height:104px;border-bottom:1px solid var(--rule-soft);background:repeating-linear-gradient(45deg,transparent,transparent 6px,var(--rule-soft) 6px,var(--rule-soft) 7px);display:flex;align-items:center;justify-content:center}
+.fog .cover span{font-family:var(--mono);font-size:10.5px;letter-spacing:2.5px;color:var(--mut);text-transform:uppercase}
+.fog .card .body{padding:16px 18px 18px}
+.fog .card .cid{display:flex;justify-content:space-between;align-items:center;font-family:var(--mono);font-size:10.5px;letter-spacing:1.5px;color:var(--mut);text-transform:uppercase;margin-bottom:9px}
+.fog .card .cid .tp.detect{color:var(--red)}
+.fog .card h4{font-family:var(--serif);font-weight:700;font-size:19px;letter-spacing:1px;margin-bottom:8px}
+.fog .card .tags{font-family:var(--mono);font-size:10.5px;letter-spacing:1px;color:var(--mut);margin-bottom:12px}
+.fog .card .foot{display:flex;justify-content:space-between;align-items:center;font-family:var(--mono);font-size:11px;letter-spacing:1px;color:var(--mut)}
+.fog .card .foot .go{color:var(--mist)}
+.fog .card .foot .go::before{content:"["}.fog .card .foot .go::after{content:"]"}
+
+/* 筛选状态 */
+.fog.f-case .card.t-detect{display:none}
+.fog.f-detect .card.t-case{display:none}
+
+/* 联络 */
+.fog .community{margin-top:40px;border:1px solid var(--rule);padding:18px 22px}
+.fog .community p{font-family:var(--serif);font-size:13.5px;color:var(--dim);line-height:1.9;white-space:pre-line}
+.fog .community .row{display:flex;gap:18px;flex-wrap:wrap;margin-top:12px}
+.fog .community .row .open{font-size:11.5px}
+
+/* 报尾 */
+.fog .colophon{display:flex;align-items:center;gap:8px 22px;flex-wrap:wrap;font-family:var(--mono);font-size:11.5px;letter-spacing:.5px;color:var(--mut);padding:20px 0 56px;margin-top:26px;border-top:2px solid var(--rule)}
+.fog .colophon .sp{flex:1}
+.fog .colophon a.ext{color:var(--mist);text-decoration:none;padding:1px 3px;border-radius:1px;transition:.15s;cursor:pointer}
+.fog .colophon a.ext::before{content:"["}.fog .colophon a.ext::after{content:"]"}
+.fog .colophon a.ext:hover{background:var(--hov)}
+
+@media(max-width:1100px){.fog .grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:640px){.fog .grid{grid-template-columns:1fr}}
+</style>
+</helmet>
+
+<div class="{{ rootClass }}">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="fogmark" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="24" cy="19" r="12"/><circle cx="24" cy="19" r="3.5" fill="currentColor" stroke="none"/><path d="M7 32h22M15 38h26M10 44h19"/></symbol></svg>
+
+<div class="wrap">
+
+  <header class="masthead">
+    <div class="nameplate">
+      <a class="name" href="档案首页.dc.html">
+        <svg viewBox="0 0 48 48"><use href="#fogmark"/></svg>
+        <h1>迷雾档案<small>MISTCASE.APP</small></h1>
+      </a>
+      <div class="utils-group">
+        <div class="utils"><button class="util" type="button" onClick="{{ toggleTheme }}">{{ themeLabel }}</button></div>
+      </div>
+    </div>
+    <nav class="sections">
+      <a href="档案首页.dc.html">主页</a>
+      <a class="on" href="档案库.dc.html">档案</a>
+      <a href="迷雾库.dc.html">迷雾</a>
+      <a href="解谜.dc.html">解谜</a>
+      <a href="实验室.dc.html">实验室</a>
+      <span class="sp"></span>
+      <a href="设计系统.dc.html">体例</a>
+    </nav>
+  </header>
+
+  <div class="filterbar">
+    <button class="open" type="button">侦探手册</button>
+    <span class="sp"></span>
+    <span class="fk">档案类型</span>
+    <button class="{{ chipAll }}" type="button" onClick="{{ setAll }}">全部</button>
+    <button class="{{ chipCase }}" type="button" onClick="{{ setCase }}">演绎</button>
+    <button class="{{ chipDetect }}" type="button" onClick="{{ setDetect }}">探案</button>
+  </div>
+
+  <div class="grid">
+    <a class="card t-case" href="演绎界面.dc.html">
+      <div class="cover"><span>COVER</span></div>
+      <div class="body">
+        <div class="cid"><span>C01 · <span class="tp">演绎</span></span></div>
+        <h4>湖边的灯光</h4>
+        <div class="tags">本格 · 原创 · 天色盐</div>
+        <div class="foot"><span></span><span class="go">调阅</span></div>
+      </div>
+    </a>
+    <a class="card t-case" href="演绎界面.dc.html">
+      <div class="cover"><span>COVER</span></div>
+      <div class="body">
+        <div class="cid"><span>C02 · <span class="tp">演绎</span></span></div>
+        <h4>午夜的钟声</h4>
+        <div class="tags">本格 · 天色盐</div>
+        <div class="foot"><span></span><span class="go">调阅</span></div>
+      </div>
+    </a>
+    <a class="card t-detect" href="探案界面.dc.html">
+      <div class="cover"><span>COVER</span></div>
+      <div class="body">
+        <div class="cid"><span>A07 · <span class="tp detect">探案</span></span></div>
+        <h4>孤岛工作室案件</h4>
+        <div class="tags">DeepClue</div>
+        <div class="foot"><span></span><span class="go">调阅</span></div>
+      </div>
+    </a>
+    <a class="card t-detect" href="探案界面.dc.html">
+      <div class="cover"><span>COVER</span></div>
+      <div class="body">
+        <div class="cid"><span>A08 · <span class="tp detect">探案</span></span></div>
+        <h4>独居老人中毒案</h4>
+        <div class="tags">DeepClue</div>
+        <div class="foot"><span></span><span class="go">调阅</span></div>
+      </div>
+    </a>
+    <a class="card t-detect" href="探案界面.dc.html">
+      <div class="cover"><span>COVER</span></div>
+      <div class="body">
+        <div class="cid"><span>D01 · <span class="tp detect">探案</span></span></div>
+        <h4>收藏家之死</h4>
+        <div class="tags">本格 · DeepClue</div>
+        <div class="foot"><span></span><span class="go">调阅</span></div>
+      </div>
+    </a>
+  </div>
+
+  <div class="community">
+    <p>我们仍处于开发的早期阶段。
+任何问题、建议或者想要特定背景的剧本,请随时联系我们!</p>
+    <div class="row">
+      <button class="open" type="button">小红书</button>
+      <button class="open" type="button">mistcase@deepclue.app</button>
+    </div>
+  </div>
+
+  <footer class="colophon">
+    <span>© 2025 MistCase by <a class="ext" href="https://deepclue.app" target="_blank" rel="noopener noreferrer">DeepClue ↗</a></span>
+    <span class="sp"></span>
+  </footer>
+
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1360}}">
+class Component extends DCLogic {
+  state = { light: false, filter: 'all' };
+  renderVals(){
+    const light = this.state.light, f = this.state.filter;
+    return {
+      rootClass: 'fog' + (light ? ' light' : '') + (f === 'case' ? ' f-case' : '') + (f === 'detect' ? ' f-detect' : ''),
+      themeLabel: light ? '☀ 亮色' : '☾ 暗色',
+      chipAll: f === 'all' ? 'chip on' : 'chip',
+      chipCase: f === 'case' ? 'chip on' : 'chip',
+      chipDetect: f === 'detect' ? 'chip on' : 'chip',
+      toggleTheme: () => this.setState(s => ({ light: !s.light })),
+      setAll: () => this.setState({ filter: 'all' }),
+      setCase: () => this.setState({ filter: 'case' }),
+      setDetect: () => this.setState({ filter: 'detect' }),
+    };
+  }
+}
+</script>
+</body>
+</html>
